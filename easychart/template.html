@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <link href="https://www.highcharts.com/highslide/highslide.css" rel="stylesheet" />
+        <script type="text/javascript" src="https://code.highcharts.com/6/highcharts.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/6/highcharts-more.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/6/modules/heatmap.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/6/modules/exporting.js"></script>
+        <script type="text/javascript" src="https://code.highcharts.com/6/modules/offline-exporting.js"></script>  
+        <script type="text/javascript" src="https://code.highcharts.com/6/modules/export-data.js"></script>   
+        <script type="text/javascript" src="https://rawgithub.com/highcharts/crossing-specific-value/master/crossing-specific-value.js"></script>     
+    </head>
+    <body style="margin:0;padding:0">
+        <div id="root" style="display:flex;flex-wrap:wrap;width:100%">
+        </div>
+        <script>
+            document.addEventListener('DOMContentLoaded', function (){
+                Highcharts.setOptions({{ theme }});
+                
+                {{ plots }}.forEach(function(plot, i){
+                    var container = document.createElement("div")
+                        container.setAttribute("id", "container-"+i)
+                        container.style.width  = plot.width
+                        container.style.height = plot.height
+                    document.getElementById("root").appendChild(container)
+                    Highcharts.chart("container-"+i, plot.chart)
+                })
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,2 @@
+include easychart/config.json
+include easychart/template.html
