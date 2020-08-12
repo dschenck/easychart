@@ -2,6 +2,9 @@ import easytree
 import pandas as pd
 import numpy as np
 import datetime
+import json
+
+import easychart.encoders as encoders
 
 class SeriesCollection(easytree.Tree): 
     """
@@ -89,6 +92,11 @@ class Chart(easytree.Tree):
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         self.yAxis.plotBands.append(**{**kwargs, "from":ymin, "to":ymax})
         return self
+
+    def save(self, filename):
+        with open(filename, "w") as file: 
+            json.dump(self.serialize(), file, cls=encoders.Encoder)
+        return
 
 class Plot: 
     """
