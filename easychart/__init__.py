@@ -1,13 +1,44 @@
 from easychart.models import Chart, Plot, Grid
 import easychart.ipynb
+import easychart.datasets as datasets
 
-def new(*, datetime=False, zoom="x", tooltip=None, charttype=None, title=None, subtitle=None, 
+def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtitle=None, 
         xtitle=None, ytitle=None, xformat=None, yformat=None, ymin=None, ymax=None):
     """
-    Convenience method to create a chart
+    Creates a new chart with some preset defaults
+
+    Parameters
+    ------------------
+    type : str
+        the default type of series
+    datetime : boolean
+        sets the x-axis as a datetime axis
+    zoom : str
+        one of None, "x", "y" or "xy"
+    tooltip : str
+        one of None or "shared"
+    title : str
+        title of the chart
+    subtitle : str
+        subtitle of the chart
+    xtitle : str
+        x-axis title
+    ytitle : str
+        y-axis title
+    xformat : str
+        format of the x-axis labels
+    yformat : str
+        format of the y-axis labels
+    ymin : float
+        minimum of the y-axis
+    ymax : float
+        maximum of the y-axis
     """
 
     chart = Chart()
+
+    if type is not None: 
+        chart.chart.type = type
 
     if datetime: 
         chart.xAxis.type = "datetime"
@@ -18,9 +49,6 @@ def new(*, datetime=False, zoom="x", tooltip=None, charttype=None, title=None, s
     if tooltip is not None: 
         if tooltip == "shared":
             chart.tooltip.shared = True
-
-    if charttype is not None: 
-        chart.chart.type = charttype
 
     if title is not None: 
         chart.title.text = title
