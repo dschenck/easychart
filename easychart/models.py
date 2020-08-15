@@ -10,7 +10,7 @@ class SeriesCollection(easytree.Tree):
     """
     Series collection
     """
-    def append(self, data, **kwargs):
+    def append(self, data=None, **kwargs):
         if isinstance(data, (list, tuple)):
             if "index" in kwargs:
                 index = kwargs.pop("index")
@@ -49,11 +49,13 @@ class SeriesCollection(easytree.Tree):
             for column in data.T: 
                 self.append(column, **kwargs)
             return
+        if data is None: 
+            return super().append(kwargs)
         raise TypeError(f"Unexpected data type ({data.__class__})")
 
 class Chart(easytree.Tree):
     """
-    Highcharts chart configuration
+    Highcharts chart configuration.
     """
     def __init__(self):
         self.series = SeriesCollection([])
@@ -62,6 +64,9 @@ class Chart(easytree.Tree):
         return Plot(self, width, height, theme)
 
     def vline(self, x, **kwargs):
+        """
+        Adds a vertical line across the chart
+        """
         if self.xAxis.type == "datetime":
             if isinstance(x, (datetime.datetime, datetime.date)):
                 x = 1000 * x.timestamp()
@@ -70,9 +75,15 @@ class Chart(easytree.Tree):
         self.xAxis.plotLines.append(value=x, **kwargs)
 
     def hline(self, y, **kwargs):
+        """
+        Adds a horizontal line across the chart
+        """
         self.yAxis.plotLines.append(value=y, **kwargs)
 
     def vband(self, xmin, xmax, **kwargs):
+        """
+        Adds a vertical band (mask) from xmin to xmax across the chart
+        """
         if "color" not in kwargs: 
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         if self.xAxis.type == "datetime":
@@ -88,14 +99,20 @@ class Chart(easytree.Tree):
         return self
 
     def hband(self, ymin, ymax, **kwargs):
+        """
+        Adds a horizontal band (mask) from ymin to ymax across the chart
+        """
         if "color" not in kwargs: 
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         self.yAxis.plotBands.append(**{**kwargs, "from":ymin, "to":ymax})
         return self
 
-    def save(self, filename):
+    def save(self, filename, indent=0):
+        """
+        Serializes and saves the chart configuration to a JSON file
+        """
         with open(filename, "w") as file: 
-            json.dump(self.serialize(), file, cls=encoders.Encoder)
+            json.dump(self.serialize(), file, cls=encoders.Encoder, indent=indent)
         return
 
 class Plot: 
@@ -103,6 +120,16 @@ class Plot:
     Chart container
     """
     def __init__(self, chart, width="100%", height="400px", theme=None):
+        """
+        Parameters
+        ------------
+        width : str (optional)
+            width of the plot, expressed as a percentage of the page width
+        height : str (optional)
+            height of the plot, expressed as a number of pixels
+        theme : dict (optional)
+            dictionary of global options (theme)
+        """
         self.chart  = chart
         if not isinstance(width, str) and not width.endswith("%"):
             width = f"{width}%"
@@ -127,10 +154,28 @@ class Grid:
     Grid of chart plots
     """
     def __init__(self, plots=None, theme=None):
+        """
+        Parameters
+        ------------------------
+        plots : list (optional)
+            list of individual plots
+        theme : dict (optional)
+            dictionary of global options (theme)
+        """
         self.plots = plots or []
         self.theme = theme
 
     def add(self, chart, width="100%", height="400px"):
+        """
+        Adds a chart (or plot) to the grid
+
+        Parameters
+        ------------
+        width : str (optional)
+            width of the plot, expressed as a percentage of the grid width
+        height : str (optional)
+            height of the plot, expressed as a number of pixels
+        """
         if not isinstance(chart, Plot):
             chart = Plot(chart, width=width, height=height)
         self.plots.append(chart)
