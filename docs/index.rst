@@ -34,3 +34,4 @@ Open up a new Jupyter notebook and start creating your charts:
 
    contents/examples/index
    contents/API
+   contents/changelog
