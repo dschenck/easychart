@@ -1,2 +1,3 @@
 include easychart/config.json
 include easychart/template.html
+include easychart/datasets/olympics.csv
