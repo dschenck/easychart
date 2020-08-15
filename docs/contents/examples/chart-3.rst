@@ -1,0 +1,10 @@
+Simple pie chart
+=====================================================
+
+.. raw:: html 
+
+    <div class="chart-container" data-filename="../../_static/charts/chart-3.json?v=1">loading...</div>
+
+
+.. literalinclude:: /_misc/examples/chart-3.py
+.. literalinclude:: /static/charts/chart-3.json
