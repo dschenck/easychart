@@ -1,4 +1,4 @@
-Column chart 
+Stacked column chart
 =====================================================
 
-.. easychart:chart:chart-1
+.. easychart:chart:chart-5

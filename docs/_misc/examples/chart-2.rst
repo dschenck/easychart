@@ -1,4 +1,4 @@
-Simple time series
+Time series
 =====================================================
 
 .. easychart:chart:chart-2

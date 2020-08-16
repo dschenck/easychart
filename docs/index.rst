@@ -14,12 +14,10 @@ Open up a new Jupyter notebook and start creating your charts:
 
     >>> import easychart
 
-    >>> chart = easychart.new()
-    >>> chart.chart.type = "column"
-    >>> chart.title.text = "France Olympic medals"
-    >>> chart.subtitle.text = "by year and by medal class"
+    >>> chart = easychart.new(title="France Olympic medals", 
+    ...     subtitle="by year and by medal class",
+    ...     type="column", ytitle="medals")
     >>> chart.xAxis.categories = ["Gold","Silver","Bronze"]
-    >>> chart.yAxis.title.text = "medals"
     >>> chart.series.append([7, 16, 18], name=2008)
     >>> chart.series.append([11, 11, 13], name=2012)
     >>> chart
@@ -32,6 +30,8 @@ Open up a new Jupyter notebook and start creating your charts:
    :maxdepth: 2
    :caption: Table of contents
 
+   contents/introduction
    contents/examples/index
+   contents/customizing
    contents/API
    contents/changelog

@@ -1,0 +1,99 @@
+{
+    "series": [
+        {
+            "data": [
+                163,
+                224,
+                312,
+                314,
+                303,
+                175,
+                119
+            ],
+            "type": "column",
+            "name": "Fair"
+        },
+        {
+            "data": [
+                662,
+                933,
+                909,
+                871,
+                702,
+                522,
+                307
+            ],
+            "type": "column",
+            "name": "Good"
+        },
+        {
+            "data": [
+                2834,
+                3903,
+                3826,
+                4884,
+                3115,
+                2093,
+                896
+            ],
+            "type": "column",
+            "name": "Ideal"
+        },
+        {
+            "data": [
+                1603,
+                2337,
+                2331,
+                2924,
+                2360,
+                1428,
+                808
+            ],
+            "type": "column",
+            "name": "Premium"
+        },
+        {
+            "data": [
+                1513,
+                2400,
+                2164,
+                2299,
+                1824,
+                1204,
+                678
+            ],
+            "type": "column",
+            "name": "Very Good"
+        }
+    ],
+    "chart": {
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "Diamond inventories by cut and color"
+    },
+    "xAxis": {
+        "categories": [
+            "D",
+            "E",
+            "F",
+            "G",
+            "H",
+            "I",
+            "J"
+        ],
+        "title": {
+            "text": "Diamond color"
+        }
+    },
+    "yAxis": {
+        "title": {
+            "text": "Count"
+        }
+    },
+    "plotOptions": {
+        "column": {
+            "stacking": "normal"
+        }
+    }
+}

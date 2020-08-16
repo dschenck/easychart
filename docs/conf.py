@@ -55,7 +55,7 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ['static']
 
 html_js_files = [
-    'index.js',
+    'index.js?v=20200816',
     'style.css'
 ]
 

@@ -1,4 +1,4 @@
-Simple scatter chart
+Scatter chart
 =====================================================
 
 .. easychart:chart:chart-4

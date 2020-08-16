@@ -1,4 +1,4 @@
-Column chart 
+Area range chart (advanced)
 =====================================================
 
-.. easychart:chart:chart-1
+.. easychart:chart:chart-6

@@ -1,5 +1,8 @@
 Examples 
 ============== 
+The `Highcharts demo page <https://www.highcharts.com/demo/>`_ is rich with examples, which should be generally readable for non-javascript coders. In addition, here are some additional python-based examples. 
+
+The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is also a fantastic resource to help construct charts.
 
 .. toctree:: 
    :maxdepth: 1 
@@ -9,3 +12,6 @@ Examples
    chart-2 
    chart-3 
    chart-4 
+   chart-5 
+   chart-7 
+   chart-6 

@@ -1,0 +1,42 @@
+{
+    "series": [
+        {
+            "data": [
+                46.1,
+                48.2
+            ],
+            "name": "Hillary Clinton",
+            "type": "column",
+            "color": "rgb(18,8,55)"
+        },
+        {
+            "data": [
+                57.3,
+                42.7
+            ],
+            "name": "Donald Trump",
+            "type": "column",
+            "color": "rgb(202,0,4)"
+        }
+    ],
+    "chart": {
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "US 2016 Presidential election results"
+    },
+    "yAxis": {
+        "title": {
+            "text": ""
+        },
+        "labels": {
+            "format": "{value}%"
+        }
+    },
+    "xAxis": {
+        "categories": [
+            "Electoral vote",
+            "Popular vote"
+        ]
+    }
+}
