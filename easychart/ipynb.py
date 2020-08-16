@@ -26,15 +26,15 @@ if ip and (ip.__module__.startswith('IPython') or ip.__module__.startswith('ipyk
             raise TypeError(f"Unexpected type ({obj.__class__})")
 
         if grid.theme is None: 
-            if os.environ.get("easychart.config"): 
-                if os.path.exists(os.environ["easychart.config"]): 
-                    with open(os.environ["easychart.config"], "r") as file: 
+            if os.environ.get("easychart.theme"): 
+                if os.path.exists(os.environ["easychart.theme"]): 
+                    with open(os.environ["easychart.theme"], "r") as file: 
                         grid.theme = json.load(file)
-            elif os.path.exists(os.path.expanduser("~/.easychart/config.json")):
-                with open(os.path.expanduser("~/.easychart/config.json"), "r") as file: 
+            elif os.path.exists(os.path.expanduser("~/.easychart/theme.json")):
+                with open(os.path.expanduser("~/.easychart/theme.json"), "r") as file: 
                     grid.theme = json.load(file)
             else:
-                with open(os.path.join(os.path.dirname(__file__), "config.json"), "r") as file: 
+                with open(os.path.join(os.path.dirname(__file__), "theme.json"), "r") as file: 
                     grid.theme = json.load(file)
 
         with open(os.path.join(os.path.dirname(__file__), "template.html"), "r") as file: 
