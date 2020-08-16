@@ -7,3 +7,4 @@ chart.append([46.1,48.2], name="Hillary Clinton",
     type="column", color="rgb(18,8,55)")
 chart.append([57.3,42.7], name="Donald Trump", 
     type="column", color="rgb(202,0,4)")
+chart

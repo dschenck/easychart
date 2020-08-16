@@ -10,3 +10,4 @@ chart.series.append(zip(data["min"], data["max"]), type="arearange",
                     color="#eeeeee", name="annual range", 
                     marker={"enabled":False})
 chart.series.append(data["last"], name="end of year")
+chart

@@ -12,15 +12,15 @@ Installing :code:`easychart` is simple with pip:
 Open up a new Jupyter notebook and start creating your charts:
 ::
 
-    >>> import easychart
+    import easychart
 
-    >>> chart = easychart.new(title="France Olympic medals", 
-    ...     subtitle="by year and by medal class",
-    ...     type="column", ytitle="medals")
-    >>> chart.xAxis.categories = ["Gold","Silver","Bronze"]
-    >>> chart.series.append([7, 16, 18], name=2008)
-    >>> chart.series.append([11, 11, 13], name=2012)
-    >>> chart
+    chart = easychart.new(title="France Olympic medals", 
+        subtitle="by year and by medal class",
+        type="column", ytitle="medals")
+    chart.xAxis.categories = ["Gold","Silver","Bronze"]
+    chart.series.append([7, 16, 18], name=2008)
+    chart.series.append([11, 11, 13], name=2012)
+    chart
     
 .. raw:: html
 

@@ -9,6 +9,7 @@ chart.xAxis.categories = ["Gold","Silver","Bronze"]
 chart.yAxis.title.text = "medals"
 chart.series.append([7, 16, 18], name=2008)
 chart.series.append([11, 11, 13], name=2012)
+chart
 chart.save("../static/charts/chart-1.json", indent=4)
 
 
@@ -34,6 +35,7 @@ chart.subtitle.text = "Source: American Red Cross"
 chart.tooltip.pointFormat = "{point.percentage:.0f}%"
 chart.series.append([{"name":bloodtype, "y":percentage} for bloodtype, percentage 
                       in zip(["O","A","B","AB"],[45,40,11,4])])
+chart
 chart.save("../static/charts/chart-3.json", indent=4)
 
 
@@ -71,6 +73,7 @@ chart.xAxis.title.text = "Diamond color"
 chart.yAxis.title.text = "Count"
 chart.plotOptions.column.stacking = "normal"
 chart.series.append(data, type="column")
+chart
 chart.save("../static/charts/chart-5.json", indent=4)
 
 
@@ -125,6 +128,7 @@ chart.series.append(zip(data["min"], data["max"]), type="arearange",
                     color="#eeeeee", name="annual range", 
                     marker={"enabled":False})
 chart.series.append(data["last"], name="end of year")
+chart
 chart.save("../static/charts/chart-7.json", indent=4)
 
 
@@ -133,6 +137,7 @@ import easychart
 
 chart = easychart.new()
 chart.series.append([1,1,2,3,5,8], name="Fibonacci series")
+chart
 chart.save("../static/charts/chart-8.json", indent=4)
 
 
@@ -146,5 +151,6 @@ chart.append([46.1,48.2], name="Hillary Clinton",
     type="column", color="rgb(18,8,55)")
 chart.append([57.3,42.7], name="Donald Trump", 
     type="column", color="rgb(202,0,4)")
+chart
 chart.save("../static/charts/chart-9.json", indent=4)
 

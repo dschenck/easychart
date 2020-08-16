@@ -12,3 +12,4 @@ chart.xAxis.title.text = "Diamond color"
 chart.yAxis.title.text = "Count"
 chart.plotOptions.column.stacking = "normal"
 chart.series.append(data, type="column")
+chart
