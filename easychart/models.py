@@ -11,6 +11,8 @@ class SeriesCollection(easytree.Tree):
     Series collection
     """
     def append(self, data=None, **kwargs):
+        if isinstance(data, (zip, range)):
+            data = list(data)
         if isinstance(data, (list, tuple)):
             if "index" in kwargs:
                 index = kwargs.pop("index")
@@ -60,8 +62,11 @@ class Chart(easytree.Tree):
     def __init__(self):
         self.series = SeriesCollection([])
 
-    def show(self, width="100%", height="400px", theme=None):
-        return Plot(self, width, height, theme)
+    def append(self, data=None, **kwargs):
+        """
+        Shortcut for chart.series.append(data, **kwargs)
+        """
+        return self.series.append(data, **kwargs)
 
     def vline(self, x, **kwargs):
         """
@@ -107,6 +112,9 @@ class Chart(easytree.Tree):
         self.yAxis.plotBands.append(**{**kwargs, "from":ymin, "to":ymax})
         return self
 
+    def show(self, width="100%", height="400px", theme=None):
+        return Plot(self, width, height, theme)
+        
     def save(self, filename, indent=0):
         """
         Serializes and saves the chart configuration to a JSON file
