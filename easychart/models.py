@@ -3,6 +3,7 @@ import pandas as pd
 import numpy as np
 import datetime
 import json
+import re
 
 import easychart.encoders as encoders
 
@@ -61,6 +62,95 @@ class Chart(easytree.Tree):
     """
     def __init__(self):
         self.series = SeriesCollection([])
+
+    def __setattr__(self, name, value):
+        if hasattr(self.__class__, f"set_{name}"): 
+            getattr(self, f"set_{name}")(value)
+            return 
+        return super().__setattr__(name, value)
+
+    def set_title(self, value):
+        """
+        Shortcut for self.title.text = value
+        """ 
+        if isinstance(value, str):
+            self.title.text = value
+            return 
+        return super().__setattr__("title", value)
+
+    def set_subtitle(self, value):
+        """
+        Shortcut for self.subtitle.text = value
+        """ 
+        if isinstance(value, str):
+            self.subtitle.text = value
+            return 
+        return super().__setattr__("subtitle", value)
+
+    def set_categories(self, value):
+        """
+        Shortcut for self.xAxis.categories = value
+        """ 
+        self.xAxis.categories = value
+
+    def set_zoom(self, value):
+        """
+        Shortcut for self.chart.zoomType = value
+        """
+        if isinstance(value, str) and value.lower() in ["x", "y", "xy"]:
+            self.chart.zoomType = value
+            return
+        if isinstance(value, bool) and value == True: 
+            self.chart.zoomType = "xy"
+            return
+        raise ValueError(f"Unexpected value for zoom ({value})")
+
+    def set_tooltip(self, value):
+        """
+        Shortcut for tooltipe
+        """
+        if isinstance(value, bool):
+            self.tooltip.enabled = value
+            return 
+        if value == "shared":
+            self.tooltip.shared = True
+            return
+        if isinstance(value, str):
+            match = re.search(r"(^.+){(.+:?.+?)}(.+)", value)
+            if match: 
+                self.tooltip.valuePrefix = match.groups()[0]
+                self.tooltip.valueSuffix = match.groups()[2]
+
+                if ":" in match.groups()[1]:
+                    submatch = re.match("\.?(\d)[f%]?", match.groups()[1].split(":")[1])
+                    if submatch:
+                        self.tooltip.valueDecimals = int(submatch.groups()[0])
+            return
+        super().__setattr__("tooltip", value)
+
+    def set_decimals(self, value):
+        if isinstance(value, int):
+            self.tooltip.valueDecimals = value
+            return 
+        raise ValueError(f"Unexpected value for tooltip decimals ({value})")
+
+    def set_legend(self, value):
+        """
+        Enable or disable the legend with a boolean
+        """
+        if isinstance(value, bool):
+            self.legend.enabled = value
+            return 
+        super().__setattr__("legend", value)
+
+    def set_stacking(self, value):
+        """
+        Set the stacking plot option
+        """
+        if value not in [None, "normal", "percent"]:
+            raise ValueError(f"Unexpected stacking value ({value})")
+        self.plotOptions.series.stacking = value
+        return
 
     def append(self, data=None, **kwargs):
         """
