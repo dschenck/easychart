@@ -40,22 +40,10 @@ for filename in os.listdir(directory):
                     contents.append(f'    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/{chart}.json?v=1"></div>')
                     contents.append("\n")
                     contents.append(f".. literalinclude:: /_misc/examples/{chart}.py")
-                    contents.append(f".. literalinclude:: /static/charts/{chart}.json")
                 else:
                     contents.append(line)
         with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../contents/examples", filename), "w") as file:
             file.write("\n".join(contents))
-
-#with open(os.path.join(os.path.dirname(os.path.realpath(__file__)), "../contents/examples/index.rst"), "w") as file:
-#    file.write("Examples \n")
-#    file.write("============== \n")
-#    file.write("\n")
-#    file.write(".. toctree:: \n")
-#    file.write("   :maxdepth: 1 \n")
-#    file.write("   :caption: Table of contents \n\n")#
-#    for filename in os.listdir(directory): 
-#        if filename.endswith(".rst"):
-#            file.write(f"   {filename[:-4]} \n")
 
 #run the make html
 os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))

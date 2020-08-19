@@ -7,4 +7,3 @@ Area range chart (advanced)
 
 
 .. literalinclude:: /_misc/examples/chart-6.py
-.. literalinclude:: /static/charts/chart-6.json

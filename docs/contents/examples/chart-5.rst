@@ -7,4 +7,3 @@ Stacked column chart
 
 
 .. literalinclude:: /_misc/examples/chart-5.py
-.. literalinclude:: /static/charts/chart-5.json

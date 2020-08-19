@@ -7,4 +7,3 @@ Time series
 
 
 .. literalinclude:: /_misc/examples/chart-2.py
-.. literalinclude:: /static/charts/chart-2.json

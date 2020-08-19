@@ -7,4 +7,3 @@ Column chart
 
 
 .. literalinclude:: /_misc/examples/chart-1.py
-.. literalinclude:: /static/charts/chart-1.json

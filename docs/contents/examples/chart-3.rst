@@ -7,4 +7,3 @@ Pie chart
 
 
 .. literalinclude:: /_misc/examples/chart-3.py
-.. literalinclude:: /static/charts/chart-3.json

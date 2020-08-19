@@ -7,4 +7,3 @@ Scatter chart
 
 
 .. literalinclude:: /_misc/examples/chart-4.py
-.. literalinclude:: /static/charts/chart-4.json
