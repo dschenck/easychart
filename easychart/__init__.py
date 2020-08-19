@@ -75,7 +75,18 @@ def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtit
         chart.yAxis.max = ymax
 
     return chart
-    
+
+def plot(data, **kwargs):
+    """
+    Convenience method to create a chart and append a series
+    """
+    chartkwargs = {k:v for k,v in kwargs.items() if k in 
+        ["datetime", "zoom", "title", "subtitle","tooltip","xtitle","ytitle"]}
+    serieskwargs = {k:v for k, v in kwargs.items() if k not in chartkwargs}
+    chart = new(**chartkwargs)
+    chart.series.append(data, **serieskwargs)
+    return chart
+
 def render(*charts, width="100%", height="400px", theme=None):
     """
     Render one or several charts or a grid thereof to the jupyter notebook
