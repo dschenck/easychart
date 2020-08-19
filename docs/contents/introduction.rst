@@ -21,7 +21,7 @@ Creating and rendering a chart involves writing a chart *definition* which conta
 
 .. raw:: html 
 
-    <div class="chart-container" data-filename="../../_static/charts/chart-8.json?v=1">loading...</div>
+    <div class="chart-container" data-filename="../_static/charts/chart-8.json?v=1">loading...</div>
 
 .. note::
     In the above example, the chart definition is a simple python dictionary - no black magic involved here. It has only one key and its value is a list of individual series. There is only one series in the list.
@@ -75,7 +75,7 @@ with:
 
 .. raw:: html 
 
-    <div class="chart-container" data-filename="../../_static/charts/chart-9.json?v=1">loading...</div>
+    <div class="chart-container" data-filename="../_static/charts/chart-9.json?v=1">loading...</div>
 
 Serialization
 -----------------------------------------
