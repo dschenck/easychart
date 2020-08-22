@@ -189,7 +189,7 @@ Setting :code:`"shared"` to :code:`chart.tooltip` will set :code:`chart.tooltip.
 
     chart = easychart.new()
     #equivalent to chart.tooltip.shared = True
-    chart.tooltip = True
+    chart.tooltip = "shared"
 
 Setting a label format string to tooltip will affect the decimals, prefix and suffix. 
 ::
