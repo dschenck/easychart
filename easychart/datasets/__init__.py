@@ -15,4 +15,10 @@ def load(dataset):
     if dataset == "electricity":
         return pd.read_csv(os.path.join(os.path.dirname(os.path.realpath(__file__)), "electricity.csv"), 
             index_col=0, parse_dates=True).squeeze().rename("IP")
+    if dataset == "stocks":
+        return pd.read_csv(os.path.join(os.path.dirname(os.path.realpath(__file__)), "stocks.csv"), 
+            index_col=0, parse_dates=True)
+    if dataset == "populations":
+        return pd.read_csv(os.path.join(os.path.dirname(os.path.realpath(__file__)), "populations.csv"), 
+            index_col=0)
     raise ValueError(f"There is no {dataset} dataset, please check your spelling")
