@@ -107,8 +107,12 @@ class Chart(easytree.Tree):
 
     def set_tooltip(self, value):
         """
-        Shortcut for tooltipe
+        Shortcut for tooltip
         """
+        if isinstance(value, tuple):
+            for element in value: 
+                self.tooltip = element
+            return
         if isinstance(value, bool):
             self.tooltip.enabled = value
             return 
@@ -116,15 +120,16 @@ class Chart(easytree.Tree):
             self.tooltip.shared = True
             return
         if isinstance(value, str):
-            match = re.search(r"(^.+){(.+:?.+?)}(.+)", value)
+            match = re.search(r"(^.+)?{(.+:?.+?)}(.+)?", value)
             if match: 
-                self.tooltip.valuePrefix = match.groups()[0]
-                self.tooltip.valueSuffix = match.groups()[2]
-
+                if match.groups()[0] is not None:
+                    self.tooltip.valuePrefix = match.groups()[0]
                 if ":" in match.groups()[1]:
                     submatch = re.match("\.?(\d)[f%]?", match.groups()[1].split(":")[1])
                     if submatch:
                         self.tooltip.valueDecimals = int(submatch.groups()[0])
+                if match.groups()[2] is not None:
+                    self.tooltip.valueSuffix = match.groups()[2]
             return
         super().__setattr__("tooltip", value)
 
@@ -154,7 +159,7 @@ class Chart(easytree.Tree):
 
     def append(self, data=None, **kwargs):
         """
-        Shortcut for chart.series.append(data, **kwargs)
+        Shortcut for :code:`chart.series.append(data, **kwargs)`
         """
         return self.series.append(data, **kwargs)
 
