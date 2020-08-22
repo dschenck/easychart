@@ -14,4 +14,8 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-4 
    chart-5 
    chart-7 
+   chart-13
    chart-6 
+   chart-10
+   chart-11
+   chart-12

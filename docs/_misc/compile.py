@@ -47,4 +47,5 @@ for filename in os.listdir(directory):
 
 #run the make html
 os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
+os.system("make clean")
 os.system("make html")
