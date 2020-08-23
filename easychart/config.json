@@ -15,5 +15,5 @@
         "https://code.highcharts.com/6/modules/offline-exporting.js" , 
         "https://code.highcharts.com/6/modules/export-data.js"
     ],
-    "theme":"economist"
+    "theme":"easychart"
 }
