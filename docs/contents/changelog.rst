@@ -22,3 +22,9 @@ Version 0.1.4 (2020-08-22)
 ------------------------------------------
 - fixed the regular expression of the tooltip shortcut to allow no prefix
 - you can assign a tuple to :code:`chart.tooltip`
+
+Version 0.1.5 (2020-08-23)
+------------------------------------------
+- refactored rendering
+- added config file to inject additional modules and stylesheets
+- added themes from `Joshua Kunst <http://jkunst.com/highcharts-themes-collection/>`_
