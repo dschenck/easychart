@@ -1,4 +1,5 @@
 from easychart.models import Chart, Plot, Grid
+
 import easychart.ipynb
 import easychart.datasets as datasets
 
@@ -47,14 +48,13 @@ def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtit
         chart.chart.zoomType = zoom
 
     if tooltip is not None: 
-        if tooltip == "shared":
-            chart.tooltip.shared = True
+        chart.tooltip = tooltip
 
     if title is not None: 
-        chart.title.text = title
+        chart.title = title
 
     if subtitle is not None: 
-        chart.subtitle.text = subtitle
+        chart.subtitle = subtitle
 
     if xtitle is not None: 
         chart.xAxis.title.text = xtitle
