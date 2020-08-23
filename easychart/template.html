@@ -3,13 +3,12 @@
     <head>
         <meta charset="utf-8" />
         <link href="https://www.highcharts.com/highslide/highslide.css" rel="stylesheet" />
-        <script type="text/javascript" src="https://code.highcharts.com/6/highcharts.js"></script>
-        <script type="text/javascript" src="https://code.highcharts.com/6/highcharts-more.js"></script>
-        <script type="text/javascript" src="https://code.highcharts.com/6/modules/heatmap.js"></script>
-        <script type="text/javascript" src="https://code.highcharts.com/6/modules/exporting.js"></script>
-        <script type="text/javascript" src="https://code.highcharts.com/6/modules/offline-exporting.js"></script>  
-        <script type="text/javascript" src="https://code.highcharts.com/6/modules/export-data.js"></script>   
-        <script type="text/javascript" src="https://rawgithub.com/highcharts/crossing-specific-value/master/crossing-specific-value.js"></script>     
+        {% for stylesheet in stylesheets %}
+            <link href="{{ stylesheet }}" rel="stylesheet" />    
+        {% endfor %}
+        {% for script in scripts %}
+            <script type="text/javascript" src="{{ script }}"></script>    
+        {% endfor %}
     </head>
     <body style="margin:0;padding:0">
         <div id="root" style="display:flex;flex-wrap:wrap;width:100%">

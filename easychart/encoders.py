@@ -2,9 +2,13 @@ import json
 import numpy as np
 import pandas as pd
 import datetime
+import easychart
+import easytree
 
 class Encoder(json.JSONEncoder):
     def default(self, value):
+        if isinstance(value, (easychart.Chart, easytree.Tree)):
+            return self.default(value.serialize())
         if isinstance(value, (pd.Timestamp, datetime.datetime)):
             if value == value.replace(hour=0, minute=0, second=0): 
                 return value.strftime("%Y-%m-%d")

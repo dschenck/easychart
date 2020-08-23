@@ -1,0 +1,122 @@
+{
+    "colors": [
+        "#2364AA",
+        "#3DA5D9",
+        "#73BFB8",
+        "#FEC601",
+        "#EA7317",
+        "#ff0066",
+        "#eeaaee",
+        "#55BF3B",
+        "#DF5353",
+        "#7798BF",
+        "#aaeeee"
+    ],
+    "title": {
+        "style": {
+            "color": "#000000",
+            "font": "bold 14px \"Arial\", sans-serif"
+        },
+        "align": "left",
+        "text": null
+    },
+    "subtitle": {
+        "style": {
+            "color": "#000000",
+            "font": "12px Arial, sans-serif"
+        },
+        "align": "left",
+        "text": null
+    },
+    "legend": {
+        "layout": "horizontal",
+        "align": "center",
+        "verticalAlign": "bottom",
+        "itemStyle": {
+            "font": "9pt Arial, sans-serif",
+            "color": "#000000"
+        }
+    },
+    "tooltip": {
+        "backgroundColor": "rgba(0, 0, 0, 0.75)",
+        "style": {
+            "color": "#F0F0F0",
+            "font": "Arial"
+        },
+        "shared": true
+    },
+    "xAxis": {
+        "gridLineColor": "#eeeeee",
+        "gridLineWidth": 1,
+        "gridLineDashStyle": "dash",
+        "lineColor": "#000000",
+        "lineWidth": 1,
+        "labels": {
+            "style": {
+                "color": "#000000",
+                "font": "Arial"
+            }
+        },
+        "tickColor": "#000000",
+        "tickPosition": "outside",
+        "tickLength": 5
+    },
+    "yAxis": {
+        "gridLineColor": "#eeeeee",
+        "gridLineWidth": 1,
+        "gridLineDashStyle": "dash",
+        "lineColor": "#000000",
+        "lineWidth": 1,
+        "labels": {
+            "style": {
+                "color": "#000000",
+                "font": "Arial"
+            }
+        },
+        "tickColor": "#000000",
+        "tickPosition": "outside",
+        "tickLength": 5,
+        "tickWidth": 1,
+        "title": {
+            "rotation": 270,
+            "text": null
+        }
+    },
+    "credits": {
+        "style": {
+            "color": "#666"
+        },
+        "position": {
+            "align": "left",
+            "x": 50
+        },
+        "text": "",
+        "href": null
+    },
+    "plotOptions": {
+        "chart": {
+            "animation": false
+        },
+        "line": {
+            "animation": false
+        },
+        "pie": {
+            "showInLegend": true,
+            "dataLabels": {
+                "enabled": false
+            }
+        },
+        "column": {
+            "pointPadding": 0.1,
+            "borderWidth": 0,
+            "groupPadding": 0.1
+        },
+        "scatter": {
+            "marker": {
+                "radius": 3,
+                "enabled": true,
+                "symbol": "circle"
+            }
+        }
+    }
+}
