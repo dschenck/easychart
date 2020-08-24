@@ -157,7 +157,21 @@ class Chart(easytree.Tree):
         self.plotOptions.series.stacking = value
         return
 
+    def set_datetime(self, value):
+        """
+        Set the xAxis as a datetime axis
+        """
+        if isinstance(value, bool) and value == True:
+            self.xAxis.type = "datetime"
+        raise ValueError("Unexpected value for xAxis.type")
+
     def append(self, data=None, **kwargs):
+        """
+        Shortcut for :code:`chart.series.append(data, **kwargs)`
+        """
+        return self.series.append(data, **kwargs)
+
+    def plot(self, data=None, **kwargs):
         """
         Shortcut for :code:`chart.series.append(data, **kwargs)`
         """
