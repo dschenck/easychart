@@ -6,6 +6,7 @@ import json
 import re
 
 import easychart.encoders as encoders
+import easychart.internals as internals
 
 class SeriesCollection(easytree.Tree): 
     """
@@ -18,7 +19,7 @@ class SeriesCollection(easytree.Tree):
             if "index" in kwargs:
                 index = kwargs.pop("index")
                 if all([isinstance(d, datetime.date) for d in index]):
-                    data = [(1000 * d.timestamp(), v) for (d, v) in zip(index, data)]
+                    data = [(internals.timestamp(d), v) for (d, v) in zip(index, data)]
                 else:
                     data = [(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
@@ -27,13 +28,13 @@ class SeriesCollection(easytree.Tree):
                 kwargs["name"] = data.name
             if "index" not in kwargs:
                 if all([isinstance(d, datetime.date) for d in data.index]):
-                    data = [(1000 * d.timestamp(), v) for (d, v) in zip(data.index, data)]
+                    data = [(internals.timestamp(d), v) for (d, v) in zip(data.index, data)]
                 else:
                     data = data.values
             else:
                 index = kwargs.pop("index")
                 if all([isinstance(d, datetime.date) for d in index]):
-                    data = [(1000 * d.timestamp(), v) for (d, v) in zip(index, data)]
+                    data = [(internals.timestamp(d), v) for (d, v) in zip(index, data)]
                 else:
                     data = [(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
@@ -183,9 +184,9 @@ class Chart(easytree.Tree):
         """
         if self.xAxis.type == "datetime":
             if isinstance(x, (datetime.datetime, datetime.date)):
-                x = 1000 * x.timestamp()
+                x = internals.timestamp(x)
             elif isinstance(x, str):
-                x = 1000 * pd.Timestamp(x).timestamp()
+                x = internals.timestamp(pd.Timestamp(x))
         self.xAxis.plotLines.append(value=x, **kwargs)
 
     def hline(self, y, **kwargs):
@@ -202,13 +203,13 @@ class Chart(easytree.Tree):
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         if self.xAxis.type == "datetime":
             if isinstance(xmin, (datetime.datetime, datetime.date)):
-                xmin = 1000 * xmin.timestamp()
+                xmin = internals.timestamp(xmin)
             elif isinstance(xmin, str):
-                xmin = 1000 * pd.Timestamp(xmin).timestamp()
+                xmin = internals.timestamp(pd.Timestamp(xmin))
             if isinstance(xmax, (datetime.datetime, datetime.date)):
-                xmax = 1000 * xmax.timestamp()
+                xmax = internals.timestamp(xmax)
             elif isinstance(xmax, str):
-                xmax = 1000 * pd.Timestamp(xmax).timestamp()
+                xmax = internals.timestamp(pd.Timestamp(xmax))
         self.xAxis.plotBands.append(**{**kwargs, "from":xmin, "to":xmax})
         return self
 
