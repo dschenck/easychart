@@ -3,6 +3,8 @@ from easychart.models import Chart, Plot, Grid
 import easychart.ipynb
 import easychart.datasets as datasets
 
+__version__ = "0.1.6"
+
 def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtitle=None, 
         xtitle=None, ytitle=None, xformat=None, yformat=None, ymin=None, ymax=None):
     """
