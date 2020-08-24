@@ -28,3 +28,8 @@ Version 0.1.5 (2020-08-23)
 - refactored rendering
 - added config file to inject additional modules and stylesheets
 - added themes from `Joshua Kunst <http://jkunst.com/highcharts-themes-collection/>`_
+
+Version 0.1.6 (2020-08-24)
+------------------------------------------
+- timestamp support for datetime.date
+- bugfix in importing config.json
