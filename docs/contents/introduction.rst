@@ -157,6 +157,15 @@ Setting a string to :code:`chart.subtitle` will assign the value to the :code:`c
     #equivalent to chart.subtitle.text = "Chart subtitle"
     chart.subtitle = "Chart subtitle" 
 
+Datetime
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+Setting :code:`chart.datetime` equal to :code:`True` will set the xAxis' type equal to datetime
+::
+
+    chart = easychart.new()
+    #equivalent to chart.xAxis.type = "datetime"
+    chart.datetime = True
+
 Categories
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 Setting a value to :code:`chart.categories` will assign the value to the :code:`chart.xAxis.categories` attribute.
