@@ -1,3 +1,4 @@
 include easychart/template.html
 include easychart/datasets/*
 include easychart/themes/*
+include easychart/config.json
