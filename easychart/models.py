@@ -99,7 +99,7 @@ class Chart(easytree.Tree):
         Shortcut for self.chart.zoomType = value
         """
         if isinstance(value, str) and value.lower() in ["x", "y", "xy"]:
-            self.chart.zoomType = value
+            self.chart.zoomType = value.lower()
             return
         if isinstance(value, bool) and value == True: 
             self.chart.zoomType = "xy"
@@ -164,6 +164,7 @@ class Chart(easytree.Tree):
         """
         if isinstance(value, bool) and value == True:
             self.xAxis.type = "datetime"
+            return
         raise ValueError("Unexpected value for xAxis.type")
 
     def append(self, data=None, **kwargs):

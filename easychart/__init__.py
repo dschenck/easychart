@@ -6,7 +6,8 @@ import easychart.datasets as datasets
 __version__ = "0.1.6"
 
 def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtitle=None, 
-        xtitle=None, ytitle=None, xformat=None, yformat=None, ymin=None, ymax=None):
+        xtitle=None, ytitle=None, xformat=None, yformat=None, ymin=None, ymax=None,
+        legend=None, categories=None):
     """
     Creates a new chart with some preset defaults
 
@@ -75,6 +76,12 @@ def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtit
 
     if ymax is not None: 
         chart.yAxis.max = ymax
+
+    if legend is not None:
+        chart.legend = legend
+
+    if categories is not None:
+        chart.categories = categories
 
     return chart
 
