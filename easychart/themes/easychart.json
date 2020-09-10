@@ -43,7 +43,8 @@
             "color": "#F0F0F0",
             "font": "Arial"
         },
-        "shared": true
+        "shared": true,
+        "valueDecimals":2
     },
     "xAxis": {
         "gridLineColor": "#eeeeee",
@@ -54,6 +55,13 @@
         "labels": {
             "style": {
                 "color": "#000000",
+                "font": "Arial"
+            }
+        },
+        "title":{
+            "text": null,
+            "style": {
+                "color": "#F0F0F0",
                 "font": "Arial"
             }
         },
@@ -79,7 +87,11 @@
         "tickWidth": 1,
         "title": {
             "rotation": 270,
-            "text": null
+            "text": null,
+            "style": {
+                "color": "#F0F0F0",
+                "font": "Arial"
+            }
         }
     },
     "credits": {
