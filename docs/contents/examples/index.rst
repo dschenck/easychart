@@ -19,3 +19,5 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-10
    chart-11
    chart-12
+   chart-14
+   chart-15

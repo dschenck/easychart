@@ -25,10 +25,10 @@ chart.subtitle.text = "Detrended (100 = 1975-2020 average)"
 chart.xAxis.categories = pivot.index
 chart.plotOptions.arearange.marker.enabled = False
 chart.plotOptions.line.marker.enabled = False
-chart.series.append(zip(pivot["5%"], pivot["95%"]), name="10%-90% range", type="arearange", color="#eeeeee")
-chart.series.append(zip(pivot["25%"], pivot["75%"]), name="25%-75% range", type="arearange", color="#cccccc")
-chart.series.append(pivot["0%"], name="min", dashStyle="dot", color="black")
-chart.series.append(pivot["100%"], name="max", dashStyle="dot", color="black")
-chart.series.append(pivot[2019], name="2019")
-chart.series.append(pivot[2020], name="2020")
+chart.append(zip(pivot["5%"], pivot["95%"]), name="10%-90% range", type="arearange", color="#eeeeee")
+chart.append(zip(pivot["25%"], pivot["75%"]), name="25%-75% range", type="arearange", color="#cccccc")
+chart.append(pivot["0%"], name="min", dashStyle="dot", color="black")
+chart.append(pivot["100%"], name="max", dashStyle="dot", color="black")
+chart.append(pivot[2019], name="2019")
+chart.append(pivot[2020], name="2020")
 chart

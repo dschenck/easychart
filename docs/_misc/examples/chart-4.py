@@ -10,6 +10,6 @@ chart.yAxis.title.text = "price (USD)"
 for clarity in ["VS1", "VVS2", "VVS1", "IF"]: 
     #isolate the diamonds with the given level of clarity
     sample = data[data["clarity"] == clarity]
-    chart.series.append(sample["price"], index=sample["carat"], 
-                        type="scatter", name=clarity)
+    chart.append(sample["price"], index=sample["carat"], 
+                 type="scatter", name=clarity)
 chart

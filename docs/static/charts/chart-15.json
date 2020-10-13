@@ -1,0 +1,43 @@
+{
+    "series": [
+        {
+            "data": [
+                43000,
+                19000,
+                60000,
+                35000,
+                17000,
+                10000
+            ],
+            "pointPlacement": "on",
+            "name": "budget"
+        },
+        {
+            "data": [
+                50000,
+                39000,
+                42000,
+                31000,
+                26000,
+                14000
+            ],
+            "pointPlacement": "on",
+            "name": "actual"
+        }
+    ],
+    "chart": {
+        "zoomType": "x",
+        "type": "line",
+        "polar": true
+    },
+    "xAxis": {
+        "categories": [
+            "Sales",
+            "Marketing",
+            "Development",
+            "Support",
+            "Technology",
+            "Administration"
+        ]
+    }
+}
