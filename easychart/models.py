@@ -19,24 +19,24 @@ class SeriesCollection(easytree.Tree):
             if "index" in kwargs:
                 index = kwargs.pop("index")
                 if all([isinstance(d, datetime.date) for d in index]):
-                    data = [(internals.timestamp(d), v) for (d, v) in zip(index, data)]
+                    data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(index, data)]
                 else:
-                    data = [(i, v) for (i, v) in zip(index, data)]
+                    data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
         if isinstance(data, (pd.Series)):
             if "name" not in kwargs:
                 kwargs["name"] = data.name
             if "index" not in kwargs:
                 if all([isinstance(d, datetime.date) for d in data.index]):
-                    data = [(internals.timestamp(d), v) for (d, v) in zip(data.index, data)]
+                    data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(data.index, data)]
                 else:
                     data = data.values
             else:
                 index = kwargs.pop("index")
                 if all([isinstance(d, datetime.date) for d in index]):
-                    data = [(internals.timestamp(d), v) for (d, v) in zip(index, data)]
+                    data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(index, data)]
                 else:
-                    data = [(i, v) for (i, v) in zip(index, data)]
+                    data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
         if isinstance(data, pd.DataFrame):
             if "name" in kwargs: 
