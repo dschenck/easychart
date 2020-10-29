@@ -13,6 +13,18 @@ class SeriesCollection(easytree.Tree):
     Series collection
     """
     def append(self, data=None, **kwargs):
+        if "legend" in kwargs:
+            kwargs["showInLegend"] = kwargs.pop("legend")
+        if "marker" in kwargs and isinstance(kwargs["marker"], bool): 
+            kwargs["marker"] = {"enabled": kwargs["marker"]}
+        if "width" in kwargs: 
+            kwargs["lineWidth"] = kwargs.pop("width")
+        if "dash" in kwargs: 
+            kwargs["dashStyle"] = kwargs.pop("dash")
+        if "dashstyle" in kwargs: 
+            kwargs["dashStyle"] = kwargs.pop("dashstyle")
+        if "linestyle" in kwargs: 
+            kwargs["dashStyle"] = kwargs.pop("linestyle")
         if isinstance(data, (zip, range)):
             data = list(data)
         if isinstance(data, (list, tuple)):
