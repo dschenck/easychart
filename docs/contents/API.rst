@@ -9,7 +9,7 @@ Utility functions
 Objects
 -----------------------------------
 .. autoclass:: easychart.Chart
-    :members: append, serialize, save, vline, hline, vband, hband
+    :members: append, plot, serialize, save, vline, hline, vband, hband
 
 .. autoclass:: easychart.Plot
     :members: __init__

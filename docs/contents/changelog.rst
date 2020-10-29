@@ -33,3 +33,9 @@ Version 0.1.6 (2020-08-24)
 ------------------------------------------
 - timestamp support for datetime.date
 - bugfix in importing config.json
+
+Version 0.1.7 (2020-10-29)
+------------------------------------------
+- flatted data points when constructing timestamped arearange charts 
+- upgraded highcharts javascripts injections to version 8
+- added argument aliases in series.append
