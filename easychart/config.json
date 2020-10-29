@@ -8,12 +8,12 @@
         "https://fonts.googleapis.com/css?family=Open+Sans"
     ],
     "scripts":[
-        "https://code.highcharts.com/6/highcharts.js",
-        "https://code.highcharts.com/6/highcharts-more.js",
-        "https://code.highcharts.com/6/modules/heatmap.js",
-        "https://code.highcharts.com/6/modules/exporting.js",
-        "https://code.highcharts.com/6/modules/offline-exporting.js" , 
-        "https://code.highcharts.com/6/modules/export-data.js"
+        "https://code.highcharts.com/8/highcharts.js",
+        "https://code.highcharts.com/8/highcharts-more.js",
+        "https://code.highcharts.com/8/modules/heatmap.js",
+        "https://code.highcharts.com/8/modules/exporting.js",
+        "https://code.highcharts.com/8/modules/offline-exporting.js" , 
+        "https://code.highcharts.com/8/modules/export-data.js"
     ],
     "theme":"easychart"
 }
