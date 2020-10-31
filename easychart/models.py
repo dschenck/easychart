@@ -235,6 +235,46 @@ class Chart(easytree.Tree):
         self.yAxis.plotBands.append(**{**kwargs, "from":ymin, "to":ymax})
         return self
 
+    def regress(self, y, x, intercept=True, **kwargs):
+        """
+        Plots a simple linear regression (y = ax + b) using the scikit-learn 
+        regression module (soft dependency). If not already installed in your 
+        environment, simply run pip install scikit-learn
+        """
+        def label(param, intercept, rsquared): 
+            """
+            Generates the regression label
+            """
+            def f(number):
+                """
+                Format the string
+                """
+                if 100 < abs(number) <= 9999:
+                    return f"{number:.0f}"
+                if 10 < abs(number) <= 100:
+                    return f"{number:.1f}"
+                if 0.1 < abs(number) <= 10: 
+                    return f"{number:.2f}"
+                return f"{number:.2e}"
+
+            if intercept not in [None, False]: 
+                return f"y = {f(intercept)} + {f(param)}x (r-squared={rsquared:.2f})"
+            return f"y = {f(param)}x (r-squared={rsquared:.2f})"
+
+        try:
+            from sklearn.linear_model import LinearRegression
+        except ImportError:
+            raise ImportError("scikit-learn is a soft-dependency of easychart")
+            
+        X = np.reshape(x, (-1, 1))
+        
+        reg = LinearRegression(fit_intercept=intercept).fit(X, y)
+        
+        if "name" not in kwargs:
+            kwargs["name"] = label(reg.coef_[0], intercept and reg.intercept_, reg.score(X, y))
+            
+        return self.plot(reg.predict(X), index=x, **kwargs)
+
     def show(self, width="100%", height="400px", theme=None):
         return Plot(self, width, height, theme)
         

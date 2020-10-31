@@ -39,3 +39,7 @@ Version 0.1.7 (2020-10-29)
 - flatted data points when constructing timestamped arearange charts 
 - upgraded highcharts javascripts injections to version 8
 - added argument aliases in series.append
+
+Version 0.1.8 (2020-10-31)
+------------------------------------------
+- added simple linear regression
