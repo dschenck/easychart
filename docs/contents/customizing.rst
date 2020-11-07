@@ -7,13 +7,6 @@ Changing the theme on the fly
 By default, charts will render with the *easychart* theme, but the package comes with a collection of 20 themes, courtesy of `Joshua Kunst <http://jkunst.com/highcharts-themes-collection/>`_. To render a chart in a different theme, render the chart and pass the name of the theme: 
 ::
 
-    import easychart
-
-    chart = easychart.new(title="US 2016 Presidential election results", ytitle="", yformat="{value}%")
-    chart.categories = ["Electoral vote", "Popular vote"]
-    chart.append([46.1,48.2], name="Hillary Clinton (D)", type="column")
-    chart.append([57.3,42.7], name="Donald J. Trump (R)", type="column"
-
     #pass the theme explicitely to the render function
     easychart.render(chart, theme="economist")
 
@@ -24,15 +17,7 @@ Alternatively, you can also pass a theme object to the :code:`render` function.
 
     #create a theme object
     theme = {"chart":{"backgroundColor":"#eeeeee"}, "yAxis":{"gridLineColor":"white"}}
-
-    chart = easychart.new(title="US 2016 Presidential election results", 
-        ytitle="", yformat="{value}%")
-    chart.xAxis.categories = ["Electoral vote", "Popular vote"]
-    chart.series.append([46.1,48.2], name="Hillary Clinton (D)", 
-        type="column", color="rgb(18,8,55)")
-    chart.series.append([57.3,42.7], name="Donald J. Trump (R)", 
-        type="column", color="rgb(202,0,4)")
-
+    
     #pass the theme explicitely to the render function
     easychart.render(chart, theme=theme)
 
