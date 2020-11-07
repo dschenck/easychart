@@ -92,7 +92,7 @@
         }
     },
     "plotOptions": {
-        "column": {
+        "series": {
             "stacking": "normal"
         }
     }

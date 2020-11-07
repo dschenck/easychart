@@ -11,7 +11,7 @@ chart.stacking = "percent"
 chart.yAxis.labels.format = "{value}%"
 chart.tooltip = ("shared", "{value:.1}%")
 for column in data.columns[::-1]: 
-    chart.append(data[column], index=data.index, type="area", marker={"enabled":False})
+    chart.plot(data[column], index=data.index, type="area", marker=False)
 chart.vband(2020, 2100, color="rgba(200,200,200,0.2)", zIndex=20,
             label={"text":"forecast", "style":{"color":"white"}})
 chart

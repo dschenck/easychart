@@ -18,8 +18,8 @@
         }
     ],
     "chart": {
-        "zoomType": "x",
-        "type": "column"
+        "type": "column",
+        "zoomType": "x"
     },
     "title": {
         "text": "France Olympic medals"

@@ -19,10 +19,10 @@ chart.yAxis.labels.format = "{value}%"
 chart.tooltip = ("shared", "{value:.1}%")
 chart.plotOptions.columnrange.grouping = False
 chart.plotOptions.line.states.hover.enabled = False
-chart.append(zip(stats["10%"], stats["90%"]), name="10%-90% range", 
+chart.plot(zip(stats["10%"], stats["90%"]), name="10%-90% range", 
              type="columnrange", color="rgba(20, 20, 20, 0.1)")
-chart.append(zip(stats["25%"], stats["75%"]), name="25%-75% range", 
+chart.plot(zip(stats["25%"], stats["75%"]), name="25%-75% range", 
              type="columnrange", color="rgba(20, 20, 20, 0.3)")
-chart.append(stats["last"], name="April 2020", lineWidth=0, allowPointSelect=False)
+chart.plot(stats["last"], name="April 2020", lineWidth=0, allowPointSelect=False)
 
 chart

@@ -32,6 +32,7 @@
         "text": "Source: American Red Cross"
     },
     "tooltip": {
-        "pointFormat": "{point.percentage:.0f}%"
+        "valueDecimals": 0,
+        "valueSuffix": "%"
     }
 }

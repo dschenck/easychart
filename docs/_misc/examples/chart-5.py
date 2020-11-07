@@ -7,9 +7,9 @@ data = easychart.datasets.load("diamonds")
 data = data.groupby(["color", "cut"])["price"].count().unstack()
 
 chart = easychart.new(title="Diamond inventories by cut and color")
-chart.xAxis.categories = data.index
+chart.categories = data.index
 chart.xAxis.title.text = "Diamond color"
 chart.yAxis.title.text = "Count"
-chart.plotOptions.column.stacking = "normal"
-chart.append(data, type="column")
+chart.stacking = "normal"
+chart.plot(data, type="column")
 chart

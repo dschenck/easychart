@@ -126,8 +126,8 @@
                 97.86592150951174
             ],
             "name": "min",
-            "dashStyle": "dot",
-            "color": "black"
+            "color": "black",
+            "dashStyle": "dot"
         },
         {
             "data": [
@@ -145,8 +145,8 @@
                 117.40523223025093
             ],
             "name": "max",
-            "dashStyle": "dot",
-            "color": "black"
+            "color": "black",
+            "dashStyle": "dot"
         },
         {
             "data": [
@@ -212,12 +212,7 @@
         ]
     },
     "plotOptions": {
-        "arearange": {
-            "marker": {
-                "enabled": false
-            }
-        },
-        "line": {
+        "series": {
             "marker": {
                 "enabled": false
             }

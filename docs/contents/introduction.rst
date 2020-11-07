@@ -40,7 +40,7 @@ To solve these issues, the easychart library provides a :code:`Chart` object and
     import easychart
 
     chart = easychart.new()
-    chart.series.append([1,1,2,3,5,8], name="Fibonacci series")
+    chart.plot([1,1,2,3,5,8], name="Fibonacci series")
     chart
 
 .. note::
@@ -68,9 +68,9 @@ with:
     chart = easychart.new(title="US 2016 Presidential election results")
     chart.yAxis.title.text = ""
     chart.yAxis.labels.format = "{value}%"
-    chart.xAxis.categories = ["Electoral vote", "Popular vote"]
-    chart.append([46.1,48.2], name="Hillary Clinton", type="column", color="rgb(18,8,55)")
-    chart.append([57.3,42.7], name="Donald Trump", type="column", color="rgb(202,0,4)")
+    chart.categories = ["Electoral vote", "Popular vote"]
+    chart.plot([46.1,48.2], name="Hillary Clinton", type="column", color="rgb(18,8,55)")
+    chart.plot([57.3,42.7], name="Donald Trump", type="column", color="rgb(202,0,4)")
     chart
 
 .. raw:: html 
@@ -87,9 +87,9 @@ Serialization involves converting a chart object back into a native Python objec
     chart = easychart.new(title="US 2016 Presidential election results")
     chart.yAxis.title.text = ""
     chart.yAxis.labels.format = "{value}%"
-    chart.xAxis.categories = ["Electoral vote", "Popular vote"]
-    chart.append([46.1,48.2], name="Hillary Clinton", type="column", color="rgb(18,8,55)")
-    chart.append([57.3,42.7], name="Donald Trump", type="column", color="rgb(202,0,4)")
+    chart.categories = ["Electoral vote", "Popular vote"]
+    chart.plot([46.1,48.2], name="Hillary Clinton", type="column", color="rgb(18,8,55)")
+    chart.plot([57.3,42.7], name="Donald Trump", type="column", color="rgb(202,0,4)")
     chart.serialize()
 
     {
@@ -135,9 +135,9 @@ Serialization involves converting a chart object back into a native Python objec
         }
     }
 
-Shortcuts
+Setter aliases
 -----------------------------------------
-The :code:`Chart` object comes with a number of setter shortcuts.
+The :code:`Chart` object comes with a number of setter shortcuts, also known as aliases.
 
 Title
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~

@@ -21,14 +21,13 @@ for decile in [0, 0.05, 0.25, 0.5, 0.75, 0.95, 1]:
 
 #create the chart
 chart = easychart.new(tooltip="shared", title="US gas and electricity production")
-chart.subtitle.text = "Detrended (100 = 1975-2020 average)"
-chart.xAxis.categories = pivot.index
-chart.plotOptions.arearange.marker.enabled = False
-chart.plotOptions.line.marker.enabled = False
-chart.append(zip(pivot["5%"], pivot["95%"]), name="10%-90% range", type="arearange", color="#eeeeee")
-chart.append(zip(pivot["25%"], pivot["75%"]), name="25%-75% range", type="arearange", color="#cccccc")
-chart.append(pivot["0%"], name="min", dashStyle="dot", color="black")
-chart.append(pivot["100%"], name="max", dashStyle="dot", color="black")
-chart.append(pivot[2019], name="2019")
-chart.append(pivot[2020], name="2020")
+chart.subtitle = "Detrended (100 = 1975-2020 average)"
+chart.categories = pivot.index
+chart.marker = False
+chart.plot(zip(pivot["5%"], pivot["95%"]), name="10%-90% range", type="arearange", color="#eeeeee")
+chart.plot(zip(pivot["25%"], pivot["75%"]), name="25%-75% range", type="arearange", color="#cccccc")
+chart.plot(pivot["0%"], name="min", dashstyle="dot", color="black")
+chart.plot(pivot["100%"], name="max", dashstyle="dot", color="black")
+chart.plot(pivot[2019], name="2019")
+chart.plot(pivot[2020], name="2020")
 chart

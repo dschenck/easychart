@@ -43,3 +43,10 @@ Version 0.1.7 (2020-10-29)
 Version 0.1.8 (2020-10-31)
 ------------------------------------------
 - added simple linear regression
+
+Version 0.1.9 (2020-11-07)
+------------------------------------------
+- :code:`enabled` and :code:`active` are now aliases for :code:`visible` in :code:`chart.plot`
+- refactored the encoders to expose both a function and a class
+- dictionary keys, values and items are now serializable
+- added aliases
