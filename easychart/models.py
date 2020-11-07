@@ -89,6 +89,12 @@ class Chart(easytree.Tree):
             return 
         return super().__setattr__(name, value)
 
+    def set_type(self, value):
+        """
+        Shortcut for self.chart.type = value
+        """
+        self.chart.type = value
+
     def set_title(self, value):
         """
         Shortcut for self.title.text = value
@@ -185,6 +191,15 @@ class Chart(easytree.Tree):
             self.xAxis.type = "datetime"
             return
         raise ValueError("Unexpected value for xAxis.type")
+
+    def set_marker(self, value):
+        if isinstance(value, bool): 
+            self.plotOptions.series.marker.enabled = value
+            return
+        if value is None: 
+            self.plotOptions.series.marker.enabled = False
+            return
+        self.plotOptions.series.marker = value
 
     def append(self, data=None, **kwargs):
         """
