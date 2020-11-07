@@ -1,11 +1,10 @@
 from easychart.models import Chart, Plot, Grid
+from easychart.__meta__ import * 
 
 import easychart.ipynb
 import easychart.datasets as datasets
 
-__version__ = "0.1.8"
-
-def new(*, type=None, datetime=False, zoom="x", tooltip=None, title=None, subtitle=None, 
+def new(type=None, *, datetime=False, zoom="x", tooltip=None, title=None, subtitle=None, 
         xtitle=None, ytitle=None, xformat=None, yformat=None, ymin=None, ymax=None,
         legend=None, categories=None):
     """
