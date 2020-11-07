@@ -15,8 +15,11 @@ class SeriesCollection(easytree.Tree):
     def append(self, data=None, **kwargs):
         if "legend" in kwargs:
             kwargs["showInLegend"] = kwargs.pop("legend")
-        if "marker" in kwargs and isinstance(kwargs["marker"], bool): 
-            kwargs["marker"] = {"enabled": kwargs["marker"]}
+        if "marker" in kwargs: 
+            if isinstance(kwargs["marker"], bool): 
+                kwargs["marker"] = {"enabled": kwargs["marker"]}
+            elif kwargs["marker"] is None: 
+                kwargs["marker"] = {"enabled": False}
         if "width" in kwargs: 
             kwargs["lineWidth"] = kwargs.pop("width")
         if "dash" in kwargs: 
@@ -25,6 +28,10 @@ class SeriesCollection(easytree.Tree):
             kwargs["dashStyle"] = kwargs.pop("dashstyle")
         if "linestyle" in kwargs: 
             kwargs["dashStyle"] = kwargs.pop("linestyle")
+        if "active" in kwargs: 
+            kwargs["visible"] = kwargs.pop("active")
+        if "enabled" in kwargs: 
+            kwargs["visible"] = kwargs.pop("enabled")
         if isinstance(data, (zip, range)):
             data = list(data)
         if isinstance(data, (list, tuple)):
