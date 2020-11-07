@@ -1,6 +1,7 @@
 import os
 import json
 import html
+import simplejson
 import easychart
 import easychart.encoders
 import warnings
@@ -60,7 +61,7 @@ def render(grid):
     return template.render(
             scripts=config["scripts"], 
             stylesheets=config["stylesheets"],
-            theme=json.dumps(grid.theme), 
-            plots=json.dumps([plot.serialize() for plot in grid.plots], 
-                              cls=easychart.encoders.Encoder))
+            theme=simplejson.dumps(grid.theme), 
+            plots=simplejson.dumps([plot.serialize() for plot in grid.plots], 
+                              default=easychart.encoders.default, ignore_nan=True))
 
