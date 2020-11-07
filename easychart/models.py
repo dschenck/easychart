@@ -2,7 +2,7 @@ import easytree
 import pandas as pd
 import numpy as np
 import datetime
-import json
+import simplejson
 import re
 
 import easychart.encoders as encoders
@@ -94,6 +94,18 @@ class Chart(easytree.Tree):
         Shortcut for self.chart.type = value
         """
         self.chart.type = value
+
+    def set_height(self, value):
+        """
+        Shortcut for self.chart.height = value
+        """
+        self.chart.height = value
+
+    def set_width(self, value):
+        """
+        Shortcut for self.chart.width = value
+        """
+        self.chart.width = value
 
     def set_title(self, value):
         """
@@ -193,6 +205,9 @@ class Chart(easytree.Tree):
         raise ValueError("Unexpected value for xAxis.type")
 
     def set_marker(self, value):
+        """
+        Set the default marker
+        """
         if isinstance(value, bool): 
             self.plotOptions.series.marker.enabled = value
             return
@@ -305,7 +320,7 @@ class Chart(easytree.Tree):
         Serializes and saves the chart configuration to a JSON file
         """
         with open(filename, "w") as file: 
-            json.dump(self.serialize(), file, cls=encoders.Encoder, indent=indent)
+            simplejson.dump(self.serialize(), file, default=encoders.default, indent=indent)
         return
 
 class Plot: 
