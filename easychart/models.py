@@ -216,6 +216,13 @@ class Chart(easytree.Tree):
             return
         self.plotOptions.series.marker = value
 
+    def set_inverted(self, value):
+        """
+        Alias for chart.chart.inverted
+        """
+        self.chart.inverted = value
+        return
+
     def append(self, data=None, **kwargs):
         """
         Shortcut for :code:`chart.series.append(data, **kwargs)`
