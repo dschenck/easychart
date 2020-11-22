@@ -86,10 +86,9 @@
         "tickLength": 5,
         "tickWidth": 1,
         "title": {
-            "rotation": 270,
             "text": null,
             "style": {
-                "color": "#F0F0F0",
+                "color": "#000000",
                 "font": "Arial"
             }
         }
