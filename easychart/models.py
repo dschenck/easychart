@@ -32,6 +32,20 @@ class SeriesCollection(easytree.Tree):
             kwargs["visible"] = kwargs.pop("active")
         if "enabled" in kwargs: 
             kwargs["visible"] = kwargs.pop("enabled")
+        if "labels" in kwargs: 
+            if isinstance(kwargs["labels"], bool):
+                kwargs["dataLabels"] = {"enabled":kwargs.pop("labels")}
+            elif isinstance(kwargs["labels"], str):
+                kwargs["dataLabels"] = {"enabled":True, "format":kwargs.pop("labels")}
+            else:
+                kwargs["dataLabels"] = kwargs.pop("labels")
+        if "datalabels" in kwargs: 
+            if isinstance(kwargs["datalabels"], bool):
+                kwargs["dataLabels"] = {"enabled":kwargs.pop("datalabels")}
+            elif isinstance(kwargs["datalabels"], str):
+                kwargs["dataLabels"] = {"enabled":True, "format":kwargs.pop("datalabels")}
+            else:
+                kwargs["dataLabels"] = kwargs.pop("datalabels")
         if isinstance(data, (zip, range)):
             data = list(data)
         if isinstance(data, (list, tuple)):
@@ -190,9 +204,19 @@ class Chart(easytree.Tree):
         """
         Set the stacking plot option
         """
-        if value not in [None, "normal", "percent"]:
+        if value not in [None, "normal", "percent", True]:
             raise ValueError(f"Unexpected stacking value ({value})")
+        if value is True: 
+            self.plotOptions.series.stacking = "normal"
+            return
         self.plotOptions.series.stacking = value
+        return
+
+    def set_stacked(self, value):
+        """
+        Alias for stacking
+        """
+        self.stacking = value
         return
 
     def set_datetime(self, value):
@@ -221,6 +245,31 @@ class Chart(easytree.Tree):
         Alias for chart.chart.inverted
         """
         self.chart.inverted = value
+        return
+
+    def set_datalabels(self, value):
+        """
+        Alias for chart.plotOptions.series.dataLabels
+        """
+        if isinstance(value, tuple):
+            for element in value: 
+                self.datalabels = element
+            return
+        if isinstance(value, bool): 
+            self.plotOptions.series.dataLabels.enabled = value
+            return
+        if isinstance(value, str):
+            self.plotOptions.series.dataLabels.enabled = True
+            self.plotOptions.series.dataLabels.format = value
+            return
+        self.plotOptions.series.dataLabels.enabled = value
+        return
+
+    def set_labels(self, value):
+        """
+        Alias for chart.plotOptions.series.dataLabels
+        """
+        self.datalabels = value
         return
 
     def append(self, data=None, **kwargs):
