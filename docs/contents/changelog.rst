@@ -50,3 +50,7 @@ Version 0.1.9 (2020-11-07)
 - refactored the encoders to expose both a function and a class
 - dictionary keys, values and items are now serializable
 - added aliases
+
+Version 0.1.10 (2020-11-20)
+------------------------------------------
+- added aliases for datalabels

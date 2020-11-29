@@ -34,3 +34,7 @@ Open up a new Jupyter notebook and start creating your charts:
    contents/customizing
    contents/API
    contents/changelog
+
+Source
+-------------------------------------
+Code is hosted on `github <https://github.com/dschenck/easychart>`_
