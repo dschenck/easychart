@@ -46,8 +46,7 @@ exclude_patterns = ['_build', '_misc', 'Thumbs.db', '.DS_Store']
 # The theme to use for HTML and HTML Help pages.  See the documentation for
 # a list of builtin themes.
 #
-html_theme = 'alabaster'
-html_theme = "sphinx_rtd_theme"
+html_theme = "furo"
 
 # Add any paths that contain custom static files (such as style sheets) here,
 # relative to this directory. They are copied after the builtin static files,
@@ -55,7 +54,7 @@ html_theme = "sphinx_rtd_theme"
 html_static_path = ['static']
 
 html_js_files = [
-    'index.js?v=20200816',
+    'index.js?v=20210113',
     'style.css'
 ]
 

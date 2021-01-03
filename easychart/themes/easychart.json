@@ -15,7 +15,7 @@
     "title": {
         "style": {
             "color": "#000000",
-            "font": "bold 14px \"Arial\", sans-serif"
+            "font": "bold 14px Arial, sans-serif"
         },
         "align": "left",
         "text": null
@@ -61,7 +61,7 @@
         "title":{
             "text": null,
             "style": {
-                "color": "#F0F0F0",
+                "color": "#000000",
                 "font": "Arial"
             }
         },
