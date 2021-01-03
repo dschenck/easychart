@@ -1,5 +1,3 @@
 div.chart-container {
-    padding: 2px; 
-    background-color: white;
-    border:1px solid gray;
+    border:1px solid #fffcfc;
 }
