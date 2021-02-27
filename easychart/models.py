@@ -92,7 +92,130 @@ class SeriesCollection(easytree.Tree):
 
 class Chart(easytree.Tree):
     """
-    Highcharts chart configuration.
+    A Highchart chart configuration
+
+    The :code:`Chart` object comes with convenience setters to make it easier and faster to create charts:
+
+    \- setting a string to :code:`chart.type` will assign the value to the :code:`chart.chart.type` attribute.
+    ::
+
+        #equivalent to chart.chart.type = "column"
+        chart.type = "column"
+
+    \- setting a value to :code:`chart.height` will assign the value to the :code:`chart.chart.height` attribute.
+    ::
+
+        #equivalent to chart.chart.height = "400px"
+        chart.height = "400px"
+
+    \- setting a value to :code:`chart.width` will assign the value to the :code:`chart.chart.width` attribute.
+    ::
+
+        #equivalent to chart.chart.width = "400px"
+        chart.width = "400px"
+
+    \- setting a string to :code:`chart.title` will assign the value to the :code:`chart.title.text` attribute.
+    ::
+
+        #equivalent to chart.title.text = "Chart title"
+        chart.title = "Chart title"
+
+    \- setting a string to :code:`chart.subtitle` will assign the value to the :code:`chart.subtitle.text` attribute.
+    ::
+
+        #equivalent to chart.subtitle.text = "Chart subtitle"
+        chart.subtitle = "Chart subtitle"  
+
+    \- setting :code:`chart.datetime` equal to :code:`True` will set the xAxis' type equal to :code:`"datetime"`
+    ::
+
+        #equivalent to chart.xAxis.type = "datetime"
+        chart.datetime = True
+
+    \- setting an iterable (list, tuple...) to :code:`chart.categories` will assign the value to :code:`chart.xAxis.categories`.
+    ::
+
+        #equivalent to chart.xAxis.categories = ["Paris","New York","Nairobi"]
+        chart.categories = ["Paris","New York","Nairobi"]
+
+    \- setting :code:`None`, :code:`"x"`, :code:`"y"` or :code:`"xy"` to :code:`chart.zoom` will assign the value to the :code:`chart.chart.zoomType` attribute.
+    ::
+
+        #equivalent to chart.chart.zoomType = "xy"
+        chart.zoom = "xy"
+
+    \- setting a boolean to :code:`chart.tooltip` will enable or disable the tooltip. 
+    ::
+
+        #equivalent to chart.tooltip.enabled = False
+        chart.tooltip = False
+
+    \- setting :code:`"shared"` to :code:`chart.tooltip` will set :code:`chart.tooltip.shared = True`. 
+    ::
+
+        #equivalent to chart.tooltip.shared = True
+        chart.tooltip = "shared"
+
+    \- setting a label format string to :code:`chart.tooltip` will format the decimals, prefix and suffix. 
+    ::
+
+        chart.tooltip = "${value:.2f} per unit"
+
+        #is equivalent to...
+        chart.tooltip.valuePrefix = "$"
+        chart.tooltip.valueSuffix = " per unit"
+        chart.tooltip.valueDecimals = 2
+
+    \- setting a tuple of values to the :code:`chart.tooltip` will set each value to the toolip attribute, as per the above rules. 
+    ::
+
+        chart.tooltip = ("shared", "{value}mm")
+
+        #is equivalent to...
+        chart.tooltip.shared = True
+        chart.tooltip.valueSuffix = "mm"
+
+    \- setting a boolean to :code:`chart.legend` will enable or disable the legend
+    ::
+
+        #equivalent to chart.legend.enabled = False
+        chart.legend = False
+
+    \- setting one of :code:`None`, :code:`"percent"` or :code:`"normal"` to :code:`chart.stacking` will affect the value to :code:`chart.plotOptions.series.stacking`. 
+    ::
+
+        #equivalent to chart.plotOptions.series.stacking = "percent"
+        chart.stacking = "percent"
+
+    \- setting :code:`True` to :code:`chart.inverted` will invert the chart
+    ::
+
+        #equivalent to self.chart.inverted = True
+        chart.inverted = True
+
+    \- setting :code:`True` or :code:`False` to :code:`chart.marker` will enable or disable series markers
+    ::
+
+        #equivalent to chart.plotOptions.series.marker.enabled = True
+        chart.marker = True
+
+    \- setting a non-boolean value to :code:`chart.marker` will assign that value to the series' marker property
+    ::
+
+        #equivalent to chart.plotOptions.series.marker = value
+        chart.marker = value
+
+    \- setting a boolean value to :code:`chart.datalabels`  or :code:`chart.labels` will enable or disable the chart data labels
+    ::
+
+        #equivalent to chart.plotOptions.series.dataLabels.enabled = True
+        chart.datalabels = True
+
+    \- setting a string to :code:`chart.datalabels` or :code:`chart.labels` will assign the value as the format of the data labels
+    ::
+
+        #equivalent to chart.plotOptions.series.dataLabels.format = value
+        chart.labels = "{value}%
     """
     def __init__(self):
         self.series = SeriesCollection([])
@@ -262,7 +385,7 @@ class Chart(easytree.Tree):
             self.plotOptions.series.dataLabels.enabled = True
             self.plotOptions.series.dataLabels.format = value
             return
-        self.plotOptions.series.dataLabels.enabled = value
+        self.plotOptions.series.dataLabels = value
         return
 
     def set_labels(self, value):
@@ -287,7 +410,14 @@ class Chart(easytree.Tree):
     def vline(self, x, **kwargs):
         """
         Adds a vertical line across the chart
+
+        Shortcut for: 
+        :: 
+
+            self.xAxis.plotLines.append(value=x, **kwargs)
         """
+        if "color" not in kwargs: 
+            kwargs["color"] = "black"
         if self.xAxis.type == "datetime":
             if isinstance(x, (datetime.datetime, datetime.date)):
                 x = internals.timestamp(x)
@@ -298,7 +428,14 @@ class Chart(easytree.Tree):
     def hline(self, y, **kwargs):
         """
         Adds a horizontal line across the chart
+
+        Shortcut for: 
+        :: 
+
+            self.yAxis.plotLines.append(value=x, **kwargs)
         """
+        if "color" not in kwargs: 
+            kwargs["color"] = "black"
         self.yAxis.plotLines.append(value=y, **kwargs)
 
     def vband(self, xmin, xmax, **kwargs):
@@ -331,8 +468,11 @@ class Chart(easytree.Tree):
     def regress(self, y, x, intercept=True, **kwargs):
         """
         Plots a simple linear regression (y = ax + b) using the scikit-learn 
-        regression module (soft dependency). If not already installed in your 
-        environment, simply run pip install scikit-learn
+        regression module (soft dependency). 
+        
+        .. note: 
+            If scikit-learn is not already installed in your 
+            environment, simply run :code:`pip install scikit-learn`
         """
         def label(param, intercept, rsquared): 
             """
@@ -373,7 +513,7 @@ class Chart(easytree.Tree):
         
     def save(self, filename, indent=0):
         """
-        Serializes and saves the chart configuration to a JSON file
+        Serializes and dumps the chart configuration to file
         """
         with open(filename, "w") as file: 
             simplejson.dump(self.serialize(), file, default=encoders.default, indent=indent)
