@@ -54,3 +54,7 @@ Version 0.1.9 (2020-11-07)
 Version 0.1.10 (2020-11-20)
 ------------------------------------------
 - added aliases for datalabels
+
+Version 0.1.11 (2021-03-28)
+------------------------------------------
+- pd.DataFrame and 2d np.arrays will no longer be interpreted as list of column series to accommodate alternative series types (e.g. boxplots, arearange) 

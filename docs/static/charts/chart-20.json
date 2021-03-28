@@ -1,0 +1,79 @@
+{
+    "series": [
+        {
+            "data": [
+                5,
+                3,
+                4,
+                7,
+                2
+            ],
+            "name": "John",
+            "stack": "male"
+        },
+        {
+            "data": [
+                3,
+                4,
+                4,
+                2,
+                5
+            ],
+            "name": "Joe",
+            "stack": "male"
+        },
+        {
+            "data": [
+                2,
+                5,
+                6,
+                2,
+                1
+            ],
+            "name": "Jane",
+            "stack": "female"
+        },
+        {
+            "data": [
+                3,
+                0,
+                4,
+                4,
+                3
+            ],
+            "name": "Janet",
+            "stack": "female"
+        }
+    ],
+    "chart": {
+        "type": "column",
+        "zoomType": "x"
+    },
+    "plotOptions": {
+        "series": {
+            "stacking": "normal"
+        }
+    },
+    "title": {
+        "text": "Total fruit consumption, grouped by gender"
+    },
+    "xAxis": {
+        "categories": [
+            "Apples",
+            "Oranges",
+            "Pears",
+            "Grapes",
+            "Bananas"
+        ]
+    },
+    "yAxis": {
+        "allowDecimals": false,
+        "min": 0,
+        "title": {
+            "text": "Number of fruits"
+        }
+    },
+    "tooltip": {
+        "valueDecimals": 0
+    }
+}

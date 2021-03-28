@@ -1,6 +1,6 @@
 import easychart
 
-#min, Q1, average, Q3, max
+#min, Q1, median, Q3, max
 data = [[760, 801, 848, 895, 965],
         [733, 853, 939, 980, 1080],
         [714, 762, 817, 870, 918],

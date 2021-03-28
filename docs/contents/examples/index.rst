@@ -23,3 +23,7 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-15
    chart-16
    chart-17
+   chart-20
+   chart-19
+   chart-18
+   chart-21

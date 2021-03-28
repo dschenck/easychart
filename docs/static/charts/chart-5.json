@@ -10,8 +10,7 @@
                 175,
                 119
             ],
-            "type": "column",
-            "name": "Fair"
+            "name": "cut"
         },
         {
             "data": [
@@ -23,8 +22,7 @@
                 522,
                 307
             ],
-            "type": "column",
-            "name": "Good"
+            "name": "cut"
         },
         {
             "data": [
@@ -36,8 +34,7 @@
                 2093,
                 896
             ],
-            "type": "column",
-            "name": "Ideal"
+            "name": "cut"
         },
         {
             "data": [
@@ -49,8 +46,7 @@
                 1428,
                 808
             ],
-            "type": "column",
-            "name": "Premium"
+            "name": "cut"
         },
         {
             "data": [
@@ -62,11 +58,11 @@
                 1204,
                 678
             ],
-            "type": "column",
-            "name": "Very Good"
+            "name": "cut"
         }
     ],
     "chart": {
+        "type": "column",
         "zoomType": "x"
     },
     "title": {
