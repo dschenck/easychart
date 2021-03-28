@@ -72,20 +72,9 @@ class SeriesCollection(easytree.Tree):
                     data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
         if isinstance(data, pd.DataFrame):
-            if "name" in kwargs: 
-                if callable(kwargs["name"]):
-                    name = [kwargs["name"](c) for c in data.columns]
-            else:
-                name = data.columns
-            for i, column in enumerate(data): 
-                self.append(data[column], **{**kwargs, "name":name[i]})
-            return
-        if isinstance(data, np.ndarray) and data.ndim == 1:
+            return self.append(data.values.tolist(), index=data.index, **kwargs)
+        if isinstance(data, np.ndarray):
             return self.append(data.tolist(), **kwargs)
-        if isinstance(data, np.ndarray) and data.ndim == 2: 
-            for column in data.T: 
-                self.append(column, **kwargs)
-            return
         if data is None: 
             return super().append(kwargs)
         raise TypeError(f"Unexpected data type ({data.__class__})")
@@ -404,8 +393,14 @@ class Chart(easytree.Tree):
     def plot(self, data=None, **kwargs):
         """
         Shortcut for :code:`chart.series.append(data, **kwargs)`
+        
+        Returns
+        --------
+        self : Chart
+            the chart instance
         """
-        return self.series.append(data, **kwargs)
+        self.series.append(data, **kwargs)
+        return self
 
     def vline(self, x, **kwargs):
         """
