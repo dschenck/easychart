@@ -10,7 +10,7 @@
                 175,
                 119
             ],
-            "name": "cut"
+            "name": "Fair"
         },
         {
             "data": [
@@ -22,7 +22,7 @@
                 522,
                 307
             ],
-            "name": "cut"
+            "name": "Good"
         },
         {
             "data": [
@@ -34,7 +34,7 @@
                 2093,
                 896
             ],
-            "name": "cut"
+            "name": "Ideal"
         },
         {
             "data": [
@@ -46,7 +46,7 @@
                 1428,
                 808
             ],
-            "name": "cut"
+            "name": "Premium"
         },
         {
             "data": [
@@ -58,7 +58,7 @@
                 1204,
                 678
             ],
-            "name": "cut"
+            "name": "Very Good"
         }
     ],
     "chart": {

@@ -12,5 +12,5 @@ chart.xAxis.title.text = "Diamond color"
 chart.yAxis.title.text = "Count"
 chart.stacking = "normal"
 for cut in data: 
-    chart.plot(data[cut], name="cut")
+    chart.plot(data[cut], name=cut)
 chart
