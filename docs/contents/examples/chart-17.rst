@@ -1,6 +1,6 @@
 Inverted column range
 =====================================================
-As found on the Highcharts demo `page <https://www.highcharts.com/demo/columnrange>`_
+As found on the Highcharts `demo <https://www.highcharts.com/demo/columnrange>`_
 
 .. raw:: html 
 

@@ -1,6 +1,6 @@
 Line with datalabels
 =====================================================
-As found on the Highcharts demo `page <https://www.highcharts.com/demo/line-labels>`_
+As found on the Highcharts `demo <https://www.highcharts.com/demo/line-labels>`_
 
 .. raw:: html 
 

@@ -12,6 +12,7 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-2 
    chart-3 
    chart-4 
+   chart-23
    chart-5 
    chart-7 
    chart-13
@@ -27,3 +28,4 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-19
    chart-18
    chart-21
+   chart-22

@@ -1,6 +1,6 @@
 Logarithmic scale
 =====================================================
-Inspired from this Highcharts demo `page <https://www.highcharts.com/demo/line-log-axis>`_
+Inspired from this Highcharts `demo <https://www.highcharts.com/demo/line-log-axis>`_
 
 .. raw:: html 
 

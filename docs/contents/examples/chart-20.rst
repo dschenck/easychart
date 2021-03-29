@@ -1,6 +1,6 @@
 Stacked and grouped column
 =====================================================
-Inspired from this Highcharts demo `page <https://www.highcharts.com/demo/column-stacked-and-grouped>`_
+Inspired from this Highcharts `demo <https://www.highcharts.com/demo/column-stacked-and-grouped>`_
 
 .. raw:: html 
 

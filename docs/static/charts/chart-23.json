@@ -1,0 +1,85 @@
+{
+    "series": [
+        {
+            "data": [
+                107,
+                31,
+                635,
+                203,
+                2
+            ],
+            "name": 1800,
+            "dataLabels": {
+                "enabled": false
+            }
+        },
+        {
+            "data": [
+                133,
+                156,
+                947,
+                408,
+                6
+            ],
+            "name": 1900,
+            "dataLabels": {
+                "enabled": false
+            }
+        },
+        {
+            "data": [
+                814,
+                841,
+                3714,
+                727,
+                31
+            ],
+            "name": 2000,
+            "dataLabels": {
+                "enabled": false
+            }
+        },
+        {
+            "data": [
+                1216,
+                1001,
+                4436,
+                738,
+                40
+            ],
+            "name": 2016,
+            "dataLabels": {
+                "enabled": true
+            }
+        }
+    ],
+    "chart": {
+        "type": "bar",
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "Historic World Population by Region"
+    },
+    "subtitle": {
+        "text": "Source: <a href='https://en.wikipedia.org/wiki/World_population'>Wikipedia.org</a>"
+    },
+    "xAxis": {
+        "categories": [
+            "Africa",
+            "America",
+            "Asia",
+            "Europe",
+            "Oceania"
+        ]
+    },
+    "yAxis": {
+        "title": {
+            "text": "Population (millions)",
+            "align": "high"
+        }
+    },
+    "tooltip": {
+        "valueDecimals": 0,
+        "valueSuffix": "m"
+    }
+}
