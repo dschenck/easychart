@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="easychart",
-    version="0.1.11",
+    version="0.1.12",
     author="david.schenck@outlook.com",
     author_email="david.schenck@outlook.com",
     description="Highcharts meets python",
