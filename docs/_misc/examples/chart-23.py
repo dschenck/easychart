@@ -1,4 +1,5 @@
 import easychart
+import pandas as pd
 
 data = pd.DataFrame([[107, 31, 635, 203, 2],[133, 156, 947, 408, 6],
                      [814, 841, 3714, 727, 31],[1216, 1001, 4436, 738, 40]], 

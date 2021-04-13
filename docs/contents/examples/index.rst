@@ -29,3 +29,5 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-18
    chart-21
    chart-22
+   chart-23
+   chart-24

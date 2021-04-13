@@ -58,3 +58,7 @@ Version 0.1.10 (2020-11-20)
 Version 0.1.11 (2021-03-28)
 ------------------------------------------
 - pd.DataFrame and 2d np.arrays will no longer be interpreted as list of column series to accommodate alternative series types (e.g. boxplots, arearange) 
+
+Version 0.1.12 (2021-04-13)
+------------------------------------------
+- added support for `datetime.time` in chart xAxis
