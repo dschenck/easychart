@@ -21,6 +21,10 @@ def default(value):
         if value == value.replace(hour=0, minute=0, second=0): 
             return value.strftime("%Y-%m-%d")
         return value.strftime("%Y-%m-%d %H:%M:%S.%f")
+    if isinstance(value, datetime.time):
+        if value.second == 0: 
+            return value.strftime("%H:%M")
+        return value.strftime("%H:%M:S")
     if isinstance(value, datetime.date):
         return value.strftime("%Y-%m-%d")
     if isinstance(value, np.datetime64):

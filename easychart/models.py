@@ -51,7 +51,7 @@ class SeriesCollection(easytree.Tree):
         if isinstance(data, (list, tuple)):
             if "index" in kwargs:
                 index = kwargs.pop("index")
-                if all([isinstance(d, datetime.date) for d in index]):
+                if all([isinstance(d, internals.DATETIME_TYPES) for d in index]):
                     data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(index, data)]
                 else:
                     data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
@@ -60,13 +60,13 @@ class SeriesCollection(easytree.Tree):
             if "name" not in kwargs:
                 kwargs["name"] = data.name
             if "index" not in kwargs:
-                if all([isinstance(d, datetime.date) for d in data.index]):
+                if all([isinstance(d, internals.DATETIME_TYPES) for d in data.index]):
                     data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(data.index, data)]
                 else:
                     data = data.values
             else:
                 index = kwargs.pop("index")
-                if all([isinstance(d, datetime.date) for d in index]):
+                if all([isinstance(d, internals.DATETIME_TYPES) for d in index]):
                     data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(index, data)]
                 else:
                     data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
@@ -414,7 +414,7 @@ class Chart(easytree.Tree):
         if "color" not in kwargs: 
             kwargs["color"] = "black"
         if self.xAxis.type == "datetime":
-            if isinstance(x, (datetime.datetime, datetime.date)):
+            if isinstance(x, internals.DATETIME_TYPES):
                 x = internals.timestamp(x)
             elif isinstance(x, str):
                 x = internals.timestamp(pd.Timestamp(x))
@@ -440,11 +440,11 @@ class Chart(easytree.Tree):
         if "color" not in kwargs: 
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         if self.xAxis.type == "datetime":
-            if isinstance(xmin, (datetime.datetime, datetime.date)):
+            if isinstance(xmin, internals.DATETIME_TYPES):
                 xmin = internals.timestamp(xmin)
             elif isinstance(xmin, str):
                 xmin = internals.timestamp(pd.Timestamp(xmin))
-            if isinstance(xmax, (datetime.datetime, datetime.date)):
+            if isinstance(xmax, internals.DATETIME_TYPES):
                 xmax = internals.timestamp(xmax)
             elif isinstance(xmax, str):
                 xmax = internals.timestamp(pd.Timestamp(xmax))
