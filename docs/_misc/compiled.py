@@ -47,6 +47,43 @@ chart
 chart.save("../static/charts/chart-23.json", indent=4)
 
 
+# chart-27.py
+import easychart
+
+data = [
+    ['Brazil', 'Portugal', 5],
+    ['Brazil', 'France', 1],
+    ['Canada', 'Portugal', 1],
+    ['Canada', 'France', 5],
+    ['Mexico', 'Portugal', 1],
+    ['Mexico', 'France', 1],
+    ['USA', 'Portugal', 1],
+    ['USA', 'France', 1],
+    ['Portugal', 'Angola', 2],
+    ['Portugal', 'Senegal', 1],
+    ['France', 'Angola', 1],
+    ['France', 'Senegal', 3],
+    ['Spain', 'Senegal', 1],
+    ['Spain', 'Morocco', 3],
+    ['England', 'Morocco', 2],
+    ['England', 'South Africa', 7],
+    ['South Africa', 'China', 5],
+    ['Angola', 'Japan', 3],
+    ['Senegal', 'India', 1],
+    ['Senegal', 'Japan', 3],
+    ['Mali', 'India', 1],
+    ['Morocco', 'India', 1],
+    ['Morocco', 'Japan', 3]
+]
+
+chart = easychart.new(type="sankey")
+chart.title = "Sankey diagram"
+chart.subtitle = "Flow diagram in which the width of the arrows is proportional to the flow rate"
+chart.plot(data, keys=["from","to","weight"])
+chart
+chart.save("../static/charts/chart-27.json", indent=4)
+
+
 # chart-13.py
 import easychart
 
@@ -65,6 +102,20 @@ chart.plot([7.0, 6.9, 9.5, 14.5, 18.2, 21.5, 25.2, 26.5, 23.3, 18.3, 13.9, 9.6],
              name="Temperature", type="spline", yAxis=0, tooltip={"valueSuffix":"°C"})
 chart
 chart.save("../static/charts/chart-13.json", indent=4)
+
+
+# chart-26.py
+import easychart
+
+labels = ["O","A","B","AB"]
+values = [45,40,11,4]
+
+chart = easychart.new("pie", title="Distribution of blood type in the US")
+chart.subtitle = "Source: American Red Cross"
+chart.tooltip = "{point.percentage:.0f}%"
+chart.plot(values, index=labels, labels="{point.name} ({point.y}%)")
+chart
+chart.save("../static/charts/chart-26.json", indent=4)
 
 
 # chart-12.py
