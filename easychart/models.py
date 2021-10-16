@@ -15,6 +15,8 @@ class SeriesCollection(easytree.Tree):
     def append(self, data=None, **kwargs):
         if "legend" in kwargs:
             kwargs["showInLegend"] = kwargs.pop("legend")
+        if "markers" in kwargs:
+            kwargs["marker"] = kwargs.pop("markers")
         if "marker" in kwargs: 
             if isinstance(kwargs["marker"], bool): 
                 kwargs["marker"] = {"enabled": kwargs["marker"]}
@@ -506,7 +508,7 @@ class Chart(easytree.Tree):
     def show(self, width="100%", height="400px", theme=None):
         return Plot(self, width, height, theme)
         
-    def save(self, filename, indent=0):
+    def save(self, filename, indent=4):
         """
         Serializes and dumps the chart configuration to file
         """
