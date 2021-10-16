@@ -5,10 +5,10 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="easychart",
-    version="0.1.12",
+    version="0.1.13",
     author="david.schenck@outlook.com",
     author_email="david.schenck@outlook.com",
-    description="Highcharts meets python",
+    description="Highcharts meets python in your Jupyter notebook",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://easychart.readthedocs.io/en/latest/",
