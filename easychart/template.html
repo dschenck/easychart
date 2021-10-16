@@ -3,7 +3,6 @@
 
 <head>
     <meta charset="utf-8" />
-    <link href="https://www.highcharts.com/highslide/highslide.css" rel="stylesheet" />
     {% for stylesheet in stylesheets %}
     <link href="{{ stylesheet }}" rel="stylesheet" />
     {% endfor %}
@@ -19,15 +18,15 @@
         document.addEventListener('DOMContentLoaded', function () {
             Highcharts.setOptions({{ theme }});
 
-        { { plots } }.forEach(function (plot, i) {
-            var container = document.createElement("div")
-            container.setAttribute("id", "container-" + i)
-            container.style.width = plot.width
-            container.style.height = plot.height
-            document.getElementById("root").appendChild(container)
-            Highcharts.chart("container-" + i, plot.chart)
-        })
-            });
+            {{ plots }}.forEach(function (plot, i) {
+                var container = document.createElement("div")
+                container.setAttribute("id", "container-" + i)
+                container.style.width = plot.width
+                container.style.height = plot.height
+                document.getElementById("root").appendChild(container)
+                Highcharts.chart("container-" + i, plot.chart)
+            })
+        });
     </script>
 </body>
 

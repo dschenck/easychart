@@ -1,3 +1,4 @@
+from easychart.config import config
 from easychart.models import Chart, Plot, Grid
 from easychart.__meta__ import * 
 
@@ -88,6 +89,9 @@ def plot(data, **kwargs):
     """
     Convenience method to create a chart and append a series
     """
+    if isinstance(data, Chart): 
+        return render(data, **{key:value for key, value in kwargs.items() if key in {"width","height","theme"}})
+        
     chartkwargs = {k:v for k,v in kwargs.items() if k in 
         ["datetime", "zoom", "title", "subtitle","tooltip","xtitle","ytitle"]}
     serieskwargs = {k:v for k, v in kwargs.items() if k not in chartkwargs}
