@@ -41,7 +41,3 @@ By default, charts will render with the *easychart* theme, but you can configure
     print(os.path.expanduser("~/.easychart/theme.json"))
 
 Alternatively, you can also set the :code:`EASYCHART.THEME` environment variable to either a preset theme (e.g. "economist") or the path of a custom theme file. 
-
-Modules and extensions
-------------------------------
-Some Highchart features - like `exporting <https://www.highcharts.com/docs/export-module/export-module-overview>`_ - require additional modules to render (e.g. in your Jupyter notebook). To import additional dependencies, extend this `config <https://github.com/dschenck/easychart/blob/master/easychart/config.json>`_ file and save as :code:`os.path.expanduser("~/.easychart/config.json")`.

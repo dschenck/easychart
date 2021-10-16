@@ -60,6 +60,8 @@ html_css_files = [
     'style.css'
 ]
 
+html_logo = "static/logo.svg"
+
 
 #https://github.com/readthedocs/readthedocs.org/issues/2569
 master_doc = 'index'

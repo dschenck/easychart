@@ -2,7 +2,7 @@ Sankey charts
 =====================================================
 
 .. note::
-    Make sure the sankey javascript module is included in your config. See section on `Modules and Extensions <https://easychart.readthedocs.io/en/latest/contents/customizing.html#modules-and-extensions>`_ for more details.
+    Requires the `sankey` module. See section on `extensions <https://easychart.readthedocs.io/en/latest/contents/extensions.html>`_ for more details.
 
 .. raw:: html 
 

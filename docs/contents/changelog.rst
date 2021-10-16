@@ -62,3 +62,7 @@ Version 0.1.11 (2021-03-28)
 Version 0.1.12 (2021-04-13)
 ------------------------------------------
 - added support for `datetime.time` in chart xAxis
+
+Version 0.1.13 (2021-10-16)
+------------------------------------------
+- refactored config object
