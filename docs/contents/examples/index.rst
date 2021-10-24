@@ -32,3 +32,4 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    chart-23
    chart-24
    chart-27
+   chart-28

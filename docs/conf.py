@@ -54,7 +54,7 @@ html_theme = "furo"
 html_static_path = ['static']
 
 html_js_files = [
-    'index.js?v=20211013'
+    'index.js?v=20211024'
 ]
 html_css_files = [
     'style.css'
