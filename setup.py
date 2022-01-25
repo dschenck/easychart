@@ -18,6 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["pandas","numpy","easytree","simplejson","jinja2"],
-    include_package_data=True
+    install_requires=["pandas", "numpy", "easytree", "simplejson", "jinja2"],
+    include_package_data=True,
 )

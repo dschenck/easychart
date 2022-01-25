@@ -8,78 +8,107 @@ import re
 import easychart.encoders as encoders
 import easychart.internals as internals
 
-class SeriesCollection(easytree.Tree): 
+
+class SeriesCollection(easytree.Tree):
     """
     Series collection
     """
+
     def append(self, data=None, **kwargs):
         if "legend" in kwargs:
             kwargs["showInLegend"] = kwargs.pop("legend")
+
         if "markers" in kwargs:
             kwargs["marker"] = kwargs.pop("markers")
-        if "marker" in kwargs: 
-            if isinstance(kwargs["marker"], bool): 
+
+        if "marker" in kwargs:
+            if isinstance(kwargs["marker"], bool):
                 kwargs["marker"] = {"enabled": kwargs["marker"]}
-            elif kwargs["marker"] is None: 
+            elif kwargs["marker"] is None:
                 kwargs["marker"] = {"enabled": False}
-        if "width" in kwargs: 
+
+        if "width" in kwargs:
             kwargs["lineWidth"] = kwargs.pop("width")
-        if "dash" in kwargs: 
+
+        if "dash" in kwargs:
             kwargs["dashStyle"] = kwargs.pop("dash")
-        if "dashstyle" in kwargs: 
+
+        if "dashstyle" in kwargs:
             kwargs["dashStyle"] = kwargs.pop("dashstyle")
-        if "linestyle" in kwargs: 
+
+        if "linestyle" in kwargs:
             kwargs["dashStyle"] = kwargs.pop("linestyle")
-        if "active" in kwargs: 
+
+        if "active" in kwargs:
             kwargs["visible"] = kwargs.pop("active")
-        if "enabled" in kwargs: 
+
+        if "enabled" in kwargs:
             kwargs["visible"] = kwargs.pop("enabled")
-        if "labels" in kwargs: 
+
+        if "labels" in kwargs:
             if isinstance(kwargs["labels"], bool):
-                kwargs["dataLabels"] = {"enabled":kwargs.pop("labels")}
+                kwargs["dataLabels"] = {"enabled": kwargs.pop("labels")}
             elif isinstance(kwargs["labels"], str):
-                kwargs["dataLabels"] = {"enabled":True, "format":kwargs.pop("labels")}
+                kwargs["dataLabels"] = {"enabled": True, "format": kwargs.pop("labels")}
             else:
                 kwargs["dataLabels"] = kwargs.pop("labels")
-        if "datalabels" in kwargs: 
+
+        if "datalabels" in kwargs:
             if isinstance(kwargs["datalabels"], bool):
-                kwargs["dataLabels"] = {"enabled":kwargs.pop("datalabels")}
+                kwargs["dataLabels"] = {"enabled": kwargs.pop("datalabels")}
             elif isinstance(kwargs["datalabels"], str):
-                kwargs["dataLabels"] = {"enabled":True, "format":kwargs.pop("datalabels")}
+                kwargs["dataLabels"] = {
+                    "enabled": True,
+                    "format": kwargs.pop("datalabels"),
+                }
             else:
                 kwargs["dataLabels"] = kwargs.pop("datalabels")
+
         if isinstance(data, (zip, range)):
             data = list(data)
+
         if isinstance(data, (list, tuple)):
             if "index" in kwargs:
                 index = kwargs.pop("index")
                 if all([isinstance(d, internals.DATETIME_TYPES) for d in index]):
-                    data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(index, data)]
+                    data = [
+                        internals.flatten(internals.timestamp(d), v)
+                        for (d, v) in zip(index, data)
+                    ]
                 else:
                     data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
+
         if isinstance(data, (pd.Series)):
             if "name" not in kwargs:
                 kwargs["name"] = data.name
             if "index" not in kwargs:
                 if all([isinstance(d, internals.DATETIME_TYPES) for d in data.index]):
-                    data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(data.index, data)]
+                    data = [
+                        internals.flatten(internals.timestamp(d), v)
+                        for (d, v) in zip(data.index, data)
+                    ]
                 else:
                     data = data.values
             else:
                 index = kwargs.pop("index")
                 if all([isinstance(d, internals.DATETIME_TYPES) for d in index]):
-                    data = [internals.flatten(internals.timestamp(d), v) for (d, v) in zip(index, data)]
+                    data = [
+                        internals.flatten(internals.timestamp(d), v)
+                        for (d, v) in zip(index, data)
+                    ]
                 else:
                     data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
             return super().append(data=data, **kwargs)
+
         if isinstance(data, pd.DataFrame):
             return self.append(data.values.tolist(), index=data.index, **kwargs)
         if isinstance(data, np.ndarray):
             return self.append(data.tolist(), **kwargs)
-        if data is None: 
+        if data is None:
             return super().append(kwargs)
         raise TypeError(f"Unexpected data type ({data.__class__})")
+
 
 class Chart(easytree.Tree):
     """
@@ -208,13 +237,14 @@ class Chart(easytree.Tree):
         #equivalent to chart.plotOptions.series.dataLabels.format = value
         chart.labels = "{value}%
     """
+
     def __init__(self):
         self.series = SeriesCollection([])
 
     def __setattr__(self, name, value):
-        if hasattr(self.__class__, f"set_{name}"): 
+        if hasattr(self.__class__, f"set_{name}"):
             getattr(self, f"set_{name}")(value)
-            return 
+            return
         return super().__setattr__(name, value)
 
     def set_type(self, value):
@@ -238,25 +268,25 @@ class Chart(easytree.Tree):
     def set_title(self, value):
         """
         Shortcut for self.title.text = value
-        """ 
+        """
         if isinstance(value, str):
             self.title.text = value
-            return 
+            return
         return super().__setattr__("title", value)
 
     def set_subtitle(self, value):
         """
         Shortcut for self.subtitle.text = value
-        """ 
+        """
         if isinstance(value, str):
             self.subtitle.text = value
-            return 
+            return
         return super().__setattr__("subtitle", value)
 
     def set_categories(self, value):
         """
         Shortcut for self.xAxis.categories = value
-        """ 
+        """
         self.xAxis.categories = value
 
     def set_zoom(self, value):
@@ -266,7 +296,7 @@ class Chart(easytree.Tree):
         if isinstance(value, str) and value.lower() in ["x", "y", "xy"]:
             self.chart.zoomType = value.lower()
             return
-        if isinstance(value, bool) and value == True: 
+        if isinstance(value, bool) and value == True:
             self.chart.zoomType = "xy"
             return
         raise ValueError(f"Unexpected value for zoom ({value})")
@@ -276,18 +306,18 @@ class Chart(easytree.Tree):
         Shortcut for tooltip
         """
         if isinstance(value, tuple):
-            for element in value: 
+            for element in value:
                 self.tooltip = element
             return
         if isinstance(value, bool):
             self.tooltip.enabled = value
-            return 
+            return
         if value == "shared":
             self.tooltip.shared = True
             return
         if isinstance(value, str):
             match = re.search(r"(^.+)?{(.+:?.+?)}(.+)?", value)
-            if match: 
+            if match:
                 if match.groups()[0] is not None:
                     self.tooltip.valuePrefix = match.groups()[0]
                 if ":" in match.groups()[1]:
@@ -302,7 +332,7 @@ class Chart(easytree.Tree):
     def set_decimals(self, value):
         if isinstance(value, int):
             self.tooltip.valueDecimals = value
-            return 
+            return
         raise ValueError(f"Unexpected value for tooltip decimals ({value})")
 
     def set_legend(self, value):
@@ -311,7 +341,7 @@ class Chart(easytree.Tree):
         """
         if isinstance(value, bool):
             self.legend.enabled = value
-            return 
+            return
         super().__setattr__("legend", value)
 
     def set_stacking(self, value):
@@ -320,7 +350,7 @@ class Chart(easytree.Tree):
         """
         if value not in [None, "normal", "percent", True]:
             raise ValueError(f"Unexpected stacking value ({value})")
-        if value is True: 
+        if value is True:
             self.plotOptions.series.stacking = "normal"
             return
         self.plotOptions.series.stacking = value
@@ -346,10 +376,10 @@ class Chart(easytree.Tree):
         """
         Set the default marker
         """
-        if isinstance(value, bool): 
+        if isinstance(value, bool):
             self.plotOptions.series.marker.enabled = value
             return
-        if value is None: 
+        if value is None:
             self.plotOptions.series.marker.enabled = False
             return
         self.plotOptions.series.marker = value
@@ -366,10 +396,10 @@ class Chart(easytree.Tree):
         Alias for chart.plotOptions.series.dataLabels
         """
         if isinstance(value, tuple):
-            for element in value: 
+            for element in value:
                 self.datalabels = element
             return
-        if isinstance(value, bool): 
+        if isinstance(value, bool):
             self.plotOptions.series.dataLabels.enabled = value
             return
         if isinstance(value, str):
@@ -413,7 +443,7 @@ class Chart(easytree.Tree):
 
             self.xAxis.plotLines.append(value=x, **kwargs)
         """
-        if "color" not in kwargs: 
+        if "color" not in kwargs:
             kwargs["color"] = "black"
         if self.xAxis.type == "datetime":
             if isinstance(x, internals.DATETIME_TYPES):
@@ -431,7 +461,7 @@ class Chart(easytree.Tree):
 
             self.yAxis.plotLines.append(value=x, **kwargs)
         """
-        if "color" not in kwargs: 
+        if "color" not in kwargs:
             kwargs["color"] = "black"
         self.yAxis.plotLines.append(value=y, **kwargs)
 
@@ -439,7 +469,7 @@ class Chart(easytree.Tree):
         """
         Adds a vertical band (mask) from xmin to xmax across the chart
         """
-        if "color" not in kwargs: 
+        if "color" not in kwargs:
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         if self.xAxis.type == "datetime":
             if isinstance(xmin, internals.DATETIME_TYPES):
@@ -450,16 +480,16 @@ class Chart(easytree.Tree):
                 xmax = internals.timestamp(xmax)
             elif isinstance(xmax, str):
                 xmax = internals.timestamp(pd.Timestamp(xmax))
-        self.xAxis.plotBands.append(**{**kwargs, "from":xmin, "to":xmax})
+        self.xAxis.plotBands.append(**{**kwargs, "from": xmin, "to": xmax})
         return self
 
     def hband(self, ymin, ymax, **kwargs):
         """
         Adds a horizontal band (mask) from ymin to ymax across the chart
         """
-        if "color" not in kwargs: 
+        if "color" not in kwargs:
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
-        self.yAxis.plotBands.append(**{**kwargs, "from":ymin, "to":ymax})
+        self.yAxis.plotBands.append(**{**kwargs, "from": ymin, "to": ymax})
         return self
 
     def regress(self, y, x, intercept=True, **kwargs):
@@ -471,10 +501,12 @@ class Chart(easytree.Tree):
             If scikit-learn is not already installed in your 
             environment, simply run :code:`pip install scikit-learn`
         """
-        def label(param, intercept, rsquared): 
+
+        def label(param, intercept, rsquared):
             """
             Generates the regression label
             """
+
             def f(number):
                 """
                 Format the string
@@ -483,11 +515,11 @@ class Chart(easytree.Tree):
                     return f"{number:.0f}"
                 if 10 < abs(number) <= 100:
                     return f"{number:.1f}"
-                if 0.1 < abs(number) <= 10: 
+                if 0.1 < abs(number) <= 10:
                     return f"{number:.2f}"
                 return f"{number:.2e}"
 
-            if intercept not in [None, False]: 
+            if intercept not in [None, False]:
                 return f"y = {f(intercept)} + {f(param)}x (r-squared={rsquared:.2f})"
             return f"y = {f(param)}x (r-squared={rsquared:.2f})"
 
@@ -495,31 +527,47 @@ class Chart(easytree.Tree):
             from sklearn.linear_model import LinearRegression
         except ImportError:
             raise ImportError("scikit-learn is a soft-dependency of easychart")
-            
+
         X = np.reshape(x, (-1, 1))
-        
+
         reg = LinearRegression(fit_intercept=intercept).fit(X, y)
-        
+
         if "name" not in kwargs:
-            kwargs["name"] = label(reg.coef_[0], intercept and reg.intercept_, reg.score(X, y))
-            
+            kwargs["name"] = label(
+                reg.coef_[0], intercept and reg.intercept_, reg.score(X, y)
+            )
+
         return self.plot(reg.predict(X), index=x, **kwargs)
 
     def show(self, width="100%", height="400px", theme=None):
         return Plot(self, width, height, theme)
-        
+
     def save(self, filename, indent=4):
         """
         Serializes and dumps the chart configuration to file
         """
-        with open(filename, "w") as file: 
-            simplejson.dump(self.serialize(), file, default=encoders.default, indent=indent)
+        with open(filename, "w") as file:
+            simplejson.dump(
+                self.serialize(), file, default=encoders.default, indent=indent
+            )
         return
 
-class Plot: 
+    def serialize(self):
+        """
+        Serializes the chart to a native python structure
+        """
+        return simplejson.loads(
+            simplejson.dumps(
+                super().serialize(), default=encoders.default, ignore_nan=True
+            )
+        )
+
+
+class Plot:
     """
     Chart container
     """
+
     def __init__(self, chart, width="100%", height="400px", theme=None):
         """
         Parameters
@@ -531,29 +579,35 @@ class Plot:
         theme : dict (optional)
             dictionary of global options (theme)
         """
-        self.chart  = chart
+        self.chart = chart
         if not isinstance(width, str) and not width.endswith("%"):
             width = f"{width}%"
-        self.width  = width
+        self.width = width
         if not isinstance(height, str) and not height.endswith("px"):
             height = f"{height}px"
         self.height = height
-        self.theme  = theme
+        self.theme = theme
 
     def __repr__(self):
         return f"<Plot height={self.height} width={self.width}>"
 
     def serialize(self):
-        if isinstance(self.chart, dict): 
-            return {"chart":self.chart,"width":self.width,"height":self.height}
+        if isinstance(self.chart, dict):
+            return {"chart": self.chart, "width": self.width, "height": self.height}
         if isinstance(self.chart, (Chart, easytree.Tree)):
-            return {"chart":self.chart.serialize(),"width":self.width, "height":self.height}
+            return {
+                "chart": self.chart.serialize(),
+                "width": self.width,
+                "height": self.height,
+            }
         raise NotImplementedError
 
-class Grid: 
+
+class Grid:
     """
     Grid of chart plots
     """
+
     def __init__(self, plots=None, theme=None):
         """
         Parameters
@@ -583,16 +637,16 @@ class Grid:
 
     @property
     def height(self):
-        #extract the height and width of each plot
+        # extract the height and width of each plot
         heights = [int(plot.height[:-2]) for plot in self.plots]
-        widths  = [int(plot.width[:-1]) for plot in self.plots]
-        #group the plots by row
+        widths = [int(plot.width[:-1]) for plot in self.plots]
+        # group the plots by row
         cumwidth, rows = 0, []
         for i, (height, width) in enumerate(zip(heights, widths)):
-            if i == 0: 
+            if i == 0:
                 rows.append([height])
             else:
-                if (cumwidth + width) <= 100: 
+                if (cumwidth + width) <= 100:
                     rows[-1].append(height)
                 else:
                     rows.append([height])

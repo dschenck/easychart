@@ -51,4 +51,3 @@ def test_pandas_series():
 def test_pandas_dataframe():
     df = pd.DataFrame([[1, 2, 3], [4, 5, 6]])
     assert encoders.default(df) == [[1, 2, 3], [4, 5, 6]]
-
