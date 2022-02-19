@@ -4,6 +4,7 @@ As found on the Highcharts `demo <https://www.highcharts.com/demo/box-plot>`_
 
 .. note::
     Requires the `highcharts-more` module:
+    
     :: 
         easychart.config.scripts.append("https://code.highcharts.com/8/modules/highcharts-more.js")
         easychart.config.save() 
