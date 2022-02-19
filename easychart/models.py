@@ -69,44 +69,50 @@ class SeriesCollection(easytree.Tree):
 
         if isinstance(data, (list, tuple)):
             if "index" in kwargs:
-                index = kwargs.pop("index")
-                if all([isinstance(d, internals.DATETIME_TYPES) for d in index]):
-                    data = [
-                        internals.flatten(internals.timestamp(d), v)
-                        for (d, v) in zip(index, data)
-                    ]
-                else:
-                    data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
+                data = [
+                    internals.flatten(i, v) for (i, v) in zip(kwargs.pop("index"), data)
+                ]
             return super().append(data=data, **kwargs)
 
-        if isinstance(data, (pd.Series)):
+        if isinstance(data, pd.Series):
             if "name" not in kwargs:
                 kwargs["name"] = data.name
+
             if "index" not in kwargs:
-                if all([isinstance(d, internals.DATETIME_TYPES) for d in data.index]):
-                    data = [
-                        internals.flatten(internals.timestamp(d), v)
-                        for (d, v) in zip(data.index, data)
-                    ]
-                else:
-                    data = data.values
+                data = [internals.flatten(d, v) for (d, v) in zip(data.index, data)]
+
+            elif kwargs["index"] is False:
+                kwargs.pop("index")
+                data = data.values.tolist()
+
             else:
-                index = kwargs.pop("index")
-                if all([isinstance(d, internals.DATETIME_TYPES) for d in index]):
-                    data = [
-                        internals.flatten(internals.timestamp(d), v)
-                        for (d, v) in zip(index, data)
-                    ]
-                else:
-                    data = [internals.flatten(i, v) for (i, v) in zip(index, data)]
+                data = [
+                    internals.flatten(i, v) for (i, v) in zip(kwargs.pop("index"), data)
+                ]
             return super().append(data=data, **kwargs)
 
         if isinstance(data, pd.DataFrame):
-            return self.append(data.values.tolist(), index=data.index, **kwargs)
+            if "index" not in kwargs:
+                data = data.reset_index().values.tolist()
+
+            elif kwargs["index"] is False:
+                kwargs.pop("index")
+                data = data.values.tolist()
+
+            else:
+                data = [
+                    internals.flatten(i, v)
+                    for (i, v) in zip(kwargs.pop("index"), data.values.tolist())
+                ]
+
+            return super().append(data=data, **kwargs)
+
         if isinstance(data, np.ndarray):
             return self.append(data.tolist(), **kwargs)
+
         if data is None:
             return super().append(kwargs)
+
         raise TypeError(f"Unexpected data type ({data.__class__})")
 
 
@@ -446,10 +452,8 @@ class Chart(easytree.Tree):
         if "color" not in kwargs:
             kwargs["color"] = "black"
         if self.xAxis.type == "datetime":
-            if isinstance(x, internals.DATETIME_TYPES):
-                x = internals.timestamp(x)
-            elif isinstance(x, str):
-                x = internals.timestamp(pd.Timestamp(x))
+            if isinstance(x, str):
+                x = pd.Timestamp(x)
         self.xAxis.plotLines.append(value=x, **kwargs)
 
     def hline(self, y, **kwargs):
@@ -472,14 +476,10 @@ class Chart(easytree.Tree):
         if "color" not in kwargs:
             kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         if self.xAxis.type == "datetime":
-            if isinstance(xmin, internals.DATETIME_TYPES):
-                xmin = internals.timestamp(xmin)
-            elif isinstance(xmin, str):
-                xmin = internals.timestamp(pd.Timestamp(xmin))
-            if isinstance(xmax, internals.DATETIME_TYPES):
-                xmax = internals.timestamp(xmax)
-            elif isinstance(xmax, str):
-                xmax = internals.timestamp(pd.Timestamp(xmax))
+            if isinstance(xmin, str):
+                xmin = pd.Timestamp(xmin)
+            if isinstance(xmax, str):
+                xmax = pd.Timestamp(xmax)
         self.xAxis.plotBands.append(**{**kwargs, "from": xmin, "to": xmax})
         return self
 
