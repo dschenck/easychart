@@ -2,8 +2,7 @@ Support for time
 =====================================================
 
 .. note::
-    New in version 0.1.12. Times (e.g. `datetime.time`) are converted to a UNIX timestamp when 
-    passed in the X-axis.
+    New in version 0.1.14. Datetime objects are converted to UNIX timestamps. Non-localized datetime objects are converted to UTC.
 
 .. raw:: html 
 
