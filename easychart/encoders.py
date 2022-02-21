@@ -42,7 +42,7 @@ def default(value):
             ).timestamp()
         )
 
-    # convert time to timestam
+    # convert time to timestamp
     if isinstance(value, datetime.time):
         return (
             1000
@@ -68,6 +68,8 @@ def default(value):
     if isinstance(
         value,
         (
+            range,
+            zip,
             collections.abc.KeysView,
             collections.abc.ValuesView,
             collections.abc.ItemsView,
