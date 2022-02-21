@@ -1,4 +1,6 @@
 import datetime
+import collections
+
 
 DATETIME_TYPES = (datetime.date, datetime.datetime, datetime.time, datetime.timedelta)
 
@@ -22,5 +24,8 @@ def timestamp(date):
 def flatten(*args):
     out = []
     for arg in args:
-        out.extend(arg) if isinstance(arg, (list, tuple)) else out.append(arg)
+        if isinstance(arg, collections.abc.Iterable) and not isinstance(arg, str):
+            out.extend(arg)
+        else:
+            out.append(arg)
     return out
