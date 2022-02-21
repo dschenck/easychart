@@ -2,6 +2,7 @@ import easytree
 import pandas as pd
 import numpy as np
 import datetime
+import collections
 import simplejson
 import re
 
@@ -64,56 +65,24 @@ class SeriesCollection(easytree.Tree):
             else:
                 kwargs["dataLabels"] = kwargs.pop("datalabels")
 
-        if isinstance(data, (zip, range)):
-            data = list(data)
-
-        if isinstance(data, (list, tuple)):
-            if "index" in kwargs:
-                data = [
-                    internals.flatten(i, v) for (i, v) in zip(kwargs.pop("index"), data)
-                ]
-            return super().append(data=data, **kwargs)
-
         if isinstance(data, pd.Series):
             if "name" not in kwargs:
                 kwargs["name"] = data.name
 
-            if "index" not in kwargs:
-                data = [internals.flatten(d, v) for (d, v) in zip(data.index, data)]
-
-            elif kwargs["index"] is False:
-                kwargs.pop("index")
+        if isinstance(data, (pd.Series, pd.DataFrame)):
+            if "index" in kwargs and isinstance(
+                kwargs["index"], collections.abc.Iterable
+            ):
                 data = data.values.tolist()
-
             else:
-                data = [
-                    internals.flatten(i, v) for (i, v) in zip(kwargs.pop("index"), data)
-                ]
-            return super().append(data=data, **kwargs)
-
-        if isinstance(data, pd.DataFrame):
-            if "index" not in kwargs:
                 data = data.reset_index().values.tolist()
 
-            elif kwargs["index"] is False:
-                kwargs.pop("index")
-                data = data.values.tolist()
+        if "index" in kwargs and isinstance(kwargs["index"], collections.abc.Iterable):
+            data = [
+                internals.flatten(i, v) for (i, v) in zip(kwargs.pop("index"), data)
+            ]
 
-            else:
-                data = [
-                    internals.flatten(i, v)
-                    for (i, v) in zip(kwargs.pop("index"), data.values.tolist())
-                ]
-
-            return super().append(data=data, **kwargs)
-
-        if isinstance(data, np.ndarray):
-            return self.append(data.tolist(), **kwargs)
-
-        if data is None:
-            return super().append(kwargs)
-
-        raise TypeError(f"Unexpected data type ({data.__class__})")
+        return super().append(data=data, **kwargs)
 
 
 class Chart(easytree.Tree):
