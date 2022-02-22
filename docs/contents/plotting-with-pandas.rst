@@ -1,7 +1,7 @@
 Plotting with Pandas
 =========================================
 
-By default the index of :code:`pd.Series` and :code:`pd.DataFrame` objects as the x-axis. In the below example, the x coordinates range from 10 to 30.
+By default values from the index of :code:`pd.Series` and :code:`pd.DataFrame` objects are used as the x coordinates. In the below example, the x coordinates range from 10 to 30.
 
 .. raw:: html 
 
