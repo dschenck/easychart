@@ -323,7 +323,7 @@ class Chart(easytree.Tree):
         """
         Set the stacking plot option
         """
-        if value not in [None, "normal", "percent", True]:
+        if value not in [None, "normal", "percent", True, False]:
             raise ValueError(f"Unexpected stacking value ({value})")
         if value is True:
             self.plotOptions.series.stacking = "normal"
