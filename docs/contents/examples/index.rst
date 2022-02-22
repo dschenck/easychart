@@ -14,6 +14,7 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    example-4 
    example-23
    example-5 
+   example-34
    example-7 
    example-13
    example-6 

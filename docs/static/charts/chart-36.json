@@ -1,0 +1,97 @@
+{
+    "series": [
+        {
+            "data": [
+                [
+                    "Apples",
+                    5
+                ],
+                [
+                    "Oranges",
+                    3
+                ],
+                [
+                    "Pears",
+                    4
+                ],
+                [
+                    "Grapes",
+                    7
+                ],
+                [
+                    "Bananas",
+                    2
+                ]
+            ],
+            "name": "John"
+        },
+        {
+            "data": [
+                [
+                    "Apples",
+                    2
+                ],
+                [
+                    "Oranges",
+                    2
+                ],
+                [
+                    "Pears",
+                    3
+                ],
+                [
+                    "Grapes",
+                    2
+                ],
+                [
+                    "Bananas",
+                    1
+                ]
+            ],
+            "name": "Jane"
+        },
+        {
+            "data": [
+                [
+                    "Apples",
+                    3
+                ],
+                [
+                    "Oranges",
+                    4
+                ],
+                [
+                    "Pears",
+                    4
+                ],
+                [
+                    "Grapes",
+                    2
+                ],
+                [
+                    "Bananas",
+                    5
+                ]
+            ],
+            "name": "Joe"
+        }
+    ],
+    "chart": {
+        "type": "bar",
+        "zoomType": "x"
+    },
+    "plotOptions": {
+        "series": {
+            "stacking": "normal"
+        }
+    },
+    "xAxis": {
+        "categories": [
+            "Apples",
+            "Oranges",
+            "Pears",
+            "Grapes",
+            "Bananas"
+        ]
+    }
+}

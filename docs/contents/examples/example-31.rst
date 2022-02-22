@@ -9,6 +9,7 @@ Semi-circle chart
 .. literalinclude:: /_misc/examples/chart-31.py
 
 As donut 
+--------
 
 .. raw:: html 
 
