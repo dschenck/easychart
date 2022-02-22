@@ -28,7 +28,7 @@ data = [
     ["Sweden", 73, 82],
     ["Hungary", 68, 76],
     ["Italy", 69, 83],
-    ["UK", 71, 81]
+    ["UK", 71, 81],
 ]
 
 chart = easychart.new(type="dumbbell")
@@ -37,5 +37,5 @@ chart.subtitle = "1960 vs 2018"
 chart.chart.inverted = True
 chart.xAxis.type = "category"
 chart.yAxis.title.text = "Life expectancy (years)"
-chart.plot(data, keys=["name","low","high"], legend=False)
+chart.plot(data, keys=["name", "low", "high"], legend=False)
 chart

@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="easychart",
-    version="0.1.13",
+    version="0.1.14",
     author="david.schenck@outlook.com",
     author_email="david.schenck@outlook.com",
     description="Highcharts meets python in your Jupyter notebook",
@@ -18,6 +18,6 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    install_requires=["pandas","numpy","easytree","simplejson","jinja2"],
-    include_package_data=True
+    install_requires=["pandas", "numpy", "easytree", "simplejson", "jinja2"],
+    include_package_data=True,
 )

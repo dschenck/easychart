@@ -15,16 +15,99 @@
     <div id="root" style="display:flex;flex-wrap:wrap;width:100%">
     </div>
     <script>
+        var createElement = function(tagname, props, children){
+            const element = document.createElement(tagname)
+
+            if(props){
+                for(var key in props){
+                    if(typeof props[key]  === 'object'){
+                        props[key] = Object.entries(props[key]).map(function(value){
+                            return `${value[0]}:${value[1]};`
+                        }).reduce((prev, curr) => prev + curr)
+                    }
+                    element.setAttribute(key, props[key]);
+                }
+            }
+            if(children){
+                if(Array.isArray(children)){
+                    for(let i = 0; i < children.length; i++){
+                        if(typeof children[i] == "string"){
+                            element.innerHTML += children[i];
+                        }
+                        else{
+                            element.appendChild(children[i])
+                        }
+                    }
+                }
+                else{
+                    if(typeof children == "string"){
+                        element.innerHTML += children;
+                    }
+                    else{
+                        element.appendChild(children)
+                    }
+                }
+            }
+            return element
+        }
+
         document.addEventListener('DOMContentLoaded', function () {
             Highcharts.setOptions({{ theme }});
 
             {{ plots }}.forEach(function (plot, i) {
-                var container = document.createElement("div")
-                container.setAttribute("id", "container-" + i)
-                container.style.width = plot.width
-                container.style.height = plot.height
+                var container = createElement(
+                    "div", 
+                    {"id":"container-" + i, "style":"width:" +plot.width +";height:" + plot.height + ";"}
+                ); document.createElement("div")
+                
                 document.getElementById("root").appendChild(container)
-                Highcharts.chart("container-" + i, plot.chart)
+                
+                try{
+                    Highcharts.chart("container-" + i, plot.chart); 
+                }
+                catch(error){
+                    document.getElementById("root").removeChild(container);
+                    
+                    var container = createElement(
+                        "div",
+                        {
+                            "style":{
+                                "background-color":"rgba(255, 82, 82, 0.1)", 
+                                "border":"1px solid rgba(255, 82, 82, 1)",
+                                "box-sizing":"border-box",
+                                "padding":"8px",
+                                "width":"100%"
+
+                            }
+                        },
+                        [
+                            createElement(
+                                "p", 
+                                {"style":"font-family:sans-serif;margin:0;font-size:0.9rem;border-bottom:1px dashed red;"}, 
+                                ["There was an error rendering your chart. Check the error message below and your chart definition"]
+                            ),
+                                createElement(
+                                "p", 
+                                {"style":"font-family:sans-serif;font-family:Monospace;"}, 
+                                [error.message]
+                            ),
+                                createElement("p", {"style":"font-family:sans-serif;font-size:0.9rem;border-bottom:1px dashed red;"}, [
+                                "Chart definition"
+                            ]),
+                            createElement("code", null, [
+                                createElement("pre", null, JSON.stringify(plot, null, 2))
+                            ]),
+                            createElement(
+                                "p",
+                                {"style":"font-family:sans-serif;margin:0;font-size:0.9rem;border-bottom:1px dashed red;"}, 
+                                "If you believe this a bug, please report it on the easychart github page"
+                            )
+                        ]
+                    )
+                    document.getElementById("root").appendChild(
+                        container
+                    )
+                }  
             })
         });
     </script>

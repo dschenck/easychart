@@ -2,11 +2,11 @@ import easychart
 
 chart = easychart.new("column")
 chart.stacked = True
-chart.title = 'Total fruit consumption, grouped by gender'
-chart.categories = ['Apples', 'Oranges', 'Pears', 'Grapes', 'Bananas']
-with chart.yAxis as axis: 
+chart.title = "Total fruit consumption, grouped by gender"
+chart.categories = ["Apples", "Oranges", "Pears", "Grapes", "Bananas"]
+with chart.yAxis as axis:
     axis.allowDecimals = False
-    axis.min = 0 
+    axis.min = 0
     axis.title.text = "Number of fruits"
 chart.tooltip = "{value:.0f}"
 chart.plot([5, 3, 4, 7, 2], name="John", stack="male")
