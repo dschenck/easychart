@@ -5,7 +5,7 @@ By default values from the index of :code:`pd.Series` and :code:`pd.DataFrame` o
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-38.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-38.json?v=1"></div>
 
 
 .. literalinclude:: /_misc/examples/chart-38.py
@@ -15,7 +15,7 @@ You can override the index of the data by explicitly passing an :code:`index` ar
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-39.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-39.json?v=1"></div>
 
 
 .. literalinclude:: /_misc/examples/chart-39.py
@@ -31,7 +31,7 @@ In the below example, we drop the index, and the x coordinates default to the ra
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-40.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-40.json?v=1"></div>
 
 
 .. literalinclude:: /_misc/examples/chart-40.py
