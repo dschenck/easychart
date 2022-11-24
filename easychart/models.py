@@ -508,7 +508,7 @@ class Chart(easytree.Tree):
 
         return self.plot(reg.predict(X), index=x, **kwargs)
 
-    def show(self, width="100%", height="400px", theme=None):
+    def show(self, width=None, height=None, theme=None):
         return Plot(self, width, height, theme)
 
     def save(self, filename, indent=4):
@@ -537,7 +537,7 @@ class Plot:
     Chart container
     """
 
-    def __init__(self, chart, width="100%", height="400px", theme=None):
+    def __init__(self, chart, width=None, height=None, theme=None):
         """
         Parameters
         ------------
@@ -549,12 +549,28 @@ class Plot:
             dictionary of global options (theme)
         """
         self.chart = chart
-        if not isinstance(width, str) and not width.endswith("%"):
-            width = f"{width}%"
-        self.width = width
-        if not isinstance(height, str) and not height.endswith("px"):
+
+        if height is None:
+            if "chart" in chart and "height" in chart["chart"]:
+                height = chart["chart"]["height"]
+            else:
+                height = "400px"
+
+        if isinstance(height, (float, int)):
             height = f"{height}px"
+
+        if width is None:
+            if "chart" in chart and "width" in chart["chart"]:
+                width = chart["chart"].pop("width")
+            else:
+                width = "100%"
+
+        if isinstance(width, (float, int)):
+            height = f"{width}%"
+
         self.height = height
+        self.width = width
+
         self.theme = theme
 
     def __repr__(self):
@@ -589,7 +605,7 @@ class Grid:
         self.plots = plots or []
         self.theme = theme
 
-    def add(self, chart, width="100%", height="400px"):
+    def add(self, chart, width=None, height=None):
         """
         Adds a chart (or plot) to the grid
 
