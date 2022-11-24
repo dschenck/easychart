@@ -26,12 +26,12 @@ class Config:
         return {
             "stylesheets": [],
             "scripts": [
-                "https://code.highcharts.com/8/highcharts.js",
-                "https://code.highcharts.com/8/highcharts-more.js",
-                "https://code.highcharts.com/8/modules/heatmap.js",
-                "https://code.highcharts.com/8/modules/exporting.js",
-                "https://code.highcharts.com/8/modules/offline-exporting.js",
-                "https://code.highcharts.com/8/modules/export-data.js",
+                "https://code.highcharts.com/10/highcharts.js",
+                "https://code.highcharts.com/10/highcharts-more.js",
+                "https://code.highcharts.com/10/modules/heatmap.js",
+                "https://code.highcharts.com/10/modules/exporting.js",
+                "https://code.highcharts.com/10/modules/offline-exporting.js",
+                "https://code.highcharts.com/10/modules/export-data.js",
             ],
             "theme": "easychart",
         }
