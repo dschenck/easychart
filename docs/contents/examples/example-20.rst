@@ -8,3 +8,12 @@ Inspired from this Highcharts `demo <https://www.highcharts.com/demo/column-stac
 
 
 .. literalinclude:: /_misc/examples/chart-20.py
+
+With various label options enabled
+
+.. raw:: html 
+
+    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-44.json"></div>
+
+
+.. literalinclude:: /_misc/examples/chart-44.py
