@@ -1,0 +1,126 @@
+{
+    "series": [
+        {
+            "data": [
+                [
+                    "MY14/15",
+                    19661
+                ],
+                [
+                    "MY15/16",
+                    16595
+                ],
+                [
+                    "MY16/17",
+                    21334
+                ],
+                [
+                    "MY17/18",
+                    18036
+                ],
+                [
+                    "MY18/19",
+                    30321
+                ],
+                [
+                    "MY19/20",
+                    28929
+                ],
+                [
+                    "MY20/21",
+                    23864
+                ],
+                [
+                    "MY21/22",
+                    27000
+                ],
+                [
+                    "MY22/23",
+                    15500
+                ]
+            ],
+            "name": "corn"
+        },
+        {
+            "data": [
+                [
+                    "MY14/15",
+                    11269
+                ],
+                [
+                    "MY15/16",
+                    17431
+                ],
+                [
+                    "MY16/17",
+                    18107
+                ],
+                [
+                    "MY17/18",
+                    17775
+                ],
+                [
+                    "MY18/19",
+                    16019
+                ],
+                [
+                    "MY19/20",
+                    21016
+                ],
+                [
+                    "MY20/21",
+                    16851
+                ],
+                [
+                    "MY21/22",
+                    18844
+                ],
+                [
+                    "MY22/23",
+                    11000
+                ]
+            ],
+            "name": "wheat"
+        }
+    ],
+    "chart": {
+        "type": "column",
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "Ukraine grain exports, by marketing year (MY)"
+    },
+    "subtitle": {
+        "text": "thousand metric tons"
+    },
+    "plotOptions": {
+        "series": {
+            "stacking": "normal"
+        }
+    },
+    "xAxis": {
+        "categories": [
+            "MY14/15",
+            "MY15/16",
+            "MY16/17",
+            "MY17/18",
+            "MY18/19",
+            "MY19/20",
+            "MY20/21",
+            "MY21/22",
+            "MY22/23"
+        ]
+    },
+    "caption": {
+        "text": "Source: USDA FAS, accessed 30 November 2022"
+    },
+    "legend": {
+        "align": "right",
+        "layout": "vertical",
+        "verticalAlign": "middle",
+        "itemMarginTop": 15,
+        "title": {
+            "text": "Legend"
+        }
+    }
+}
