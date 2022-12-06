@@ -512,6 +512,107 @@ class Chart(easytree.Tree):
 
         return self.plot(reg.predict(X), index=x, **kwargs)
 
+    def annotate(
+        self,
+        text,
+        *,
+        x=0,
+        y=0,
+        xOffset=None,
+        yOffset=None,
+        point=None,
+        align=None,
+        verticalAlign=None,
+        shape=None,
+        padding=None,
+        distance=None,
+        backgroundColor=None,
+        borderColor=None,
+        borderRadius=None,
+        borderWidth=None,
+        useHTML=None,
+        size=None,
+        color=None,
+        xAxis=0,
+        yAxis=0,
+        width=None,
+    ):
+        """
+        Add an annotation to a chart
+
+        Parameters
+        ----------
+        text : str
+            The annotation label text
+        x : float
+            The x position of the point to which the annotation refers to 
+        y : float
+            The y position of the point to which the annotation refers to
+        xAxis : int
+            The x-Axis in which the x coordinate is defined
+        yAxis : int
+            The y-Axis in which the y coordinate is defined
+        xOffset : float
+            The horizontal offset of the annotation relative to the point (in pixels)
+        yOffset : float
+            The vertical offset of the annotation relative to the point (in pixels)
+        point : str
+            The id of the point to which the annotation refers to (if x and y not specified)
+        align : str (one of "center", "left", "right")
+            The horizontal alignment of the annotation relative to the point
+        verticalAlign: str (one of "bottom", "middle", "top")
+            The vertical alignment of the annotation relative to the point
+        shape : str (one of "callout", "connector", "rect", "circle", "diamond", "triangle")
+            The shape of the annotation
+        padding : int
+            The padding within the box (assuming border or background is set)
+        distance : float
+            The offset of the annotation relative to the point (in lieu of xOffset and yOffset)
+        size : int
+            The font size
+        color : str
+            The font color
+        
+        Note
+        ----
+        For more details on annotations, check out the `Highcharts API documentation <https://api.highcharts.com/highcharts/annotations.labelOptions>`_
+        """
+
+        def drop_none_values(mapping):
+            """
+            Filters out None values from a dictionary
+            """
+            return {k: v for k, v in mapping.items() if v is not None}
+
+        with self.annotations.append({}) as annotation:
+            annotation.labels.append(
+                {
+                    "text": text,
+                    "point": {"x": x, "y": y, "xAxis": xAxis, "yAxis": yAxis}
+                    if point is None
+                    else point,
+                    **drop_none_values(
+                        {
+                            "align": align,
+                            "verticalAlign": verticalAlign,
+                            "shape": shape,
+                            "padding": padding,
+                            "backgroundColor": backgroundColor,
+                            "borderColor": borderColor,
+                            "borderRadius": borderRadius,
+                            "borderWidth": borderWidth,
+                            "useHTML": useHTML,
+                            "style": drop_none_values(
+                                {"fontSize": size, "color": color, "width": width}
+                            ),
+                        }
+                    ),
+                }
+            )
+            annotation.labelOptions = drop_none_values(
+                {"x": xOffset, "y": yOffset, "distance": distance,}
+            )
+
     def show(self, width=None, height=None, theme=None):
         return Plot(self, width, height, theme)
 
