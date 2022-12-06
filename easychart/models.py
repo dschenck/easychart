@@ -536,6 +536,9 @@ class Chart(easytree.Tree):
         xAxis=0,
         yAxis=0,
         width=None,
+        draggable="xy",
+        zIndex=None,
+        visible=None,
     ):
         """
         Add an annotation to a chart
@@ -579,41 +582,139 @@ class Chart(easytree.Tree):
         ----
         For more details on annotations, check out the `Highcharts API documentation <https://api.highcharts.com/highcharts/annotations.labelOptions>`_
         """
-
-        def drop_none_values(mapping):
-            """
-            Filters out None values from a dictionary
-            """
-            return {k: v for k, v in mapping.items() if v is not None}
+        if point is None:
+            point = {"x": x, "y": y, "xAxis": xAxis, "yAxis": yAxis}
+        elif isinstance(point, tuple):
+            point = dict(zip(["x", "y", "xAxis", "yAxis"], [*point, 0, 0, 0, 0]))
+        elif isinstance(point, dict):
+            point = {"xAxis": xAxis, "yAxis": yAxis, **point}
 
         with self.annotations.append({}) as annotation:
             annotation.labels.append(
-                {
-                    "text": text,
-                    "point": {"x": x, "y": y, "xAxis": xAxis, "yAxis": yAxis}
-                    if point is None
-                    else point,
-                    **drop_none_values(
-                        {
-                            "align": align,
-                            "verticalAlign": verticalAlign,
-                            "shape": shape,
-                            "padding": padding,
-                            "backgroundColor": backgroundColor,
-                            "borderColor": borderColor,
-                            "borderRadius": borderRadius,
-                            "borderWidth": borderWidth,
-                            "useHTML": useHTML,
-                            "style": drop_none_values(
-                                {"fontSize": size, "color": color, "width": width}
-                            ),
-                        }
-                    ),
-                }
+                internals.dictfilter(
+                    {
+                        "text": text,
+                        "point": point,
+                        "x": xOffset,
+                        "y": -yOffset if yOffset is not None else yOffset,
+                        "align": align,
+                        "verticalAlign": verticalAlign,
+                        "shape": shape,
+                        "padding": padding,
+                        "backgroundColor": backgroundColor,
+                        "borderColor": borderColor,
+                        "borderRadius": borderRadius,
+                        "borderWidth": borderWidth,
+                        "useHTML": useHTML,
+                        "distance": distance,
+                        "style": internals.dictfilter(
+                            {"fontSize": size, "color": color, "width": width},
+                            lambda k, v: v is not None,
+                        ),
+                    },
+                    lambda k, v: v is not None,
+                )
             )
-            annotation.labelOptions = drop_none_values(
-                {"x": xOffset, "y": yOffset, "distance": distance,}
+
+            annotation.labelOptions = internals.dictfilter(
+                {"visible": visible, "draggable": draggable, "zIndex": zIndex},
+                lambda k, v: v is not None,
             )
+
+    def draw(
+        self,
+        shape,
+        *,
+        x=None,
+        y=None,
+        xAxis=0,
+        yAxis=0,
+        r=None,
+        width=None,
+        height=None,
+        xOffset=None,
+        yOffset=None,
+        point=None,
+        points=None,
+        draggable="xy",
+        visible=None,
+        zIndex=None,
+        **kwargs,
+    ):
+        # easychart feature: drawing line segments
+        if shape == "line":
+            shape = "path"
+
+            if "fill" not in kwargs:
+                kwargs["fill"] = False
+
+            if "color" in kwargs:
+                kwargs["stroke"] = kwargs.pop("color")
+
+            if "width":
+                kwargs["strokeWidth"], width = width, None
+
+            if "linestyle" in kwargs:
+                kwargs["dashStyle"] = kwargs.pop("linestyle")
+
+            if "style" in kwargs:
+                kwargs["dashStyle"] = kwargs.pop("style")
+
+        # easychart feature: drawing boxes (rectangles defined in the x/y space)
+        if shape == "box":
+            shape = "path"
+            points = [
+                (x, y),
+                (x + width, y),
+                (x + width, y + height),
+                (x, y + height),
+                (x, y),
+            ]
+
+        if shape == "square" or shape == "rectangle":
+            shape = "rect"
+
+        if "color" in kwargs:
+            kwargs["fill"] = kwargs.pop("color")
+
+        # inject default axes by default
+        if points is not None:
+            for i, p in enumerate(points):
+                if isinstance(p, (tuple)):
+                    points[i] = dict(
+                        zip(["x", "y", "xAxis", "yAxis"], [*p, 0, 0, 0, 0])
+                    )
+
+                elif isinstance(p, dict):
+                    points[i] = {"yAxis": yAxis, "xAxis": xAxis, **p}
+
+        with self.annotations.append({}) as annotation:
+            annotation.shapes.append(
+                internals.dictfilter(
+                    {
+                        "type": shape,
+                        "point": point
+                        or (
+                            None
+                            if (x == y == None)
+                            else {"x": x, "y": y, "xAxis": xAxis, "yAxis": yAxis}
+                        ),
+                        "x": xOffset,
+                        "y": -yOffset if yOffset is not None else yOffset,
+                        "points": points,
+                        "r": r,
+                        "height": height,
+                        "width": width,
+                        **kwargs,
+                    },
+                    lambda k, v: v is not None,
+                )
+            )
+            annotation.shapeOptions = internals.dictfilter(
+                {"draggable": draggable, "zIndex": zIndex, "visible": visible},
+                lambda k, v: v is not None,
+            )
+        pass
 
     def show(self, width=None, height=None, theme=None):
         return Plot(self, width, height, theme)

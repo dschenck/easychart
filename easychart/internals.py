@@ -9,3 +9,12 @@ def flatten(*args):
         else:
             out.append(arg)
     return out
+
+
+def dictfilter(mapping, func):
+    """
+    Filters out values from a dictionary using a callback 
+    function
+    """
+    return {k: v for k, v in mapping.items() if func(k, v)}
+
