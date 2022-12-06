@@ -556,6 +556,8 @@ class Chart(easytree.Tree):
             The horizontal offset of the annotation relative to the point (in pixels)
         yOffset : float
             The vertical offset of the annotation relative to the point (in pixels)
+        width : int
+            The width (in pixels) of the annotation
         point : str
             The id of the point to which the annotation refers to (if x and y not specified)
         align : str (one of "center", "left", "right")
