@@ -4,39 +4,35 @@ Modules and extensions
 Some chart types (e.g. Sankey) or features (e.g. `exporting <https://www.highcharts.com/docs/export-module/export-module-overview>`_) require additional javascript modules to render in your Jupyter notebook. 
 
 .. note::
-    Check the Highcharts API documentation to see which chart types have dependencies. For example, the `venn <https://api.highcharts.com/highcharts/series.venn>`_ chart type requires the venn module.
+    By default, the following modules are loaded
+       - https://code.highcharts.com/highcharts.js (required)
+       - https://code.highcharts.com/highcharts-more.js
+       - https://code.highcharts.com/modules/heatmap.js
+       - https://code.highcharts.com/modules/exporting.js
+       - https://code.highcharts.com/modules/offline-exporting.js
+       - https://code.highcharts.com/modules/export-data.js
+       - https://code.highcharts.com/modules/annotations.js
+       - https://code.highcharts.com/modules/accessibility.js
 
-To import these module dependencies, add the required modules scripts to the config. Here are a few examples: 
+The full list of available modules is available from the `Highcharts CDN <https://code.highcharts.com/>`_ page. 
+
+.. hint::
+    Check the `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ to see which chart types have dependencies. For example, the `venn <https://api.highcharts.com/highcharts/series.venn>`_ chart type requires the venn module.
+
+To load an additional module in your Jupyter notebook, add the required modules script path to the config. Here are a few examples: 
 ::
 
     import easychart
 
-    #Sankey module
-    #https://api.highcharts.com/highcharts/series.sankey
-    easychart.config.scripts.append("https://code.highcharts.com/8/modules/sankey.js")
+    # Sankey module
+    # https://api.highcharts.com/highcharts/series.sankey
+    easychart.config.scripts.append("https://code.highcharts.com/modules/sankey.js")
 
-    #exporting module
-    #https://api.highcharts.com/highcharts/exporting
-    easychart.config.scripts.append("https://code.highcharts.com/8/modules/exporting.js")
-
-    #annotations module
-    #https://api.highcharts.com/highcharts/annotations
-    easychart.config.scripts.append("https://code.highcharts.com/8/modules/annotations.js")
-
-    #heatmap module
-    #https://api.highcharts.com/highcharts/series.heatmap
-    easychart.config.scripts.append("https://code.highcharts.com/8/modules/heatmap.js")
-
-    #streamgraph module
-    #https://api.highcharts.com/highcharts/series.streamgraph
-    easychart.config.scripts.append("https://code.highcharts.com/modules/streamgraph.js")
-
-    #bellcurve module
-    #https://api.highcharts.com/highcharts/series.bellcurve
-    easychart.config.scripts.append("https://code.highcharts.com/modules/bellcurve.js")
-
-    #save changes if you want these imports to persist in your next session
+    # save changes if you want these imports to persist in your next session
     easychart.config.save()
+
+.. attention::
+    Do not mix versioned modules (e.g. https://code.highcharts.com/8/highcharts.js) with unversioned modules (https://code.highcharts.com/modules/heatmap.js) as this may result in conflicts.
 
 To see which modules are already imported in your config, simply print the configuration to your console: 
 :: 
