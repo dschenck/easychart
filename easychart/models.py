@@ -70,10 +70,14 @@ class SeriesCollection(easytree.Tree):
                 kwargs["name"] = data.name
 
         if isinstance(data, (pd.Series, pd.DataFrame)):
-            if "index" in kwargs and isinstance(
-                kwargs["index"], collections.abc.Iterable
-            ):
-                data = data.values.tolist()
+            if "index" in kwargs:
+                if isinstance(kwargs["index"], collections.abc.Iterable):
+                    data = data.values.tolist()
+                elif isinstance(kwargs["index"], bool):
+                    if kwargs["index"] == False:
+                        data = data.values.tolist()
+                    if kwargs["index"] == True:
+                        data = data.reset_index().values.tolist()
             else:
                 data = data.reset_index().values.tolist()
 
