@@ -537,6 +537,7 @@ class Chart(easytree.Tree):
         xAxis=0,
         yAxis=0,
         width=None,
+        allowOverlap=True,
         draggable="xy",
         zIndex=None,
         visible=None,
@@ -608,6 +609,7 @@ class Chart(easytree.Tree):
                         "borderWidth": borderWidth,
                         "useHTML": useHTML,
                         "distance": distance,
+                        "allowOverlap": allowOverlap,
                         "style": internals.dictfilter(
                             {"fontSize": size, "color": color, "width": width},
                             lambda k, v: v is not None,
