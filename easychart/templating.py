@@ -63,8 +63,6 @@ def render(grid):
         stylesheets=easychart.config.stylesheets,
         theme=simplejson.dumps(grid.theme),
         plots=simplejson.dumps(
-            [plot.serialize() for plot in grid.plots],
-            default=easychart.encoders.default,
-            ignore_nan=True,
+            grid.serialize(), default=easychart.encoders.default, ignore_nan=True,
         ),
     )

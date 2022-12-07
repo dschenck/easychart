@@ -8,6 +8,7 @@ import re
 
 import easychart.encoders as encoders
 import easychart.internals as internals
+import easychart.config
 
 
 class SeriesCollection(easytree.Tree):
@@ -760,24 +761,22 @@ class Plot:
 
         if height is None:
             if "chart" in chart and "height" in chart["chart"]:
-                height = chart["chart"]["height"]
+                self.height = internals.Size(chart["chart"]["height"])
             else:
-                height = "400px"
-
-        if isinstance(height, (float, int)):
-            height = f"{height}px"
+                self.height = internals.Size("400px")
+        else:
+            self.height = internals.Size(height)
 
         if width is None:
             if "chart" in chart and "width" in chart["chart"]:
-                width = chart["chart"].pop("width")
+                self.width = internals.Size(chart["chart"].pop("width"))
             else:
-                width = "100%"
+                self.width = internals.Size("100%")
+        else:
+            if "chart" in chart and "width" in chart["chart"]:
+                chart["chart"].pop("width")
 
-        if isinstance(width, (float, int)):
-            height = f"{width}%"
-
-        self.height = height
-        self.width = width
+            self.width = internals.Size(width)
 
         self.theme = theme
 
@@ -785,15 +784,11 @@ class Plot:
         return f"<Plot height={self.height} width={self.width}>"
 
     def serialize(self):
-        if isinstance(self.chart, dict):
-            return {"chart": self.chart, "width": self.width, "height": self.height}
-        if isinstance(self.chart, (Chart, easytree.Tree)):
-            return {
-                "chart": self.chart.serialize(),
-                "width": self.width,
-                "height": self.height,
-            }
-        raise NotImplementedError
+        return {
+            "chart": self.chart,
+            "width": self.width,
+            "height": self.height,
+        }
 
 
 class Grid:
@@ -801,7 +796,7 @@ class Grid:
     Grid of chart plots
     """
 
-    def __init__(self, plots=None, theme=None):
+    def __init__(self, plots=None, theme=None, width="100%", responsive=None):
         """
         Parameters
         ------------------------
@@ -810,8 +805,18 @@ class Grid:
         theme : dict (optional)
             dictionary of global options (theme)
         """
-        self.plots = plots or []
+        self.plots = (
+            [p if isinstance(p, Plot) else Plot(p) for p in plots]
+            if plots is not None
+            else []
+        )
         self.theme = theme
+
+        self.width = internals.Size(width).resolve(
+            easychart.config.config.rendering.container.width
+        )
+
+        self.responsive = responsive
 
     def add(self, chart, width=None, height=None):
         """
@@ -831,18 +836,39 @@ class Grid:
     @property
     def height(self):
         # extract the height and width of each plot
-        heights = [int(plot.height[:-2]) for plot in self.plots]
-        widths = [int(plot.width[:-1]) for plot in self.plots]
-        # group the plots by row
-        cumwidth, rows = 0, []
-        for i, (height, width) in enumerate(zip(heights, widths)):
-            if i == 0:
+        dimensions = [
+            (
+                internals.Size(plot.height).resolve(self.width),
+                internals.Size(plot.width).resolve(self.width),
+            )
+            for plot in self.plots
+        ]
+
+        cumwidth, rows = 0, [[]]
+        for (height, width) in dimensions:
+            # if there are less than 0 pixels left, put on a new row
+            if (self.width - (cumwidth + width)) < 0:
                 rows.append([height])
+                cumwidth = width
             else:
-                if (cumwidth + width) <= 100:
-                    rows[-1].append(height)
-                else:
-                    rows.append([height])
-                    cumwidth = 0
-            cumwidth += width
-        return f"{sum([max(row) for row in rows])}px"
+                rows[-1].append(height)
+                cumwidth += width
+
+        return f"{sum([max(row) if len(row) > 0 else 0 for row in rows])}px"
+
+    def serialize(self):
+        responsive = (
+            easychart.config.config.rendering.responsive
+            if self.responsive is None
+            else self.responsive
+        )
+
+        plots = [plot.serialize() for plot in self.plots]
+
+        for plot in plots:
+            if not responsive:
+                for dimension in ("width", "height"):
+                    plot[dimension] = f"{plot[dimension].resolve(self.width)}px"
+
+        return plots
+

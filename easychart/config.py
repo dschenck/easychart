@@ -36,6 +36,7 @@ class Config:
                 "https://code.highcharts.com/modules/accessibility.js",
             ],
             "theme": "easychart",
+            "rendering": {"container": {"width": 985}, "responsive": False,},
         }
 
     def load(self):
@@ -43,7 +44,7 @@ class Config:
         Load the configuration
         """
         # load the default values
-        config = self.defaults
+        config = {**self.defaults}
 
         # load the user configuration
         if os.path.exists(self.filename):

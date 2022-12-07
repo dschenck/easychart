@@ -21,7 +21,9 @@ def new(
     ymin=None,
     ymax=None,
     legend=None,
-    categories=None
+    categories=None,
+    width=None,
+    height=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -98,6 +100,12 @@ def new(
     if categories is not None:
         chart.categories = categories
 
+    if width is not None:
+        chart.width = width
+
+    if height is not None:
+        chart.height = height
+
     return chart
 
 
@@ -118,20 +126,33 @@ def plot(data, **kwargs):
     chartkwargs = {
         k: v
         for k, v in kwargs.items()
-        if k in ["datetime", "zoom", "title", "subtitle", "tooltip", "xtitle", "ytitle"]
+        if k
+        in [
+            "datetime",
+            "zoom",
+            "title",
+            "subtitle",
+            "tooltip",
+            "xtitle",
+            "ytitle",
+            "height",
+            "width",
+        ]
     }
     serieskwargs = {k: v for k, v in kwargs.items() if k not in chartkwargs}
+
     chart = new(**chartkwargs)
     chart.series.append(data, **serieskwargs)
     return chart
 
 
-def render(*charts, width="100%", height="400px", theme=None):
+def render(*charts, width=None, height=None, theme=None):
     """
     Render one or several charts or a grid thereof to the jupyter notebook
     """
     if len(charts) == 1 and isinstance(charts[0], Grid):
         return charts[0]
+
     plots = [
         Plot(plot, width=width, height=height) if not isinstance(plot, Plot) else plot
         for plot in charts

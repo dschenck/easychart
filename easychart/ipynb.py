@@ -23,7 +23,7 @@ if ip and (
             raise TypeError(f"Unexpected type ({obj.__class__})")
 
         template = easychart.templating.render(grid)
-        return f'<iframe style="border:0;outline:none" srcdoc="{html.escape(template)}" height="{grid.height}" width="100%"></iframe>'
+        return f'<iframe style="border:0;outline:none" height="{grid.height}" width="{grid.width}" srcdoc="{html.escape(template)}"></iframe>'
 
     if IPython.__version__ >= "0.11":
         formatter = ip.display_formatter.formatters["text/html"]
