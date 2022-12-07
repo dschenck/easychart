@@ -66,3 +66,9 @@ Version 0.1.12 (2021-04-13)
 Version 0.1.13 (2021-10-16)
 ------------------------------------------
 - refactored config object
+
+Version 0.1.15 (2022-12-07)
+------------------------------------------
+- updated default config values to unpin highcharts versions
+- added `chart.annotate` and `chart.draw` convenience methods
+- refactored chart dimensions logic
