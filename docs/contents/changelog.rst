@@ -83,3 +83,7 @@ Version 0.1.15 (2022-12-07)
 - refactored chart dimensions logic
 - allow `index=False` when plotting with Pandas to drop index
 
+
+Version 0.1.16 (2022-12-07)
+------------------------------------------
+- set allowOverlap to True by default on chart.annotate
