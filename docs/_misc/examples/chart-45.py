@@ -43,3 +43,5 @@ with chart.legend as legend:
     legend.itemMarginTop = 15
     legend.title.text = "Legend"
 
+chart
+

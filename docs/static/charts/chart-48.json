@@ -1,0 +1,84 @@
+{
+    "series": [
+        {
+            "data": [
+                [
+                    1,
+                    5
+                ],
+                [
+                    3,
+                    5
+                ],
+                [
+                    5,
+                    5
+                ]
+            ]
+        }
+    ],
+    "chart": {
+        "type": "scatter",
+        "zoomType": "x"
+    },
+    "xAxis": {
+        "min": 0,
+        "max": 6
+    },
+    "annotations": [
+        {
+            "labels": [
+                {
+                    "text": "Callout is the default shape",
+                    "point": {
+                        "x": 1,
+                        "y": 5,
+                        "xAxis": 0,
+                        "yAxis": 0
+                    },
+                    "style": {}
+                }
+            ],
+            "labelOptions": {
+                "draggable": "xy"
+            }
+        },
+        {
+            "labels": [
+                {
+                    "text": "Connector is akin to floating text",
+                    "point": {
+                        "x": 3,
+                        "y": 5,
+                        "xAxis": 0,
+                        "yAxis": 0
+                    },
+                    "shape": "connector",
+                    "style": {}
+                }
+            ],
+            "labelOptions": {
+                "draggable": "xy"
+            }
+        },
+        {
+            "labels": [
+                {
+                    "text": "You may want to set a width to a long-text annotation to avoid it growing too large",
+                    "point": {
+                        "x": 5,
+                        "y": 5,
+                        "xAxis": 0,
+                        "yAxis": 0
+                    },
+                    "style": {
+                        "width": 100
+                    }
+                }
+            ],
+            "labelOptions": {
+                "draggable": "xy"
+            }
+        }
+    ]
+}
