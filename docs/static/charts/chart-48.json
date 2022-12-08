@@ -36,6 +36,7 @@
                         "xAxis": 0,
                         "yAxis": 0
                     },
+                    "allowOverlap": true,
                     "style": {}
                 }
             ],
@@ -54,6 +55,7 @@
                         "yAxis": 0
                     },
                     "shape": "connector",
+                    "allowOverlap": true,
                     "style": {}
                 }
             ],
@@ -71,6 +73,7 @@
                         "xAxis": 0,
                         "yAxis": 0
                     },
+                    "allowOverlap": true,
                     "style": {
                         "width": 100
                     }

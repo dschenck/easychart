@@ -1,0 +1,54 @@
+{
+    "series": [
+        {
+            "data": [
+                {
+                    "y": 120000,
+                    "color": "#059669"
+                },
+                {
+                    "y": 569000,
+                    "color": "#059669"
+                },
+                {
+                    "y": 231000,
+                    "color": "#059669"
+                },
+                {
+                    "isIntermediateSum": true
+                },
+                {
+                    "y": -342000,
+                    "color": "#ef4444"
+                },
+                {
+                    "y": -233000,
+                    "color": "#ef4444"
+                },
+                {
+                    "isSum": true
+                }
+            ],
+            "showInLegend": false,
+            "dataLabels": {
+                "enabled": true,
+                "format": "{point.y:,:0f}"
+            }
+        }
+    ],
+    "chart": {
+        "type": "waterfall",
+        "zoomType": "x"
+    },
+    "xAxis": {
+        "categories": [
+            "Services revenues",
+            "Product revenues",
+            "Licensing revenues",
+            "Total revenues",
+            "Fixed costs",
+            "Variable costs",
+            "Profit (loss)"
+        ]
+    }
+}

@@ -44,4 +44,3 @@ with chart.legend as legend:
     legend.title.text = "Legend"
 
 chart
-

@@ -32,6 +32,7 @@
                         "yAxis": 0
                     },
                     "y": -75,
+                    "allowOverlap": true,
                     "style": {
                         "width": 100
                     }
@@ -52,6 +53,7 @@
                         "yAxis": 0
                     },
                     "x": 65,
+                    "allowOverlap": true,
                     "style": {
                         "width": 100
                     }

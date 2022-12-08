@@ -1,0 +1,35 @@
+{
+    "series": [
+        {
+            "data": [
+                10,
+                30,
+                {
+                    "isIntermediateSum": true
+                },
+                -4,
+                -8,
+                {
+                    "isSum": true
+                }
+            ]
+        }
+    ],
+    "chart": {
+        "type": "waterfall",
+        "zoomType": "x"
+    },
+    "legend": {
+        "enabled": false
+    },
+    "xAxis": {
+        "categories": [
+            "Opening stocks",
+            "Production",
+            "Total domestic supply",
+            "Net exports",
+            "Consumption",
+            "Closing stocks"
+        ]
+    }
+}
