@@ -44,7 +44,7 @@
             "font": "Arial"
         },
         "shared": true,
-        "valueDecimals":2
+        "valueDecimals": 2
     },
     "xAxis": {
         "gridLineColor": "#eeeeee",
@@ -58,7 +58,7 @@
                 "font": "Arial"
             }
         },
-        "title":{
+        "title": {
             "text": null,
             "style": {
                 "color": "#000000",
