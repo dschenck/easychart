@@ -14,5 +14,13 @@ Sankey charts
 
     <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-27.json?v=1"></div>
 
-
 .. literalinclude:: /_misc/examples/chart-27.py
+
+Setting ribbon colors
+---------------------
+
+.. raw:: html 
+
+    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-54.json"></div>
+
+.. literalinclude:: /_misc/examples/chart-54.py
