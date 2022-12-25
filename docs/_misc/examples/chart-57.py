@@ -5,9 +5,7 @@ labels = [
         "format": "{point.from} -> {point.to} {point.weight}km",
         "filter": {"property": "weight", "operator": ">", "value": 3},
     },
-    {
-        "nodeFormat": "Point {point.name}"
-    },
+    {"nodeFormat": "Point {point.name}"},
 ]
 
 data = [
@@ -22,5 +20,5 @@ data = [
 ]
 
 chart = easychart.new(type="sankey")
-chart.plot(data, keys=["from", "to", "weight", "dataLabels"], labels=labels)
+chart.plot(data, keys=["from", "to", "weight"], labels=labels)
 chart

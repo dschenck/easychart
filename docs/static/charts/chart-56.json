@@ -46,8 +46,7 @@
             "keys": [
                 "from",
                 "to",
-                "weight",
-                "dataLabels"
+                "weight"
             ],
             "dataLabels": {
                 "format": "{point.from} -> {point.to} {point.weight}km",
