@@ -108,6 +108,14 @@
         "chart": {
             "animation": false
         },
+        "series": {
+            "dataLabels": {
+                "style": {
+                    "textOutline": false,
+                    "fontWeight":"normal"
+                }
+            }
+        },
         "line": {
             "animation": false
         },
