@@ -22,6 +22,7 @@ def new(
     ymax=None,
     legend=None,
     categories=None,
+    stacked=None,
     width=None,
     height=None
 ):
@@ -99,6 +100,9 @@ def new(
 
     if categories is not None:
         chart.categories = categories
+
+    if stacked is not None:
+        chart.stacked = stacked
 
     if width is not None:
         chart.width = width
