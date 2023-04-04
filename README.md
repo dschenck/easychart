@@ -1,7 +1,10 @@
 # easychart
 [highcharts](https://www.highcharts.com/) meets python in your [Jupyter](https://jupyter.org/) notebook
  
-  
+[![PyPI version](https://badge.fury.io/py/easychart.svg)](https://badge.fury.io/py/easychart) 
+[![Documentation Status](https://readthedocs.org/projects/easychart/badge/?version=latest)](https://easychart.readthedocs.io/en/latest/?badge=latest) 
+[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+[![Downloads](https://static.pepy.tech/badge/easychart/week)](https://pepy.tech/project/easychart)
 
 ## Getting started
 Installing easychart is easy with pip
