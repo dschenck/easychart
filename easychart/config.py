@@ -36,7 +36,7 @@ class Config:
                 "https://code.highcharts.com/modules/accessibility.js",
             ],
             "theme": "easychart",
-            "rendering": {"container": {"width": 985}, "responsive": False,},
+            "rendering": {"container": {"width": 980}, "responsive": False,},
         }
 
     def load(self):
