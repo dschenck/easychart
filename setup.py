@@ -5,7 +5,7 @@ with open("README.md", "r") as fh:
 
 setuptools.setup(
     name="easychart",
-    version="0.1.16",
+    version="0.1.17",
     author="david.schenck@outlook.com",
     author_email="david.schenck@outlook.com",
     description="Highcharts meets python in your Jupyter notebook",
