@@ -124,7 +124,7 @@ class Chart(easytree.Tree):
     ::
 
         #equivalent to chart.subtitle.text = "Chart subtitle"
-        chart.subtitle = "Chart subtitle"  
+        chart.subtitle = "Chart subtitle"
 
     \- setting :code:`chart.datetime` equal to :code:`True` will set the xAxis' type equal to :code:`"datetime"`
     ::
@@ -144,19 +144,19 @@ class Chart(easytree.Tree):
         #equivalent to chart.chart.zoomType = "xy"
         chart.zoom = "xy"
 
-    \- setting a boolean to :code:`chart.tooltip` will enable or disable the tooltip. 
+    \- setting a boolean to :code:`chart.tooltip` will enable or disable the tooltip.
     ::
 
         #equivalent to chart.tooltip.enabled = False
         chart.tooltip = False
 
-    \- setting :code:`"shared"` to :code:`chart.tooltip` will set :code:`chart.tooltip.shared = True`. 
+    \- setting :code:`"shared"` to :code:`chart.tooltip` will set :code:`chart.tooltip.shared = True`.
     ::
 
         #equivalent to chart.tooltip.shared = True
         chart.tooltip = "shared"
 
-    \- setting a label format string to :code:`chart.tooltip` will format the decimals, prefix and suffix. 
+    \- setting a label format string to :code:`chart.tooltip` will format the decimals, prefix and suffix.
     ::
 
         chart.tooltip = "${value:.2f} per unit"
@@ -166,7 +166,7 @@ class Chart(easytree.Tree):
         chart.tooltip.valueSuffix = " per unit"
         chart.tooltip.valueDecimals = 2
 
-    \- setting a tuple of values to the :code:`chart.tooltip` will set each value to the toolip attribute, as per the above rules. 
+    \- setting a tuple of values to the :code:`chart.tooltip` will set each value to the toolip attribute, as per the above rules.
     ::
 
         chart.tooltip = ("shared", "{value}mm")
@@ -181,7 +181,7 @@ class Chart(easytree.Tree):
         #equivalent to chart.legend.enabled = False
         chart.legend = False
 
-    \- setting one of :code:`None`, :code:`"percent"` or :code:`"normal"` to :code:`chart.stacking` will affect the value to :code:`chart.plotOptions.series.stacking`. 
+    \- setting one of :code:`None`, :code:`"percent"` or :code:`"normal"` to :code:`chart.stacking` will affect the value to :code:`chart.plotOptions.series.stacking`.
     ::
 
         #equivalent to chart.plotOptions.series.stacking = "percent"
@@ -396,6 +396,14 @@ class Chart(easytree.Tree):
         self.datalabels = value
         return
 
+    def set_exporting(self, value):
+        """
+        Alias for chart.exporting.enabled
+        """
+        if isinstance(value, bool):
+            self.exporting.enabled = value
+        return
+
     def append(self, data=None, **kwargs):
         """
         Shortcut for :code:`chart.series.append(data, **kwargs)`
@@ -405,7 +413,7 @@ class Chart(easytree.Tree):
     def plot(self, data=None, **kwargs):
         """
         Shortcut for :code:`chart.series.append(data, **kwargs)`
-        
+
         Returns
         --------
         self : Chart
@@ -418,8 +426,8 @@ class Chart(easytree.Tree):
         """
         Adds a vertical line across the chart
 
-        Shortcut for: 
-        :: 
+        Shortcut for:
+        ::
 
             self.xAxis.plotLines.append(value=x, **kwargs)
         """
@@ -434,8 +442,8 @@ class Chart(easytree.Tree):
         """
         Adds a horizontal line across the chart
 
-        Shortcut for: 
-        :: 
+        Shortcut for:
+        ::
 
             self.yAxis.plotLines.append(value=x, **kwargs)
         """
@@ -468,11 +476,11 @@ class Chart(easytree.Tree):
 
     def regress(self, y, x, intercept=True, **kwargs):
         """
-        Plots a simple linear regression (y = ax + b) using the scikit-learn 
-        regression module (soft dependency). 
-        
-        .. note: 
-            If scikit-learn is not already installed in your 
+        Plots a simple linear regression (y = ax + b) using the scikit-learn
+        regression module (soft dependency).
+
+        .. note:
+            If scikit-learn is not already installed in your
             environment, simply run :code:`pip install scikit-learn`
         """
 
@@ -550,7 +558,7 @@ class Chart(easytree.Tree):
         text : str
             The annotation label text
         x : float
-            The x position of the point to which the annotation refers to 
+            The x position of the point to which the annotation refers to
         y : float
             The y position of the point to which the annotation refers to
         xAxis : int
@@ -579,7 +587,7 @@ class Chart(easytree.Tree):
             The font size
         color : str
             The font color
-        
+
         Note
         ----
         For more details on annotations, check out the `Highcharts API documentation <https://api.highcharts.com/highcharts/annotations.labelOptions>`_
@@ -847,7 +855,7 @@ class Grid:
         ]
 
         cumwidth, rows = 0, [[]]
-        for (height, width) in dimensions:
+        for height, width in dimensions:
             # if there are less than 0 pixels left, put on a new row
             if (self.width - (cumwidth + width)) < 0:
                 rows.append([height])
@@ -873,4 +881,3 @@ class Grid:
                     plot[dimension] = f"{plot[dimension].resolve(self.width)}px"
 
         return plots
-
