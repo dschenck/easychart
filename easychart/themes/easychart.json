@@ -114,7 +114,8 @@
                     "textOutline": false,
                     "fontWeight":"normal"
                 }
-            }
+            },
+            "borderRadius":0
         },
         "line": {
             "animation": false
