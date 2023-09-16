@@ -13,12 +13,9 @@ def default(value):
 
     Note
     ----
-    timezone-naive datetime.datetime objects are localized to UTC, 
+    timezone-naive datetime.datetime objects are localized to UTC,
     not as of local machine time
     """
-    if isinstance(value, (easychart.Chart, easytree.Tree)):
-        return value.serialize()
-
     # naive pd.Timestamps are modeled as UTC
     # no further conversions needed
     if isinstance(value, pd.Timestamp):

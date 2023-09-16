@@ -36,7 +36,10 @@ class Config:
                 "https://code.highcharts.com/modules/accessibility.js",
             ],
             "theme": "easychart",
-            "rendering": {"container": {"width": 980}, "responsive": False,},
+            "rendering": {
+                "container": {"width": 980},
+                "responsive": False,
+            },
         }
 
     def load(self):
@@ -51,7 +54,7 @@ class Config:
             with open(self.filename, "r") as file:
                 config.update(json.load(file))
 
-        return easytree.Tree(config)
+        return easytree.dict(config)
 
     def save(self, filename=None):
         """
@@ -74,7 +77,7 @@ class Config:
         """
         Resets and overrides the user configuration
         """
-        self.config = easytree.Tree(self.defaults)
+        self.config = easytree.dict(self.defaults)
 
         if save:
             self.save()

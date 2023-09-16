@@ -11,7 +11,7 @@ import easychart.internals as internals
 import easychart.config
 
 
-class SeriesCollection(easytree.Tree):
+class SeriesCollection(easytree.list):
     """
     Series collection
     """
@@ -90,7 +90,7 @@ class SeriesCollection(easytree.Tree):
         return super().append(data=data, **kwargs)
 
 
-class Chart(easytree.Tree):
+class Chart(easytree.dict):
     """
     A Highchart chart configuration
 
@@ -735,9 +735,7 @@ class Chart(easytree.Tree):
         Serializes and dumps the chart configuration to file
         """
         with open(filename, "w") as file:
-            simplejson.dump(
-                self.serialize(), file, default=encoders.default, indent=indent
-            )
+            simplejson.dump(self, file, default=encoders.default, indent=indent)
         return
 
     def serialize(self):
@@ -745,9 +743,7 @@ class Chart(easytree.Tree):
         Serializes the chart to a native python structure
         """
         return simplejson.loads(
-            simplejson.dumps(
-                super().serialize(), default=encoders.default, ignore_nan=True
-            )
+            simplejson.dumps(self, default=encoders.default, ignore_nan=True)
         )
 
 
