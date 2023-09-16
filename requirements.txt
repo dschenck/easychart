@@ -1,5 +1,5 @@
 pandas 
 numpy 
-easytree>=0.1.6
+easytree>=0.2.3
 jinja2
 simplejson
