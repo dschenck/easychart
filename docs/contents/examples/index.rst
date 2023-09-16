@@ -41,3 +41,4 @@ The `Highcharts API documentation <https://api.highcharts.com/highcharts/>`_ is 
    example-37
    example-38
    example-39
+   example-40
