@@ -13,18 +13,18 @@ import easychart
 
 directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "examples")
 
-contents = []
 for filename in os.listdir(directory):
-    if filename.endswith(".py"):
-        contents.append(f"# {filename}")
-        with open(os.path.join(directory, filename), "r") as file:
-            contents.extend(file.read().strip().split("\n"))
-            contents.append(
-                f"chart.save(\"../static/charts/{filename.replace('py','json')}\", indent=4)"
-            )
-        contents.append("\n")
+    if not filename.endswith(".py"):
+        continue
 
-exec("\n".join(contents))
+    with open(os.path.join(directory, filename), "r") as file:
+        contents = file.read().strip()
+        contents += "\n"
+        contents += f"chart.save(\"../static/charts/{filename.replace('py','json')}\", indent=4)"
+    try:
+        exec(contents)
+    except Exception as e:
+        print(f"Error compiling {filename} ({e})")
 
 # run the make html
 os.chdir(os.path.join(os.path.dirname(os.path.realpath(__file__)), ".."))
