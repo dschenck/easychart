@@ -13,10 +13,25 @@ def flatten(*args):
 
 def dictfilter(mapping, func):
     """
-    Filters out values from a dictionary using a callback 
+    Filters out values from a dictionary using a callback
     function
     """
     return {k: v for k, v in mapping.items() if func(k, v)}
+
+
+def alias(argname, *aliases, parse=None):
+    """
+    Allow for aliases
+    """
+
+    def wrapper(func):
+        def inner(*args, **kwargs):
+            kwargs = {argname if k in aliases else k: v for k, v in kwargs.items()}
+            return func(*args, **kwargs)
+
+        return inner
+
+    return wrapper
 
 
 class Percentage:
@@ -67,4 +82,3 @@ class Size:
             else:
                 return Pixels(value)
         raise ValueError(f"Unrecognized size '{value}'")
-

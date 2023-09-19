@@ -16,55 +16,34 @@ class SeriesCollection(easytree.list):
     Series collection
     """
 
+    @internals.alias("showInLegend", "legend")
+    @internals.alias("marker", "markers")
+    @internals.alias("lineWidth", "linewidth", "width", "lw")
+    @internals.alias("dashStyle", "dashstyle", "dash", "linestyle", "ls")
+    @internals.alias("visible", "active", "enabled")
+    @internals.alias("dataLabels", "datalabels", "labels")
+    @internals.alias("opacity", "alpha", "transparency")
+    @internals.alias("name", "label")
+    @internals.alias("color", "c")
+    @internals.alias("data", "y")
+    @internals.alias("index", "x")
     def append(self, data=None, **kwargs):
-        if "legend" in kwargs:
-            kwargs["showInLegend"] = kwargs.pop("legend")
-
-        if "markers" in kwargs:
-            kwargs["marker"] = kwargs.pop("markers")
-
         if "marker" in kwargs:
             if isinstance(kwargs["marker"], bool):
                 kwargs["marker"] = {"enabled": kwargs["marker"]}
             elif kwargs["marker"] is None:
                 kwargs["marker"] = {"enabled": False}
 
-        if "width" in kwargs:
-            kwargs["lineWidth"] = kwargs.pop("width")
-
-        if "dash" in kwargs:
-            kwargs["dashStyle"] = kwargs.pop("dash")
-
-        if "dashstyle" in kwargs:
-            kwargs["dashStyle"] = kwargs.pop("dashstyle")
-
-        if "linestyle" in kwargs:
-            kwargs["dashStyle"] = kwargs.pop("linestyle")
-
-        if "active" in kwargs:
-            kwargs["visible"] = kwargs.pop("active")
-
-        if "enabled" in kwargs:
-            kwargs["visible"] = kwargs.pop("enabled")
-
-        if "labels" in kwargs:
-            if isinstance(kwargs["labels"], bool):
-                kwargs["dataLabels"] = {"enabled": kwargs.pop("labels")}
-            elif isinstance(kwargs["labels"], str):
-                kwargs["dataLabels"] = {"enabled": True, "format": kwargs.pop("labels")}
-            else:
-                kwargs["dataLabels"] = kwargs.pop("labels")
-
-        if "datalabels" in kwargs:
-            if isinstance(kwargs["datalabels"], bool):
-                kwargs["dataLabels"] = {"enabled": kwargs.pop("datalabels")}
-            elif isinstance(kwargs["datalabels"], str):
+        if "dataLabels" in kwargs:
+            if isinstance(kwargs["dataLabels"], bool):
+                kwargs["dataLabels"] = {"enabled": kwargs.pop("dataLabels")}
+            elif isinstance(kwargs["dataLabels"], str):
                 kwargs["dataLabels"] = {
                     "enabled": True,
-                    "format": kwargs.pop("datalabels"),
+                    "format": kwargs.pop("dataLabels"),
                 }
             else:
-                kwargs["dataLabels"] = kwargs.pop("datalabels")
+                kwargs["dataLabels"] = kwargs.pop("dataLabels")
 
         if isinstance(data, pd.Series):
             if "name" not in kwargs:
