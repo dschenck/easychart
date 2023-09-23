@@ -3,7 +3,8 @@ from easychart.models import Chart, Plot, Grid
 from easychart.__meta__ import *
 
 import easychart.ipynb
-import easychart.datasets as datasets
+import easychart.datasets
+import easychart.themes
 
 
 def new(
