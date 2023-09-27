@@ -798,7 +798,7 @@ class Grid:
         self.theme = theme
 
         self.width = internals.Size(width).resolve(
-            easychart.config.config.rendering.container.width
+            easychart.config.rendering.container.width
         )
 
         self.responsive = responsive
@@ -843,7 +843,7 @@ class Grid:
 
     def serialize(self):
         responsive = (
-            easychart.config.config.rendering.responsive
+            easychart.config.rendering.responsive
             if self.responsive is None
             else self.responsive
         )

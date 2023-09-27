@@ -1,5 +1,6 @@
 import os
 import json
+import easychart
 
 
 def locate(name):
@@ -35,7 +36,20 @@ def locate(name):
 
 def get(theme=None):
     """
-    Load theme by name, filename
+    Load theme by name or filename
+
+    Note
+    ----
+    If theme is None, then a waterfall search is executed:
+    - if 'EASYCHART.THEME' environment variable is set, load it
+    - if 'theme' argument is set in easychart.config, load it
+    - if 'theme.json' exists in os.path.expanduser("~/.easychart"), load it
+    - otherwise, load 'easychart' default from within the package
+
+    If theme is not a filename, a waterfall search is executed for its location
+    - check the current working directory for a '{theme}.json' file
+    - check os.path.expanduser("~/.easychart") for a '{theme}.json' file
+    - check the package 'themes' directory
 
     Parameters
     ----------
@@ -52,6 +66,10 @@ def get(theme=None):
     if theme is None:
         if os.environ.get("EASYCHART.THEME"):
             theme = os.environ.get("EASYCHART.THEME")
+
+    if theme is None:
+        if easychart.config.get("theme") is not None:
+            theme = easychart.config.theme
 
     if theme is None:
         if os.path.exists(os.path.expanduser("~/.easychart/theme.json")):
