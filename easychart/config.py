@@ -66,7 +66,7 @@ class Config(easytree.dict):
             filename = Config.filename
 
         if not os.path.exists(os.path.dirname(filename)):
-            if os.path.dirname(filename) == os.path.dirname(Config.DEFAULTPATH):
+            if os.path.dirname(filename) == os.path.expanduser("~/.easychart"):
                 os.mkdir(os.path.dirname(filename))
 
         with open(filename, "w") as file:
