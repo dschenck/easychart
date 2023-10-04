@@ -5,6 +5,7 @@ import datetime
 import collections
 import simplejson
 import re
+import requests
 
 import easychart.encoders as encoders
 import easychart.internals as internals
@@ -716,6 +717,36 @@ class Chart(easytree.dict):
         with open(filename, "w") as file:
             simplejson.dump(self, file, default=encoders.default, indent=indent)
         return
+
+    def export(self, to, theme=None, scale=2, **kwargs):
+        """
+        Export chart to a static format using an export server
+        """
+        if to[-3:] not in ["png", "jpg", "svg", "pdf"]:
+            raise ValueError(
+                f"Expected 'to' argument to end in one of 'png', 'jpg', 'svg', or 'pdf', received '{to}'"
+            )
+
+        res = requests.post(
+            easychart.config.get(
+                ["exporting", "server", "url"], "http://export.highcharts.com/"
+            ),
+            json={
+                "options": self.serialize(),
+                "type": f"image/{to[-3:]}",
+                "scale": scale,
+                "globalOptions": easychart.themes.get(theme),
+            },
+        )
+
+        if res.status_code != 200:
+            raise Exception(f"Export server responded with code {res.status_code}")
+
+        if to in ["png", "jpg", "svg", "pdf"]:
+            return res.content
+
+        with open(to, "wb") as file:
+            file.write(res.content)
 
     def serialize(self):
         """
