@@ -9,7 +9,7 @@ import requests
 
 import easychart.encoders as encoders
 import easychart.internals as internals
-import easychart.config
+import easychart
 
 
 class SeriesCollection(easytree.list):
@@ -222,8 +222,14 @@ class Chart(easytree.dict):
     def set_width(self, value):
         """
         Shortcut for self.chart.width = value
+
+        Note
+        ----
+        Chart width must be expressed as a number (of pixels)
         """
-        self.chart.width = value
+        self.chart.width = internals.Size(value).resolve(
+            easychart.config.rendering.container.width
+        )
 
     def set_title(self, value):
         """
@@ -785,13 +791,10 @@ class Plot:
 
         if width is None:
             if "chart" in chart and "width" in chart["chart"]:
-                self.width = internals.Size(chart["chart"].pop("width"))
+                self.width = internals.Size(chart["chart"]["width"])
             else:
                 self.width = internals.Size("100%")
         else:
-            if "chart" in chart and "width" in chart["chart"]:
-                chart["chart"].pop("width")
-
             self.width = internals.Size(width)
 
         self.theme = theme
@@ -812,7 +815,7 @@ class Grid:
     Grid of chart plots
     """
 
-    def __init__(self, plots=None, theme=None, width="100%", responsive=None):
+    def __init__(self, plots=None, *, theme=None, width="100%"):
         """
         Parameters
         ------------------------
@@ -831,8 +834,6 @@ class Grid:
         self.width = internals.Size(width).resolve(
             easychart.config.rendering.container.width
         )
-
-        self.responsive = responsive
 
     def add(self, chart, width=None, height=None):
         """
@@ -873,17 +874,10 @@ class Grid:
         return f"{sum([max(row) if len(row) > 0 else 0 for row in rows])}px"
 
     def serialize(self):
-        responsive = (
-            easychart.config.rendering.responsive
-            if self.responsive is None
-            else self.responsive
-        )
-
         plots = [plot.serialize() for plot in self.plots]
 
         for plot in plots:
-            if not responsive:
-                for dimension in ("width", "height"):
-                    plot[dimension] = f"{plot[dimension].resolve(self.width)}px"
+            for dimension in ("width", "height"):
+                plot[dimension] = f"{plot[dimension].resolve(self.width)}px"
 
         return plots
