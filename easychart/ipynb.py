@@ -6,24 +6,52 @@ except:
 if ip and (
     ip.__module__.startswith("IPython") or ip.__module__.startswith("ipykernel")
 ):
+    import IPython
+    import os
+    import simplejson
+    import html
 
     import easychart
-    import easychart.templating
-    import html
-    import IPython
+    import easychart.encoders
+    import easychart.themes
 
-    def render(obj):
-        if isinstance(obj, easychart.Chart):
-            grid = easychart.Grid([easychart.Plot(obj)])
-        elif isinstance(obj, easychart.Plot):
-            grid = easychart.Grid([obj], theme=obj.theme)
-        elif isinstance(obj, easychart.Grid):
-            grid = obj
+    from jinja2 import Environment, FileSystemLoader
+
+    # create the environment
+    environment = Environment(
+        loader=FileSystemLoader(os.path.join(os.path.dirname(__file__)))
+    )
+
+    def render(charts) -> str:
+        """
+        Render a chart, plot or grid of charts to
+        """
+        if isinstance(charts, easychart.Chart):
+            grid = easychart.Grid([easychart.Plot(charts)])
+        elif isinstance(charts, easychart.Plot):
+            grid = easychart.Grid([charts])
+        elif isinstance(charts, easychart.Grid):
+            grid = charts
         else:
-            raise TypeError(f"Unexpected type ({obj.__class__})")
+            raise TypeError(f"Unexpected type ({charts.__class__})")
 
-        template = easychart.templating.render(grid)
-        return f'<iframe style="border:0;outline:none" height="{grid.height}" width="{grid.width}" srcdoc="{html.escape(template)}"></iframe>'
+        # get the template and render
+        template = environment.get_template("template.jinja").render(
+            **{
+                **grid.serialize(),
+                "scripts": easychart.config.scripts,
+                "stylesheets": easychart.config.stylesheets,
+                "theme": simplejson.dumps(easychart.themes.get(grid.theme)),
+            }
+        )
+
+        return f"""
+            <iframe 
+                style="border:0;outline:none;width:{grid.width or easychart.config.rendering.container.width};max-width:100%" 
+                onload='javascript:(function(o){{o.style.height=o.contentWindow.document.body.scrollHeight+"px";}}(this));' 
+                srcdoc="{html.escape(template)}">
+            </iframe>
+        """
 
     if IPython.__version__ >= "0.11":
         formatter = ip.display_formatter.formatters["text/html"]

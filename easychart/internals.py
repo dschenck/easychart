@@ -1,7 +1,20 @@
 import collections
 
 
-def flatten(*args):
+def flatten(*args) -> list:
+    """
+    Flatten a list of iterables (other than strings) into a
+    flattened list
+
+    Parameters
+    ----------
+    args : iterable
+        iterable
+
+    Returns
+    -------
+    list
+    """
     out = []
     for arg in args:
         if isinstance(arg, collections.abc.Iterable) and not isinstance(arg, str):
@@ -11,74 +24,65 @@ def flatten(*args):
     return out
 
 
-def dictfilter(mapping, func):
+def dictfilter(mapping: dict, func: callable) -> dict:
     """
     Filters out values from a dictionary using a callback
     function
+
+    Parameters
+    ----------
+    mapping : dict
+        dict to filter
+    func : callable
+        function that accepts a key and value and returns a boolean
+        value
+
+    Returns
+    -------
+    dict
     """
     return {k: v for k, v in mapping.items() if func(k, v)}
 
 
-def alias(argname, *aliases, parse=None):
+def alias(argname: str, *aliases):
     """
-    Allow for aliases
+    Rename aliased keyword arguments by its true argument name
+
+    Parameters
+    ----------
+    argname : str
+        true name of argument
+    aliases : tuple[str]
+        argument aliases
+
+    Returns
+    -------
+    decorator : callable
+
+    Note
+    ----
+    If multiple values are provided for a same argument via
+    aliases, then the last such value (as determined by order of kwargs)
+    will take precedence over other values
     """
 
-    def wrapper(func):
+    def wrapper(func: callable) -> callable:
+        """
+        Parameters
+        ----------
+        func : callable
+            the function to wrap
+
+        Returns
+        -------
+        inner : callable
+            the wrapped function
+        """
+
         def inner(*args, **kwargs):
-            kwargs = {argname if k in aliases else k: v for k, v in kwargs.items()}
+            kwargs = {(argname if k in aliases else k): v for k, v in kwargs.items()}
             return func(*args, **kwargs)
 
         return inner
 
     return wrapper
-
-
-class Percentage:
-    def __init__(self, value):
-        if isinstance(value, str) and value.endswith("%"):
-            self.value = float(value[:-1])
-        else:
-            self.value = float(value)
-
-    def __str__(self):
-        return f"{self.value}%"
-
-    def resolve(self, parent):
-        """
-        Convert to pixels
-        """
-        return parent * self.value / 100
-
-
-class Pixels:
-    def __init__(self, value):
-        if isinstance(value, str) and value.endswith("px"):
-            self.value = float(value[:-2])
-        else:
-            self.value = float(value)
-
-    def __str__(self):
-        return f"{self.value}px"
-
-    def resolve(self, parent):
-        return self.value
-
-
-class Size:
-    def __new__(cls, value):
-        if isinstance(value, (Percentage, Pixels)):
-            return value
-        if isinstance(value, str):
-            if value.endswith("%"):
-                return Percentage(value)
-            elif value.endswith("px"):
-                return Pixels(value)
-            elif value.isnumeric():
-                return Pixels(value)
-        if isinstance(value, (float, int)):
-            if value < 1:
-                return Percentage(100 * value)
-            else:
-                return Pixels(value)
-        raise ValueError(f"Unrecognized size '{value}'")
