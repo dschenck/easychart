@@ -39,10 +39,10 @@ if ip and (
         # get the template and render
         template = environment.get_template("template.jinja").render(
             **{
-                **grid.serialize(),
+                "plots": simplejson.dumps([plot.serialize() for plot in grid.plots]),
+                "theme": simplejson.dumps(easychart.themes.get(grid.theme)),
                 "scripts": easychart.config.scripts,
                 "stylesheets": easychart.config.stylesheets,
-                "theme": simplejson.dumps(easychart.themes.get(grid.theme)),
             }
         )
 
