@@ -1,4 +1,5 @@
 import collections
+import numbers
 
 
 def flatten(*args) -> list:
@@ -86,3 +87,68 @@ def alias(argname: str, *aliases):
         return inner
 
     return wrapper
+
+
+class Size:
+    """
+    Utility class designed to represent sizes (pixels and percentages)
+    """
+
+    class Pixels(str):
+        """
+        Absolute size (in pixels)
+        """
+
+        def __new__(cls, value):
+            if isinstance(value, numbers.Number):
+                value = f"{value:.0f}px"
+            if not value.endswith("px"):
+                value = f"{value}px"
+            return super().__new__(cls, value)
+
+        def __int__(self):
+            return int(self[:-2])
+
+        def __float__(self):
+            return float(self[:-2])
+
+        def resolve(self, parent):
+            return self
+
+    class Percentage(str):
+        """
+        Relative size (in percentage of parent)
+        """
+
+        def __new__(cls, value):
+            if isinstance(value, numbers.Number):
+                value = f"{value}%"
+            if not value.endswith("%"):
+                value = f"{value}%"
+            return super().__new__(cls, value)
+
+        def __int__(self):
+            return int(self[:-1])
+
+        def __float__(self):
+            return float(self[:-1]) / 100
+
+        def resolve(self, parent):
+            return Size(float(self) * float(Size(parent)))
+
+    def __new__(cls, value):
+        if isinstance(value, (Size.Percentage, Size.Pixels)):
+            return value
+        if isinstance(value, str):
+            if value.endswith("%"):
+                return Size.Percentage(value)
+            elif value.endswith("px"):
+                return Size.Pixels(value)
+            elif value.isnumeric():
+                return Size.Pixels(value)
+        if isinstance(value, (float, int)):
+            if value < 1:
+                return Size.Percentage(100 * value)
+            else:
+                return Size.Pixels(value)
+        raise ValueError(f"Unrecognized size '{value}'")

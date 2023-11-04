@@ -1,15 +1,14 @@
 import easytree
 import pandas as pd
 import numpy as np
-import datetime
 import collections
 import simplejson
 import re
 import requests
+import warnings
 
 import easychart.encoders
 import easychart.internals as internals
-import easychart
 
 
 class SeriesCollection(easytree.list):
@@ -227,7 +226,14 @@ class Chart(easytree.dict):
         ----
         Chart width must be expressed as a number (of pixels)
         """
-        self.chart.width = value
+        if isinstance(internals.Size(value), internals.Size.Percentage):
+            warnings.warn(
+                "Setting chart.chart.width in percentages (e.g. 50%) is deprecated and will be disallowed in future versions. Use pixels (e.g. 400px) instead",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+        self.chart.width = int(internals.Size(value).resolve("600px"))
 
     def set_title(self, value):
         """
@@ -780,10 +786,11 @@ class Plot:
             chart
         width : str (optional)
             width of the plot, expressed as a number of pixels or a percentage
-            of the page width
+            of the container width
         """
         self.chart = chart.chart if isinstance(chart, Plot) else chart
-        self.width = width or chart.get(
+
+        self.width = width or self.chart.get(
             ["chart", "width"],
             "100%" if easychart.config.rendering.responsive else "600px",
         )
@@ -811,8 +818,10 @@ class Grid:
         ------------------------
         plots : list (optional)
             list of individual plots
+
         width : str (optional)
             total width of grid, as pixels (e.g. "1280px")
+
         theme : dict (optional)
             dictionary of global options (theme)
         """
