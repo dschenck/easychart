@@ -1,15 +1,14 @@
 import easytree
 import pandas as pd
 import numpy as np
-import datetime
 import collections
 import simplejson
 import re
 import requests
+import warnings
 
-import easychart.encoders as encoders
+import easychart.encoders
 import easychart.internals as internals
-import easychart.config
 
 
 class SeriesCollection(easytree.list):
@@ -222,8 +221,19 @@ class Chart(easytree.dict):
     def set_width(self, value):
         """
         Shortcut for self.chart.width = value
+
+        Note
+        ----
+        Chart width must be expressed as a number (of pixels)
         """
-        self.chart.width = value
+        if isinstance(internals.Size(value), internals.Size.Percentage):
+            warnings.warn(
+                "Setting chart.chart.width in percentages (e.g. 50%) is deprecated and will be disallowed in future versions. Use pixels (e.g. 400px) instead",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+        self.chart.width = int(internals.Size(value).resolve("600px"))
 
     def set_title(self, value):
         """
@@ -707,15 +717,17 @@ class Chart(easytree.dict):
             )
         pass
 
-    def show(self, width=None, height=None, theme=None):
-        return Plot(self, width, height, theme)
+    def show(self, *, width=None, theme=None):
+        return Plot(self, width=width, theme=theme)
 
     def save(self, filename, indent=4):
         """
         Serializes and dumps the chart configuration to file
         """
         with open(filename, "w") as file:
-            simplejson.dump(self, file, default=encoders.default, indent=indent)
+            simplejson.dump(
+                self, file, default=easychart.encoders.default, indent=indent
+            )
         return
 
     def export(self, to, theme=None, scale=2, **kwargs):
@@ -748,62 +760,50 @@ class Chart(easytree.dict):
         with open(to, "wb") as file:
             file.write(res.content)
 
-    def serialize(self):
+    def serialize(self) -> dict:
         """
         Serializes the chart to a native python structure
+
+        Returns
+        -------
+        dict
         """
         return simplejson.loads(
-            simplejson.dumps(self, default=encoders.default, ignore_nan=True)
+            simplejson.dumps(self, default=easychart.encoders.default, ignore_nan=True)
         )
 
 
 class Plot:
     """
-    Chart container
+    Individual chart container
     """
 
-    def __init__(self, chart, width=None, height=None, theme=None):
+    def __init__(self, chart, *, width=None):
         """
         Parameters
         ------------
+        chart : Chart
+            chart
         width : str (optional)
-            width of the plot, expressed as a percentage of the page width
-        height : str (optional)
-            height of the plot, expressed as a number of pixels
-        theme : dict (optional)
-            dictionary of global options (theme)
+            width of the plot, expressed as a number of pixels or a percentage
+            of the container width
         """
-        self.chart = chart
+        self.chart = chart.chart if isinstance(chart, Plot) else chart
 
-        if height is None:
-            if "chart" in chart and "height" in chart["chart"]:
-                self.height = internals.Size(chart["chart"]["height"])
-            else:
-                self.height = internals.Size("400px")
-        else:
-            self.height = internals.Size(height)
+        self.width = width or self.chart.get(
+            ["chart", "width"],
+            "100%" if easychart.config.rendering.responsive else "600px",
+        )
 
-        if width is None:
-            if "chart" in chart and "width" in chart["chart"]:
-                self.width = internals.Size(chart["chart"].pop("width"))
-            else:
-                self.width = internals.Size("100%")
-        else:
-            if "chart" in chart and "width" in chart["chart"]:
-                chart["chart"].pop("width")
-
-            self.width = internals.Size(width)
-
-        self.theme = theme
-
-    def __repr__(self):
-        return f"<Plot height={self.height} width={self.width}>"
-
-    def serialize(self):
+    def serialize(self) -> dict:
+        """
+        Returns
+        -------
+        dict
+        """
         return {
-            "chart": self.chart,
+            "chart": self.chart.serialize(),
             "width": self.width,
-            "height": self.height,
         }
 
 
@@ -812,29 +812,24 @@ class Grid:
     Grid of chart plots
     """
 
-    def __init__(self, plots=None, theme=None, width="100%", responsive=None):
+    def __init__(self, plots=None, *, width=None, theme=None):
         """
         Parameters
         ------------------------
         plots : list (optional)
             list of individual plots
+
+        width : str (optional)
+            total width of grid, as pixels (e.g. "1280px")
+
         theme : dict (optional)
             dictionary of global options (theme)
         """
-        self.plots = (
-            [p if isinstance(p, Plot) else Plot(p) for p in plots]
-            if plots is not None
-            else []
-        )
+        self.plots = [Plot(p) for p in (plots or [])]
         self.theme = theme
+        self.width = f"{width}px" if isinstance(width, int) else width
 
-        self.width = internals.Size(width).resolve(
-            easychart.config.rendering.container.width
-        )
-
-        self.responsive = responsive
-
-    def add(self, chart, width=None, height=None):
+    def add(self, chart, *, width=None) -> None:
         """
         Adds a chart (or plot) to the grid
 
@@ -842,48 +837,19 @@ class Grid:
         ------------
         width : str (optional)
             width of the plot, expressed as a percentage of the grid width
-        height : str (optional)
-            height of the plot, expressed as a number of pixels
         """
         if not isinstance(chart, Plot):
-            chart = Plot(chart, width=width, height=height)
+            chart = Plot(chart, width=width)
         self.plots.append(chart)
 
-    @property
-    def height(self):
-        # extract the height and width of each plot
-        dimensions = [
-            (
-                internals.Size(plot.height).resolve(self.width),
-                internals.Size(plot.width).resolve(self.width),
-            )
-            for plot in self.plots
-        ]
-
-        cumwidth, rows = 0, [[]]
-        for height, width in dimensions:
-            # if there are less than 0 pixels left, put on a new row
-            if (self.width - (cumwidth + width)) < 0:
-                rows.append([height])
-                cumwidth = width
-            else:
-                rows[-1].append(height)
-                cumwidth += width
-
-        return f"{sum([max(row) if len(row) > 0 else 0 for row in rows])}px"
-
-    def serialize(self):
-        responsive = (
-            easychart.config.rendering.responsive
-            if self.responsive is None
-            else self.responsive
-        )
-
-        plots = [plot.serialize() for plot in self.plots]
-
-        for plot in plots:
-            if not responsive:
-                for dimension in ("width", "height"):
-                    plot[dimension] = f"{plot[dimension].resolve(self.width)}px"
-
-        return plots
+    def serialize(self) -> dict:
+        """
+        Returns
+        -------
+        dict
+        """
+        return {
+            "plots": [plot.serialize() for plot in self.plots],
+            "theme": self.theme,
+            "width": self.width,
+        }

@@ -1,3 +1,3 @@
-include easychart/template.html
+include easychart/template.jinja
 include easychart/datasets/*
 include easychart/themes/*

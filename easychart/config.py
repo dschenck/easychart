@@ -27,7 +27,10 @@ class Config(easytree.dict):
             "https://code.highcharts.com/modules/accessibility.js",
         ],
         "theme": None,
-        "rendering": {"container": {"width": 980}, "responsive": False},
+        "rendering": {
+            "container": {"width": "100%", "max-width": "100%"},
+            "responsive": False,
+        },
         "exporting": {"server": {"url": "http://export.highcharts.com/"}},
     }
 

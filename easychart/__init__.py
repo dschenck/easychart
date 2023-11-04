@@ -1,10 +1,11 @@
 from easychart.config import config
 from easychart.models import Chart, Plot, Grid
-from easychart.__meta__ import *
 
 import easychart.ipynb
 import easychart.datasets
 import easychart.themes
+
+__version__ = "0.1.17"
 
 
 def new(
@@ -25,7 +26,8 @@ def new(
     categories=None,
     stacked=None,
     width=None,
-    height=None
+    height=None,
+    exporting=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -111,6 +113,9 @@ def new(
     if height is not None:
         chart.height = height
 
+    if exporting is not None:
+        chart.exporting = exporting
+
     return chart
 
 
@@ -151,15 +156,11 @@ def plot(data, **kwargs):
     return chart
 
 
-def render(*charts, width=None, height=None, theme=None):
+def render(*charts, width=None, theme=None):
     """
     Render one or several charts or a grid thereof to the jupyter notebook
     """
     if len(charts) == 1 and isinstance(charts[0], Grid):
         return charts[0]
 
-    plots = [
-        Plot(plot, width=width, height=height) if not isinstance(plot, Plot) else plot
-        for plot in charts
-    ]
-    return Grid(plots, theme=theme)
+    return Grid([Plot(chart, width=width) for chart in charts], theme=theme)
