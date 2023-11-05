@@ -1,5 +1,5 @@
 try:
-    ip = get_ipython()
+    ip = get_ipython()  # noqa: F821
 except:
     ip = None
 
