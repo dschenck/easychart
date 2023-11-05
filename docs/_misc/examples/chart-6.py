@@ -12,7 +12,7 @@ data = data["1975-01-01":]
 data = 100 * data / data.mean()
 
 # create a pivot (month, year)
-pivot = data.groupby([data.index.month, data.index.year]).last().unstack().fillna("")
+pivot = data.groupby([data.index.month, data.index.year]).last().unstack()
 pivot.index = [
     "Jan",
     "Feb",
