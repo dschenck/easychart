@@ -718,7 +718,26 @@ class Chart(easytree.dict):
         pass
 
     def show(self, *, width=None, theme=None):
-        return Plot(self, width=width, theme=theme)
+        """
+        Render chart to an easychart.Grid
+
+        Parameters
+        ----------
+        width : int, str
+            plot width
+        theme : str, dict
+            theme
+
+        Returns
+        -------
+        Grid
+
+        Note
+        ----
+        The width given in parameter sets the plot width, not the chart width. See notes on chart and plot sizing
+        for more details
+        """
+        return Grid([Plot(self, width=width)], theme=theme)
 
     def save(self, filename, indent=4):
         """
@@ -788,11 +807,16 @@ class Plot:
             width of the plot, expressed as a number of pixels or a percentage
             of the container width
         """
-        self.chart = chart.chart if isinstance(chart, Plot) else chart
+        if isinstance(chart, Plot):
+            chart, width = chart.chart, width or chart.width
 
-        self.width = width or self.chart.get(
-            ["chart", "width"],
-            "100%" if easychart.config.rendering.responsive else "600px",
+        self.chart = chart
+        self.width = internals.Size(
+            width
+            or self.chart.get(
+                ["chart", "width"],
+                "100%" if easychart.config.rendering.responsive else "600px",
+            )
         )
 
     def serialize(self) -> dict:
@@ -827,7 +851,7 @@ class Grid:
         """
         self.plots = [Plot(p) for p in (plots or [])]
         self.theme = theme
-        self.width = f"{width}px" if isinstance(width, int) else width
+        self.width = internals.Size(width) if width is not None else width
 
     def add(self, chart, *, width=None) -> None:
         """
