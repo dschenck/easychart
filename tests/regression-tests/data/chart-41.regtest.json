@@ -1,0 +1,1 @@
+{"series": [{"data": [["male", 68, 87], ["female", 71, 85]], "name": "min-max range of grades"}], "chart": {"type": "columnrange", "zoomType": "x"}, "xAxis": {"categories": ["male", "female"]}}

@@ -1,0 +1,1 @@
+{"series": [{"data": [10, 9, 11, 11, 8, 13, 12, 14], "name": "Arvid"}, {"data": [13, 9, 10, 10, 8, null, 8, 6], "name": "Yasin", "color": "#5A5A5A"}], "chart": {"type": "area", "zoomType": "x"}, "plotOptions": {"area": {"fillOpacity": 0.5}}}
