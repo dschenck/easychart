@@ -1,1 +1,38 @@
-{"series": [{"data": [{"name": "O", "y": 45}, {"name": "A", "y": 40}, {"name": "B", "y": 11}, {"name": "AB", "y": 4}]}], "chart": {"type": "pie", "zoomType": "x"}, "title": {"text": "Distribution of blood type in the US"}, "subtitle": {"text": "Source: American Red Cross"}, "tooltip": {"valueDecimals": 0, "valueSuffix": "%"}}
+{
+    "series": [
+        {
+            "data": [
+                {
+                    "name": "O",
+                    "y": 45
+                },
+                {
+                    "name": "A",
+                    "y": 40
+                },
+                {
+                    "name": "B",
+                    "y": 11
+                },
+                {
+                    "name": "AB",
+                    "y": 4
+                }
+            ]
+        }
+    ],
+    "chart": {
+        "type": "pie",
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "Distribution of blood type in the US"
+    },
+    "subtitle": {
+        "text": "Source: American Red Cross"
+    },
+    "tooltip": {
+        "valueDecimals": 0,
+        "valueSuffix": "%"
+    }
+}

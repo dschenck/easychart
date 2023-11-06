@@ -36,7 +36,7 @@ def regress(regression):
 
     # compute different levels of historical norms
     for decile in [0, 0.05, 0.25, 0.5, 0.75, 0.95, 1]:
-        pivot[f"{decile:.0%}"] = pivot.iloc[:, :-1].quantile(decile, axis=1)
+        pivot[f"{decile:.0%}"] = pivot.iloc[:, :-1].quantile(decile, axis=1).round(4)
 
     # create the chart
     chart = easychart.new(tooltip="shared", title="US gas and electricity production")

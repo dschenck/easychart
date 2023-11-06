@@ -7,7 +7,8 @@ def regress(regression):
     import easychart
 
     numbers = pd.DataFrame(
-        [[math.cos(x), math.sin(x)] for x in range(-10, 10)], index=range(-10, 10)
+        [[round(math.cos(x), 4), round(math.sin(x), 4)] for x in range(-10, 10)],
+        index=range(-10, 10),
     )
 
     chart = easychart.new("bubble")

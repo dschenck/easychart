@@ -80,7 +80,7 @@ def regression(
             None
             """
             with open(self.filename, "w") as file:
-                json.dump(data, file, **kwargs)
+                json.dump(data, file, indent=4, **kwargs)
             return True
 
         def check(self, data: dict, **kwargs):

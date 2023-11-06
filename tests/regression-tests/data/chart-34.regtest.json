@@ -1,1 +1,39 @@
-{"series": [{"data": [["O", 45], ["A", 40], ["B", 11], ["AB", 4]], "name": null}], "chart": {"type": "pie", "zoomType": "x"}, "title": {"text": "Distribution of blood type in the US"}, "subtitle": {"text": "Source: American Red Cross"}, "tooltip": {"valueDecimals": 0, "valueSuffix": "%"}}
+{
+    "series": [
+        {
+            "data": [
+                [
+                    "O",
+                    45
+                ],
+                [
+                    "A",
+                    40
+                ],
+                [
+                    "B",
+                    11
+                ],
+                [
+                    "AB",
+                    4
+                ]
+            ],
+            "name": null
+        }
+    ],
+    "chart": {
+        "type": "pie",
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "Distribution of blood type in the US"
+    },
+    "subtitle": {
+        "text": "Source: American Red Cross"
+    },
+    "tooltip": {
+        "valueDecimals": 0,
+        "valueSuffix": "%"
+    }
+}

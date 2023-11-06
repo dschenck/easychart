@@ -1,1 +1,189 @@
-{"series": [{"data": [[1950, 55.8578798172], [2017, 60.1981626603], [2030, 58.4043126595], [2050, 54.3813426017], [2100, 43.3847312559]], "type": "area", "marker": {"enabled": false}, "name": "Asia and Oceania"}, {"data": [[1950, 21.66069466], [2017, 9.828453635], [2030, 8.647395529], [2050, 7.324335216], [2100, 5.840839643]], "type": "area", "marker": {"enabled": false}, "name": "Europe"}, {"data": [[1950, 6.80537134], [2017, 4.784045905], [2030, 4.62453277], [2050, 4.448044592], [2100, 4.463354568]], "type": "area", "marker": {"enabled": false}, "name": "Northern America"}, {"data": [[1950, 6.660079581], [2017, 8.550603939], [2030, 8.402131678], [2050, 7.980507627], [2100, 6.366144247]], "type": "area", "marker": {"enabled": false}, "name": "Latin America and the Caribbean"}, {"data": [[1950, 9.015974602], [2017, 16.63873386], [2030, 19.92162736], [2050, 25.86576997], [2100, 39.94493028]], "type": "area", "marker": {"enabled": false}, "name": "Africa"}], "chart": {"zoomType": "x"}, "title": {"text": "Distribution of world population by continent"}, "subtitle": {"text": "UN World Population Prospect (2017)"}, "plotOptions": {"series": {"stacking": "percent"}}, "yAxis": {"labels": {"format": "{value}%"}}, "tooltip": {"shared": true, "valueDecimals": 1, "valueSuffix": "%"}, "xAxis": {"plotBands": [{"color": "rgba(200,200,200,0.2)", "zIndex": 20, "label": {"text": "forecast", "style": {"color": "white"}}, "from": 2020, "to": 2100}]}}
+{
+    "series": [
+        {
+            "data": [
+                [
+                    1950,
+                    55.8578798172
+                ],
+                [
+                    2017,
+                    60.1981626603
+                ],
+                [
+                    2030,
+                    58.4043126595
+                ],
+                [
+                    2050,
+                    54.3813426017
+                ],
+                [
+                    2100,
+                    43.3847312559
+                ]
+            ],
+            "type": "area",
+            "marker": {
+                "enabled": false
+            },
+            "name": "Asia and Oceania"
+        },
+        {
+            "data": [
+                [
+                    1950,
+                    21.66069466
+                ],
+                [
+                    2017,
+                    9.828453635
+                ],
+                [
+                    2030,
+                    8.647395529
+                ],
+                [
+                    2050,
+                    7.324335216
+                ],
+                [
+                    2100,
+                    5.840839643
+                ]
+            ],
+            "type": "area",
+            "marker": {
+                "enabled": false
+            },
+            "name": "Europe"
+        },
+        {
+            "data": [
+                [
+                    1950,
+                    6.80537134
+                ],
+                [
+                    2017,
+                    4.784045905
+                ],
+                [
+                    2030,
+                    4.62453277
+                ],
+                [
+                    2050,
+                    4.448044592
+                ],
+                [
+                    2100,
+                    4.463354568
+                ]
+            ],
+            "type": "area",
+            "marker": {
+                "enabled": false
+            },
+            "name": "Northern America"
+        },
+        {
+            "data": [
+                [
+                    1950,
+                    6.660079581
+                ],
+                [
+                    2017,
+                    8.550603939
+                ],
+                [
+                    2030,
+                    8.402131678
+                ],
+                [
+                    2050,
+                    7.980507627
+                ],
+                [
+                    2100,
+                    6.366144247
+                ]
+            ],
+            "type": "area",
+            "marker": {
+                "enabled": false
+            },
+            "name": "Latin America and the Caribbean"
+        },
+        {
+            "data": [
+                [
+                    1950,
+                    9.015974602
+                ],
+                [
+                    2017,
+                    16.63873386
+                ],
+                [
+                    2030,
+                    19.92162736
+                ],
+                [
+                    2050,
+                    25.86576997
+                ],
+                [
+                    2100,
+                    39.94493028
+                ]
+            ],
+            "type": "area",
+            "marker": {
+                "enabled": false
+            },
+            "name": "Africa"
+        }
+    ],
+    "chart": {
+        "zoomType": "x"
+    },
+    "title": {
+        "text": "Distribution of world population by continent"
+    },
+    "subtitle": {
+        "text": "UN World Population Prospect (2017)"
+    },
+    "plotOptions": {
+        "series": {
+            "stacking": "percent"
+        }
+    },
+    "yAxis": {
+        "labels": {
+            "format": "{value}%"
+        }
+    },
+    "tooltip": {
+        "shared": true,
+        "valueDecimals": 1,
+        "valueSuffix": "%"
+    },
+    "xAxis": {
+        "plotBands": [
+            {
+                "color": "rgba(200,200,200,0.2)",
+                "zIndex": 20,
+                "label": {
+                    "text": "forecast",
+                    "style": {
+                        "color": "white"
+                    }
+                },
+                "from": 2020,
+                "to": 2100
+            }
+        ]
+    }
+}
