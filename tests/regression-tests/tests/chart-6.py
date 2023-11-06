@@ -57,7 +57,7 @@ def regress(regression):
     )
     chart.plot(pivot["0%"], name="min", dashstyle="dot", color="black")
     chart.plot(pivot["100%"], name="max", dashstyle="dot", color="black")
-    chart.plot(pivot[2019], name="2019")
-    chart.plot(pivot[2020], name="2020")
+    chart.plot(pivot[2019].round(4), name="2019")
+    chart.plot(pivot[2020].round(4), name="2020")
 
     regression.check(chart.serialize())
