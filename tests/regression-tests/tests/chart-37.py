@@ -12,7 +12,7 @@ def regress(regression):
     # recessions is a pd.DataFrame of the peak and trough dates
     # of US recessions since 1854, from the NBER
     res = requests.get("http://data.nber.org/data/cycles/business_cycle_dates.json")
-    recessions = pd.DataFrame(res.json()).map(lambda d: pd.Timestamp(d))[1:]
+    recessions = pd.DataFrame(res.json()).applymap(lambda d: pd.Timestamp(d))[1:]
 
     chart = easychart.new(datetime=True, title="US unemployment rate", zoom="x")
     chart.subtitle = "Source: Federal Reserve (FRED)"
