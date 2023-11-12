@@ -34,10 +34,12 @@ Open up a new Jupyter notebook and start creating your charts:
    contents/introduction
    contents/examples/index
    contents/plotting-with-pandas
+   contents/dimensions
    contents/extensions
    contents/themes
    contents/API
    contents/changelog
+   contents/about
 
 Source
 -------------------------------------
