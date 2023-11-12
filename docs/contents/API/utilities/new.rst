@@ -1,5 +1,4 @@
 easychart.new
 =============
 
-.. automodule:: easychart
-    :members: new
+.. autofunction:: easychart.new

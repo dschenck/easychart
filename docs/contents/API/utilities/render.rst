@@ -1,5 +1,4 @@
 easychart.render
 ================
 
-.. automodule:: easychart
-    :members: render
+.. autofunction:: easychart.render

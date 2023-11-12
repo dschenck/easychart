@@ -72,221 +72,430 @@ class SeriesCollection(easytree.list):
 class Chart(easytree.dict):
     """
     A Highchart chart configuration
-
-    The :code:`Chart` object comes with convenience setters to make it easier and faster to create charts:
-
-    \- setting a string to :code:`chart.type` will assign the value to the :code:`chart.chart.type` attribute.
-    ::
-
-        #equivalent to chart.chart.type = "column"
-        chart.type = "column"
-
-    \- setting a value to :code:`chart.height` will assign the value to the :code:`chart.chart.height` attribute.
-    ::
-
-        #equivalent to chart.chart.height = "400px"
-        chart.height = "400px"
-
-    \- setting a value to :code:`chart.width` will assign the value to the :code:`chart.chart.width` attribute.
-    ::
-
-        #equivalent to chart.chart.width = "400px"
-        chart.width = "400px"
-
-    \- setting a string to :code:`chart.title` will assign the value to the :code:`chart.title.text` attribute.
-    ::
-
-        #equivalent to chart.title.text = "Chart title"
-        chart.title = "Chart title"
-
-    \- setting a string to :code:`chart.subtitle` will assign the value to the :code:`chart.subtitle.text` attribute.
-    ::
-
-        #equivalent to chart.subtitle.text = "Chart subtitle"
-        chart.subtitle = "Chart subtitle"
-
-    \- setting :code:`chart.datetime` equal to :code:`True` will set the xAxis' type equal to :code:`"datetime"`
-    ::
-
-        #equivalent to chart.xAxis.type = "datetime"
-        chart.datetime = True
-
-    \- setting an iterable (list, tuple...) to :code:`chart.categories` will assign the value to :code:`chart.xAxis.categories`.
-    ::
-
-        #equivalent to chart.xAxis.categories = ["Paris","New York","Nairobi"]
-        chart.categories = ["Paris","New York","Nairobi"]
-
-    \- setting :code:`None`, :code:`"x"`, :code:`"y"` or :code:`"xy"` to :code:`chart.zoom` will assign the value to the :code:`chart.chart.zoomType` attribute.
-    ::
-
-        #equivalent to chart.chart.zoomType = "xy"
-        chart.zoom = "xy"
-
-    \- setting a boolean to :code:`chart.tooltip` will enable or disable the tooltip.
-    ::
-
-        #equivalent to chart.tooltip.enabled = False
-        chart.tooltip = False
-
-    \- setting :code:`"shared"` to :code:`chart.tooltip` will set :code:`chart.tooltip.shared = True`.
-    ::
-
-        #equivalent to chart.tooltip.shared = True
-        chart.tooltip = "shared"
-
-    \- setting a label format string to :code:`chart.tooltip` will format the decimals, prefix and suffix.
-    ::
-
-        chart.tooltip = "${value:.2f} per unit"
-
-        #is equivalent to...
-        chart.tooltip.valuePrefix = "$"
-        chart.tooltip.valueSuffix = " per unit"
-        chart.tooltip.valueDecimals = 2
-
-    \- setting a tuple of values to the :code:`chart.tooltip` will set each value to the toolip attribute, as per the above rules.
-    ::
-
-        chart.tooltip = ("shared", "{value}mm")
-
-        #is equivalent to...
-        chart.tooltip.shared = True
-        chart.tooltip.valueSuffix = "mm"
-
-    \- setting a boolean to :code:`chart.legend` will enable or disable the legend
-    ::
-
-        #equivalent to chart.legend.enabled = False
-        chart.legend = False
-
-    \- setting one of :code:`None`, :code:`"percent"` or :code:`"normal"` to :code:`chart.stacking` will affect the value to :code:`chart.plotOptions.series.stacking`.
-    ::
-
-        #equivalent to chart.plotOptions.series.stacking = "percent"
-        chart.stacking = "percent"
-
-    \- setting :code:`True` to :code:`chart.inverted` will invert the chart
-    ::
-
-        #equivalent to self.chart.inverted = True
-        chart.inverted = True
-
-    \- setting :code:`True` or :code:`False` to :code:`chart.marker` will enable or disable series markers
-    ::
-
-        #equivalent to chart.plotOptions.series.marker.enabled = True
-        chart.marker = True
-
-    \- setting a non-boolean value to :code:`chart.marker` will assign that value to the series' marker property
-    ::
-
-        #equivalent to chart.plotOptions.series.marker = value
-        chart.marker = value
-
-    \- setting a boolean value to :code:`chart.datalabels`  or :code:`chart.labels` will enable or disable the chart data labels
-    ::
-
-        #equivalent to chart.plotOptions.series.dataLabels.enabled = True
-        chart.datalabels = True
-
-    \- setting a string to :code:`chart.datalabels` or :code:`chart.labels` will assign the value as the format of the data labels
-    ::
-
-        #equivalent to chart.plotOptions.series.dataLabels.format = value
-        chart.labels = "{value}%
     """
 
     def __init__(self):
         self.series = SeriesCollection([])
 
     def __setattr__(self, name, value):
-        if hasattr(self.__class__, f"set_{name}"):
-            getattr(self, f"set_{name}")(value)
-            return
+        if hasattr(self.__class__, name) and getattr(self.__class__, name).fset:
+            return getattr(Chart, name).fset(self, value)
         return super().__setattr__(name, value)
 
-    def set_type(self, value):
+    @property
+    def categories(self):
         """
-        Shortcut for self.chart.type = value
-        """
-        self.chart.type = value
+        Get or set the xAxis categories
 
-    def set_height(self, value):
-        """
-        Shortcut for self.chart.height = value
-        """
-        self.chart.height = value
+        .. note::
 
-    def set_width(self, value):
-        """
-        Shortcut for self.chart.width = value
+            See `Highcharts API <https://api.highcharts.com/highcharts/xAxis.categories>`_
 
-        Note
-        ----
-        Chart width must be expressed as a number (of pixels)
-        """
-        if isinstance(internals.Size(value), internals.Size.Percentage):
-            warnings.warn(
-                "Setting chart.chart.width in percentages (e.g. 50%) is deprecated and will be disallowed in future versions. Use pixels (e.g. 400px) instead",
-                DeprecationWarning,
-                stacklevel=2,
-            )
+        :getter: Return the xAxis categories (if defined)
 
-        self.chart.width = int(internals.Size(value).resolve("600px"))
+            :returns: list
 
-    def set_title(self, value):
-        """
-        Shortcut for self.title.text = value
-        """
-        if isinstance(value, str):
-            self.title.text = value
-            return
-        return super().__setattr__("title", value)
+        :setter: Set the xAxis categories
 
-    def set_subtitle(self, value):
+            :accepts: iterable
         """
-        Shortcut for self.subtitle.text = value
-        """
-        if isinstance(value, str):
-            self.subtitle.text = value
-            return
-        return super().__setattr__("subtitle", value)
+        return self.xAxis.categories
 
-    def set_categories(self, value):
+    @categories.setter
+    def categories(self, value):
         """
-        Shortcut for self.xAxis.categories = value
+        See :code:`Chart.categories`
         """
         self.xAxis.categories = value
 
-    def set_zoom(self, value):
+    @property
+    def datetime(self):
         """
-        Shortcut for self.chart.zoomType = value
-        """
-        if isinstance(value, str) and value.lower() in ["x", "y", "xy"]:
-            self.chart.zoomType = value.lower()
-            return
-        if isinstance(value, bool) and value == True:
-            self.chart.zoomType = "xy"
-            return
-        raise ValueError(f"Unexpected value for zoom ({value})")
+        Get or set whether the xAxis is a datetime axis
 
-    def set_tooltip(self, value):
+        :getter: Returns whether the xAxis is a datetime axis
+
+            :returns: bool
+
+        :setter: Sets whether the xAxis is a datetime axis
+
+            :accepts: bool
         """
-        Shortcut for tooltip
+        return self.xAxis.type == "datetime"
+
+    @datetime.setter
+    def datetime(self, value):
+        """
+        See :code:`Chart.datetime`
+        """
+        if isinstance(value, bool):
+            if value is True:
+                self.xAxis.type = "datetime"
+            else:
+                self.xAxis.type = None
+        raise ValueError("Expected datetime to be True or False, received {value}")
+
+    @property
+    def datalabels(self):
+        """
+        Get or set data labels options
+        """
+        return self.plotOptions.series.dataLabels
+
+    @datalabels.setter
+    def datalabels(self, value):
+        """
+        See above
+        """
+        if isinstance(value, tuple):
+            for element in value:
+                self.datalabels = element
+            return
+
+        if isinstance(value, bool):
+            self.plotOptions.series.dataLabels.enabled = value
+
+        elif isinstance(value, str):
+            self.plotOptions.series.dataLabels.enabled = True
+            self.plotOptions.series.dataLabels.format = value
+
+        else:
+            self.plotOptions.series.dataLabels = value
+
+    @property
+    def decimals(self):
+        """
+        Returns the number of tooltip decimals
+
+        :getter: Return the number of tooltip decimals
+
+            :returns: int
+
+        :setter: Set the number of tooltip decimals
+
+            :accepts: int
+        """
+        return self.tooltip.get("valueDecimals")
+
+    @decimals.setter
+    def decimals(self, value):
+        """
+        See :code:`Chart.decimals`
+        """
+        if isinstance(value, int):
+            self.tooltip.valueDecimals = value
+        else:
+            raise ValueError("Expected decimals to be an integer, received '{value}")
+
+    @property
+    def exporting(self):
+        """
+        Get or set the exporting options
+        """
+        return super().__getattr__("exporting")
+
+    @exporting.setter
+    def exporting(self, value):
+        """
+        See :code:`exporting`
+        """
+        if isinstance(value, bool):
+            self.exporting.enabled = value
+        else:
+            self.exporting = value
+
+    @property
+    def height(self):
+        """
+        Get or set the chart height
+
+        :getter: Return the chart height
+
+            .. note::
+
+                alias for :code:`chart.chart.height`
+
+            :returns: int, str
+
+        :setter: Set the chart height
+
+            :accepts: int, str
+
+            .. note::
+
+                The chart height can be provided as a number of pixels,
+                a string representing a number of pixels (e.g. :code:`"400px"`)
+                or a percentage (e.g. :code:`50%`) of the chart width
+        """
+        return self.chart.get("height")
+
+    @height.setter
+    def height(self, value):
+        """
+        See :code:`chart.height`
+        """
+        self.chart.height = value
+
+    @property
+    def inverted(self):
+        """
+        Get or set whether the chart is inverted
+        """
+        return self.chart.inverted
+
+    @inverted.setter
+    def inverted(self, value):
+        """
+        See :code:`Chart.inverted`
+        """
+        self.chart.inverted = value
+
+    @property
+    def labels(self):
+        """
+        Alias for :code:`Chart.datalabels`
+        """
+        return self.datalabels
+
+    @labels.setter
+    def labels(self, value):
+        """
+        Alias for :code:`Chart.datalabels`
+        """
+        self.datalabels = value
+
+    @property
+    def legend(self):
+        """
+        Get or set the legend
+
+        :getter: Return the legend configuration
+
+            :returns: dict
+
+        :setter: Set the legend configuration
+
+            :accepts: bool, dict
+
+            .. note::
+
+                If given a boolean value, sets the :code:`legend.enabled` value
+
+                Otherwise, sets the value as is
+        """
+        return super().__getattr__("legend")
+
+    @legend.setter
+    def legend(self, value):
+        """
+        See :code:`Chart.legend`
+        """
+        if isinstance(value, bool):
+            self.legend.enabled = value
+        else:
+            super().__setattr__("legend", value)
+
+    @property
+    def marker(self):
+        """
+        Return marker options
+
+        :getter: Returns marker options
+
+            :returns: dict
+
+        :setter: Sets marker options
+
+            :accepts: bool, dict
+
+            .. note::
+
+                If given a boolean value, sets the :code:`marker.enabled` value
+
+                Otherwise, sets the value as is
+        """
+        return self.plotOptions.series.marker
+
+    @marker.setter
+    def marker(self, value):
+        """
+        See :code:`Chart.marker`
+        """
+        if isinstance(value, bool):
+            self.plotOptions.series.marker.enabled = value
+        elif value is None:
+            self.plotOptions.series.marker.enabled = False
+        else:
+            self.plotOptions.series.marker = value
+
+    @property
+    def stacked(self):
+        """
+        Alias for :code:`Chart.stacking`
+        """
+        return self.stacking
+
+    @stacked.setter
+    def stacked(self, value):
+        """
+        Alias for :code:`Chart.stacking`
+        """
+        self.stacking = value
+
+    @property
+    def stacking(self):
+        """
+        Get or set the stacking option
+        """
+        return self.plotOptions.series.get("stacking")
+
+    @stacking.setter
+    def stacking(self, value):
+        """
+        See :code:`Chart.stacking`
+        """
+        if isinstance(value, bool):
+            if value is True:
+                self.plotOptions.series.stacking = "normal"
+            else:
+                self.plotOptions.series.stacking = None
+        elif value in [None, "normal", "percent"]:
+            self.plotOptions.series.stacking = value
+        else:
+            raise ValueError(
+                f"Expected stacking to be one of 'percent', 'normal', True, False or None, received '{value}"
+            )
+
+    @property
+    def subtitle(self):
+        """
+        Get or set the chart subtitle
+
+        .. note::
+
+            See `Highcharts API <https://api.highcharts.com/highcharts/subtitle>`_ for full list of API options
+
+        :getter: Return the chart subtitle configuration (if defined)
+
+            :returns: dict
+
+        :setter: Set the chart subtitle
+
+            :accepts: str, dict
+
+            .. note::
+
+                If given a string, the value is set under :code:`subtitle.text`
+
+                Otherwise, the value is set as :code:`subtitle`
+
+            :example:
+            ::
+
+                >>> chart = easychart.new()
+                >>> chart.subtitle = "Source: USDA"
+                >>> chart.serialize()
+                {"subtitle":{"text":"Source: USDA"}}
+        """
+        return super().__getattr__("subtitle")
+
+    @subtitle.setter
+    def subtitle(self, value):
+        """
+        See :code:`Chart.subtitle`
+        """
+        if isinstance(value, str):
+            self.subtitle.text = value
+        else:
+            super().__setattr__("subtitle", value)
+
+    @property
+    def title(self):
+        """
+        Get or set the chart title
+
+        .. note::
+
+            See `Highcharts API <https://api.highcharts.com/highcharts/title>`_ for full list of API options
+
+        :getter: Return the chart title configuration (if defined)
+
+            :returns: dict
+
+        :setter: Set the chart title
+
+            :accepts: str, dict
+
+            .. note::
+
+                If given a string, the value is set under :code:`title.text`
+
+                Otherwise, the value is set as :code:`title`
+
+            :example:
+            ::
+
+                >>> chart = easychart.new()
+                >>> chart.title = "US Corn Acreage"
+                >>> chart.serialize()
+                {"title":{"text":"US Corn Acreage"}}
+        """
+        return super().__getattr__("title")
+
+    @title.setter
+    def title(self, value):
+        """
+        See :code:`Chart.title`
+        """
+        if isinstance(value, str):
+            self.title.text = value
+        else:
+            super().__setattr__("title", value)
+
+    @property
+    def tooltip(self):
+        """
+        Get or set tooltip configurations
+
+        :getter: Return the tooltip configuration
+
+            :returns: dict
+
+        :setter: Set the tooltip configuration
+
+            :accepts: str, bool, tuple, dict
+
+            .. note::
+
+                If given a boolean value, sets the :code:`tooltip.enabled` value
+
+                If given :code:`"shared"`, sets :code:`tooltip.shared = True`
+
+                If given a :code:`<prefix>{value:.4f}<suffix>`, parses it and sets
+                each of the :code:`tooltip.valuePrefix`, :code:`tooltip.valueDecimals`
+                and :code:`tooltipvalueSuffix`
+        """
+        return super().__getattr__("tooltip")
+
+    @tooltip.setter
+    def tooltip(self, value):
+        """
+        See :code:`Chart.tooltip`
         """
         if isinstance(value, tuple):
             for element in value:
                 self.tooltip = element
             return
+
         if isinstance(value, bool):
             self.tooltip.enabled = value
-            return
-        if value == "shared":
+
+        elif value == "shared":
             self.tooltip.shared = True
-            return
-        if isinstance(value, str):
+
+        elif isinstance(value, str):
             match = re.search(r"(^.+)?{(.+:?.+?)}(.+)?", value)
+
             if match:
                 if match.groups()[0] is not None:
                     self.tooltip.valuePrefix = match.groups()[0]
@@ -296,103 +505,126 @@ class Chart(easytree.dict):
                         self.tooltip.valueDecimals = int(submatch.groups()[0])
                 if match.groups()[2] is not None:
                     self.tooltip.valueSuffix = match.groups()[2]
-            return
-        super().__setattr__("tooltip", value)
+        else:
+            super().__setattr__("tooltip", value)
 
-    def set_decimals(self, value):
-        if isinstance(value, int):
-            self.tooltip.valueDecimals = value
-            return
-        raise ValueError(f"Unexpected value for tooltip decimals ({value})")
+    @property
+    def type(self):
+        """
+        Get or set the default series type
 
-    def set_legend(self, value):
-        """
-        Enable or disable the legend with a boolean
-        """
-        if isinstance(value, bool):
-            self.legend.enabled = value
-            return
-        super().__setattr__("legend", value)
+        :getter: Return the default series type
 
-    def set_stacking(self, value):
-        """
-        Set the stacking plot option
-        """
-        if value not in [None, "normal", "percent", True, False]:
-            raise ValueError(f"Unexpected stacking value ({value})")
-        if value is True:
-            self.plotOptions.series.stacking = "normal"
-            return
-        self.plotOptions.series.stacking = value
-        return
+            .. note::
 
-    def set_stacked(self, value):
-        """
-        Alias for stacking
-        """
-        self.stacking = value
-        return
+                alias for :code:`chart.chart.type`
 
-    def set_datetime(self, value):
-        """
-        Set the xAxis as a datetime axis
-        """
-        if isinstance(value, bool) and value == True:
-            self.xAxis.type = "datetime"
-            return
-        raise ValueError("Unexpected value for xAxis.type")
+            :returns: str
 
-    def set_marker(self, value):
-        """
-        Set the default marker
-        """
-        if isinstance(value, bool):
-            self.plotOptions.series.marker.enabled = value
-            return
-        if value is None:
-            self.plotOptions.series.marker.enabled = False
-            return
-        self.plotOptions.series.marker = value
+        :setter: Set the default series type
 
-    def set_inverted(self, value):
-        """
-        Alias for chart.chart.inverted
-        """
-        self.chart.inverted = value
-        return
+            :accepts: str
 
-    def set_datalabels(self, value):
-        """
-        Alias for chart.plotOptions.series.dataLabels
-        """
-        if isinstance(value, tuple):
-            for element in value:
-                self.datalabels = element
-            return
-        if isinstance(value, bool):
-            self.plotOptions.series.dataLabels.enabled = value
-            return
-        if isinstance(value, str):
-            self.plotOptions.series.dataLabels.enabled = True
-            self.plotOptions.series.dataLabels.format = value
-            return
-        self.plotOptions.series.dataLabels = value
-        return
+            .. note::
 
-    def set_labels(self, value):
-        """
-        Alias for chart.plotOptions.series.dataLabels
-        """
-        self.datalabels = value
-        return
+                alias for :code:`chart.chart.type = value`
 
-    def set_exporting(self, value):
         """
-        Alias for chart.exporting.enabled
+        return self.chart.get("type")
+
+    @type.setter
+    def type(self, value: str):
         """
-        if isinstance(value, bool):
-            self.exporting.enabled = value
-        return
+        See :code:`chart.type`
+        """
+        self.chart.type = value
+
+    @property
+    def width(self):
+        """
+        Get or set the chart width
+
+        :getter: Return the chart width
+
+            .. note::
+
+                alias for :code:`chart.chart.width`
+
+            :returns: int, str
+
+        :setter: Set the chart width
+
+            :accepts: int, str
+
+            .. note::
+
+                The chart width can be provided as a number of pixels,
+                a string representing a number of pixels (e.g. :code:`"400px"`)
+                or a percentage (e.g. :code:`50%`) of the default chart width
+                which is defined as :code:`600px`
+        """
+        return self.chart.width
+
+    @width.setter
+    def width(self, value):
+        """
+        See :code:`chart.width`
+        """
+        if isinstance(internals.Size(value), internals.Size.Percentage):
+            warnings.warn(
+                "Setting chart.chart.width in percentages (e.g. 50%) is deprecated and may be disallowed in future versions. Use pixels (e.g. 400px) instead",
+                DeprecationWarning,
+                stacklevel=2,
+            )
+
+        self.chart.width = int(internals.Size(value).resolve("600px"))
+
+    @property
+    def zoom(self):
+        """
+        Get or set the zoom type for the chart
+
+        .. admonition:: Proxy property
+
+            Alias for :code:`chart.zoomType`; see `here <https://api.highcharts.com/highcharts/chart.zooming.type>`_
+
+        :getter: Return the zoom type (if defined)
+
+            :returns: str
+
+        :setter: Set the xAxis categories
+
+            :accepts: str, bool
+
+            .. note::
+
+                If given a string, the value is set under :code:`chart.zoomType`
+
+                If given True (boolean), the value 'xy' is set under :code:`chart.zoomType`
+
+                If given False (boolean), the zoomType is set to :code:`None`
+
+        """
+        return self.chart.get("zoomType")
+
+    @zoom.setter
+    def zoom(self, value):
+        """
+        See :code:`Chart.zoom`
+        """
+        if isinstance(value, str) and value.lower() in ["x", "y", "xy"]:
+            self.chart.zoomType = value.lower()
+
+        elif isinstance(value, bool):
+            if value is True:
+                self.chart.zoomType = "xy"
+            else:
+                self.chart.zoomType = None
+
+        else:
+            raise ValueError(
+                f"Expected value for zoom to be one of 'x', 'y' or 'xy', received '{value}'"
+            )
 
     def append(self, data=None, **kwargs):
         """
@@ -402,7 +634,7 @@ class Chart(easytree.dict):
 
     def plot(self, data=None, **kwargs):
         """
-        Shortcut for :code:`chart.series.append(data, **kwargs)`
+        Plot data
 
         Returns
         --------
@@ -803,7 +1035,7 @@ class Plot:
         ------------
         chart : Chart
             chart
-        width : str (optional)
+        width : str
             width of the plot, expressed as a number of pixels or a percentage
             of the container width
         """

@@ -1,5 +1,4 @@
 easychart.plot
 ==============
 
-.. automodule:: easychart
-    :members: plot
+.. autofunction:: easychart.plot

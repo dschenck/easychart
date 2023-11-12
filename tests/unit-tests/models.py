@@ -46,3 +46,8 @@ def test_plot_width_changes_if_responsive():
     chart = easychart.Chart()
     plot = easychart.Plot(chart)
     assert plot.width == "100%"
+
+
+def test_chart_type():
+    chart = easychart.new("column")
+    assert chart.chart.type == "column"
