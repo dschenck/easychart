@@ -5,7 +5,7 @@ import easychart.ipynb
 import easychart.datasets
 import easychart.themes
 
-__version__ = "0.1.17"
+__version__ = "0.1.18"
 
 
 def new(
