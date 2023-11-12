@@ -1,72 +1,16 @@
 import easytree
 import pandas as pd
 import numpy as np
-import collections
 import simplejson
 import re
 import requests
 import warnings
 
+import easychart
 import easychart.encoders
 import easychart.internals as internals
 
-
-class SeriesCollection(easytree.list):
-    """
-    Series collection
-    """
-
-    @internals.alias("showInLegend", "legend")
-    @internals.alias("marker", "markers")
-    @internals.alias("lineWidth", "linewidth", "width", "lw")
-    @internals.alias("dashStyle", "dashstyle", "dash", "linestyle", "ls")
-    @internals.alias("visible", "active", "enabled")
-    @internals.alias("dataLabels", "datalabels", "labels")
-    @internals.alias("opacity", "alpha", "transparency")
-    @internals.alias("name", "label")
-    @internals.alias("color", "c")
-    @internals.alias("data", "y")
-    @internals.alias("index", "x")
-    def append(self, data=None, **kwargs):
-        if "marker" in kwargs:
-            if isinstance(kwargs["marker"], bool):
-                kwargs["marker"] = {"enabled": kwargs["marker"]}
-            elif kwargs["marker"] is None:
-                kwargs["marker"] = {"enabled": False}
-
-        if "dataLabels" in kwargs:
-            if isinstance(kwargs["dataLabels"], bool):
-                kwargs["dataLabels"] = {"enabled": kwargs.pop("dataLabels")}
-            elif isinstance(kwargs["dataLabels"], str):
-                kwargs["dataLabels"] = {
-                    "enabled": True,
-                    "format": kwargs.pop("dataLabels"),
-                }
-            else:
-                kwargs["dataLabels"] = kwargs.pop("dataLabels")
-
-        if isinstance(data, pd.Series):
-            if "name" not in kwargs:
-                kwargs["name"] = data.name
-
-        if isinstance(data, (pd.Series, pd.DataFrame)):
-            if "index" in kwargs:
-                if isinstance(kwargs["index"], collections.abc.Iterable):
-                    data = data.values.tolist()
-                elif isinstance(kwargs["index"], bool):
-                    if kwargs["index"] == False:
-                        data = data.values.tolist()
-                    if kwargs["index"] == True:
-                        data = data.reset_index().values.tolist()
-            else:
-                data = data.reset_index().values.tolist()
-
-        if "index" in kwargs and isinstance(kwargs["index"], collections.abc.Iterable):
-            data = [
-                internals.flatten(i, v) for (i, v) in zip(kwargs.pop("index"), data)
-            ]
-
-        return super().append(data=data, **kwargs)
+from .series import Series
 
 
 class Chart(easytree.dict):
@@ -75,7 +19,7 @@ class Chart(easytree.dict):
     """
 
     def __init__(self):
-        self.series = SeriesCollection([])
+        self.series = Series([])
 
     def __setattr__(self, name, value):
         if hasattr(self.__class__, name) and getattr(self.__class__, name).fset:
@@ -969,7 +913,7 @@ class Chart(easytree.dict):
         The width given in parameter sets the plot width, not the chart width. See notes on chart and plot sizing
         for more details
         """
-        return Grid([Plot(self, width=width)], theme=theme)
+        return easychart.Grid([easychart.Plot(self, width=width)], theme=theme)
 
     def save(self, filename, indent=4):
         """
@@ -1022,90 +966,3 @@ class Chart(easytree.dict):
         return simplejson.loads(
             simplejson.dumps(self, default=easychart.encoders.default, ignore_nan=True)
         )
-
-
-class Plot:
-    """
-    Individual chart container
-    """
-
-    def __init__(self, chart, *, width=None):
-        """
-        Parameters
-        ------------
-        chart : Chart
-            chart
-        width : str
-            width of the plot, expressed as a number of pixels or a percentage
-            of the container width
-        """
-        if isinstance(chart, Plot):
-            chart, width = chart.chart, width or chart.width
-
-        self.chart = chart
-        self.width = internals.Size(
-            width
-            or self.chart.get(
-                ["chart", "width"],
-                "100%" if easychart.config.rendering.responsive else "600px",
-            )
-        )
-
-    def serialize(self) -> dict:
-        """
-        Returns
-        -------
-        dict
-        """
-        return {
-            "chart": self.chart.serialize(),
-            "width": self.width,
-        }
-
-
-class Grid:
-    """
-    Grid of chart plots
-    """
-
-    def __init__(self, plots=None, *, width=None, theme=None):
-        """
-        Parameters
-        ------------------------
-        plots : list
-            list of individual plots
-
-        width : str
-            total width of grid, as pixels (e.g. "1280px")
-
-        theme : str, dict
-            theme name or dict of theme options
-        """
-        self.plots = [Plot(p) for p in (plots or [])]
-        self.theme = theme
-        self.width = internals.Size(width) if width is not None else width
-
-    def add(self, chart, *, width=None) -> None:
-        """
-        Adds a chart (or plot) to the grid
-
-        Parameters
-        ------------
-        width : str
-            width of the plot, expressed as a percentage of the grid width
-        """
-        if not isinstance(chart, Plot):
-            chart = Plot(chart, width=width)
-        self.plots.append(chart)
-
-    def serialize(self) -> dict:
-        """
-        Returns
-        -------
-        dict
-        """
-        return {
-            "plots": [plot.serialize() for plot in self.plots],
-            "theme": self.theme,
-            "width": self.width,
-        }
