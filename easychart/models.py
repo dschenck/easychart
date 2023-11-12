@@ -840,14 +840,14 @@ class Grid:
         """
         Parameters
         ------------------------
-        plots : list (optional)
+        plots : list
             list of individual plots
 
-        width : str (optional)
+        width : str
             total width of grid, as pixels (e.g. "1280px")
 
-        theme : dict (optional)
-            dictionary of global options (theme)
+        theme : str, dict
+            theme name or dict of theme options
         """
         self.plots = [Plot(p) for p in (plots or [])]
         self.theme = theme
@@ -859,7 +859,7 @@ class Grid:
 
         Parameters
         ------------
-        width : str (optional)
+        width : str
             width of the plot, expressed as a percentage of the grid width
         """
         if not isinstance(chart, Plot):
