@@ -70,7 +70,12 @@
                     document.getElementById("root").appendChild(container)
 
                     try{
-                        var chart = Highcharts.chart(`container[${i}]`, plot.chart);
+                        if(plot.chart.chart && plot.chart.chart.type == "map"){
+                            var chart = Highcharts.mapChart(`container[${i}]`, plot.chart);
+                        }
+                        else {
+                            var chart = Highcharts.chart(`container[${i}]`, plot.chart);
+                        }
                     }
                     catch(error){
                         document.getElementById("root").removeChild(container);

@@ -1,0 +1,31 @@
+easychart.Chart
+---------------
+
+.. autoclass:: easychart.Chart
+    :members: 
+        categories, 
+        datalabels, 
+        datetime, 
+        decimals, 
+        exporting, 
+        height, 
+        inverted, 
+        legend, 
+        marker, 
+        stacked, 
+        subtitle,
+        title, 
+        tooltip, 
+        type, 
+        width, 
+        zoom,
+        annotate, 
+        export, 
+        hband, 
+        hline, 
+        plot, 
+        serialize, 
+        save, 
+        show, 
+        vband,
+        vline

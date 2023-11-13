@@ -51,7 +51,7 @@ html_theme = "furo"
 # so a file named "default.css" will overwrite the builtin "default.css".
 html_static_path = ["static"]
 
-html_js_files = ["index-6759aa50.js"]
+html_js_files = ["index-eefeb6a3.js"]
 html_css_files = ["style.css"]
 
 html_logo = "static/logo.svg"

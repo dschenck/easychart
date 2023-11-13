@@ -10,7 +10,7 @@ def test_initialization():
 def test_series():
     chart = easychart.new()
     assert isinstance(chart, easychart.Chart)
-    assert isinstance(chart.series, easychart.models.SeriesCollection)
+    assert isinstance(chart.series, easychart.models.Series)
 
 
 def test_chart_show():
@@ -46,3 +46,8 @@ def test_plot_width_changes_if_responsive():
     chart = easychart.Chart()
     plot = easychart.Plot(chart)
     assert plot.width == "100%"
+
+
+def test_chart_type():
+    chart = easychart.new("column")
+    assert chart.chart.type == "column"

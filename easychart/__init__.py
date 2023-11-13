@@ -5,7 +5,7 @@ import easychart.ipynb
 import easychart.datasets
 import easychart.themes
 
-__version__ = "0.1.17"
+__version__ = "0.1.18"
 
 
 def new(
@@ -22,12 +22,16 @@ def new(
     yformat=None,
     ymin=None,
     ymax=None,
+    xmin=None,
+    xmax=None,
     legend=None,
     categories=None,
     stacked=None,
     width=None,
     height=None,
-    exporting=None
+    exporting=None,
+    xtype=None,
+    ytype=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -36,28 +40,61 @@ def new(
     ------------------
     type : str
         the default type of series
-    datetime : boolean
+
+    datetime : bool
         sets the x-axis as a datetime axis
+
     zoom : str
         one of None, "x", "y" or "xy"
+
     tooltip : str
         one of None or "shared"
+
     title : str
-        title of the chart
+        title text of the chart
+
     subtitle : str
-        subtitle of the chart
+        subtitle text of the chart
+
     xtitle : str
         x-axis title
+
     ytitle : str
         y-axis title
+
     xformat : str
         format of the x-axis labels
+
     yformat : str
         format of the y-axis labels
+
     ymin : float
         minimum of the y-axis
+
     ymax : float
         maximum of the y-axis
+
+    stacked : bool
+        True to stack the series, False otherwise
+
+    width : int
+        The chart width, in pixels
+
+    height : int or str
+        The chart height, in pixels, or in percentage of the chart width
+
+    exporting : bool
+        True to enable exporting menu on chart, False to disable
+
+    xtype : str
+        The axis type for the x-axis
+
+    ytype : str
+        The axis type for the y-axis
+
+    Returns
+    -------
+    easychart.Chart
     """
 
     chart = Chart()
@@ -98,6 +135,12 @@ def new(
     if ymax is not None:
         chart.yAxis.max = ymax
 
+    if xmin is not None:
+        chart.xAxis.min = xmin
+
+    if xmax is not None:
+        chart.xAxis.max = xmax
+
     if legend is not None:
         chart.legend = legend
 
@@ -116,49 +159,89 @@ def new(
     if exporting is not None:
         chart.exporting = exporting
 
+    if xtype is not None:
+        chart.xAxis.type = xtype
+
+    if ytype is not None:
+        chart.yAxis.type = ytype
+
     return chart
 
 
 def plot(data, **kwargs):
     """
     Convenience method to create a chart and append a series
+
+    Parameters
+    ----------
+    data : list, pd.Series, pd.DataFrame
+        See Chart.plot
+
+    kwargs
+        additional keyword arguments passed to :code:`easychart.new` (if a
+        key-word argument exists) or to :code:`Chart.plot` otherwise
+
+    Returns
+    -------
+    easychart.Chart
     """
     if isinstance(data, Chart):
-        return render(
-            data,
-            **{
-                key: value
-                for key, value in kwargs.items()
-                if key in {"width", "height", "theme"}
-            }
-        )
+        return render(data, width=kwargs.get("width"), theme=kwargs.get("theme"))
 
     chartkwargs = {
         k: v
         for k, v in kwargs.items()
         if k
         in [
+            "type",
             "datetime",
             "zoom",
+            "tooltip",
             "title",
             "subtitle",
-            "tooltip",
             "xtitle",
             "ytitle",
-            "height",
+            "xformat",
+            "yformat",
+            "ymin",
+            "ymax",
+            "xmin",
+            "xmax",
+            "legend",
+            "categories",
+            "stacked",
             "width",
+            "height",
+            "exporting",
+            "xtype",
+            "ytype",
         ]
     }
     serieskwargs = {k: v for k, v in kwargs.items() if k not in chartkwargs}
 
     chart = new(**chartkwargs)
-    chart.series.append(data, **serieskwargs)
+    chart.plot(data, **serieskwargs)
     return chart
 
 
 def render(*charts, width=None, theme=None):
     """
     Render one or several charts or a grid thereof to the jupyter notebook
+
+    Parameters
+    ---------
+    charts : list of Chart
+        list of charts
+
+    width : int, str
+        each plots's width
+
+    theme : str, dict
+        the theme name
+
+    Returns
+    -------
+    easychart.Grid
     """
     if len(charts) == 1 and isinstance(charts[0], Grid):
         return charts[0]
