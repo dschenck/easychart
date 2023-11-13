@@ -32,7 +32,7 @@ class Chart(easytree.dict):
         Get or set the xAxis categories.
 
         Categories are names used instead of number for categorical charts. Each category
-        name is mapped to a number, with the first element assigned the value of 1.
+        name is mapped to a number, with the first element assigned the value of 0.
 
         .. note::
 
