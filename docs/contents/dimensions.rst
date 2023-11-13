@@ -5,7 +5,7 @@ Chart dimensions
 
     New and updated in version 0.0.17
 
-By default, charts are rendered with a default width of :code:`600px` and height of :code:`400px` in the Jupyter notebook.
+By default, charts are rendered in the Jupyter notebook with a default width of :code:`600px` and height of :code:`400px`.
 
 .. hint::
     
@@ -17,7 +17,7 @@ The chart :code:`width` and :code:`height` can be provided as arguments to the :
     >>> import easychart
     >>> chart = easychart.new(width=900, height=600) # pixels or percentages
 
-... or set as proxy properties to the :code:`chart` object:
+... or set as properties to the :code:`chart` object:
 ::
 
     >>> chart = easychart.new()
@@ -51,7 +51,7 @@ Responsive rendering
 ====================
 With responsive rendering, the chart :code:`width` shrinks and grows to fill the available space that it is provided with by its parent container. 
 
-To enable responsive rendering, simply amend the the easychart config as follows: 
+To enable responsive rendering, simply amend the easychart config as follows: 
 ::
 
     easychart.config.rendering.responsive = True # False to revert 

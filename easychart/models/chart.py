@@ -29,13 +29,26 @@ class Chart(easytree.dict):
     @property
     def categories(self):
         """
-        Get or set the xAxis categories
+        Get or set the xAxis categories.
+
+        Categories are names used instead of number for categorical charts. Each category
+        name is mapped to a number, with the first element assigned the value of 1.
 
         .. note::
 
-            See `Highcharts API <https://api.highcharts.com/highcharts/xAxis.categories>`_
+            Alias for :code:`chart.xAxis.categories`. See `Highcharts API <https://api.highcharts.com/highcharts/xAxis.categories>`_
+            for additional details on the xAxis categories
 
-        :getter: Return the xAxis categories (if defined)
+        :Example:
+        ::
+
+            >>> import easychart
+
+            >>> chart = easychart.new("column")
+            >>> chart.categories = ["France","UK"]
+            >>> chart.plot([10, 20])
+
+        :getter: Return the xAxis categories (if any)
 
             :returns: list
 
@@ -51,6 +64,55 @@ class Chart(easytree.dict):
         See :code:`Chart.categories`
         """
         self.xAxis.categories = value
+
+    @property
+    def datalabels(self):
+        """
+        Get or set data labels options
+
+        .. note::
+
+            Alias for :code:`chart.plotOptions.series.dataLabels`. See  `Highcharts API
+            <https://api.highcharts.com/highcharts/plotOptions.series.dataLabels>`_
+            for additional details on data labels
+
+        :getter: Return the datalabel options (if any)
+
+            :returns: dict
+
+        :setter: Set the datalabel options
+
+            :accepts: bool, str, tuple, dict
+
+            .. note::
+
+                - If given a bool, value is assigned to :code:`chart.plotOptions.series.dataLabels.enabled`
+                - If given a str, value is assigned to :code:`chart.plotOptions.series.dataLabels.format`
+                - If given a dict, value is assigned as is
+                - If given a tuple, values are iteratively assigned as described above
+
+        """
+        return self.plotOptions.series.dataLabels
+
+    @datalabels.setter
+    def datalabels(self, value):
+        """
+        See above
+        """
+        if isinstance(value, tuple):
+            for element in value:
+                self.datalabels = element
+            return
+
+        if isinstance(value, bool):
+            self.plotOptions.series.dataLabels.enabled = value
+
+        elif isinstance(value, str):
+            self.plotOptions.series.dataLabels.enabled = True
+            self.plotOptions.series.dataLabels.format = value
+
+        else:
+            self.plotOptions.series.dataLabels = value
 
     @property
     def datetime(self):
@@ -78,33 +140,6 @@ class Chart(easytree.dict):
             else:
                 self.xAxis.type = None
         raise ValueError("Expected datetime to be True or False, received {value}")
-
-    @property
-    def datalabels(self):
-        """
-        Get or set data labels options
-        """
-        return self.plotOptions.series.dataLabels
-
-    @datalabels.setter
-    def datalabels(self, value):
-        """
-        See above
-        """
-        if isinstance(value, tuple):
-            for element in value:
-                self.datalabels = element
-            return
-
-        if isinstance(value, bool):
-            self.plotOptions.series.dataLabels.enabled = value
-
-        elif isinstance(value, str):
-            self.plotOptions.series.dataLabels.enabled = True
-            self.plotOptions.series.dataLabels.format = value
-
-        else:
-            self.plotOptions.series.dataLabels = value
 
     @property
     def decimals(self):
@@ -135,6 +170,19 @@ class Chart(easytree.dict):
     def exporting(self):
         """
         Get or set the exporting options
+
+        :getter: Return the exporting options
+
+            :returns: int
+
+        :setter: Set the exporting options
+
+            :accepts: bool, dict
+
+            .. note::
+
+                - If given a bool, value is assigned to :code:`chart.exporting.enabled`
+                - If given a dict, value is assigned as is
         """
         return super().__getattr__("exporting")
 
@@ -153,11 +201,11 @@ class Chart(easytree.dict):
         """
         Get or set the chart height
 
+        .. note::
+
+            alias for :code:`chart.chart.height`
+
         :getter: Return the chart height
-
-            .. note::
-
-                alias for :code:`chart.chart.height`
 
             :returns: int, str
 
@@ -184,6 +232,18 @@ class Chart(easytree.dict):
     def inverted(self):
         """
         Get or set whether the chart is inverted
+
+        .. note::
+
+            alias for :code:`chart.chart.inverted`
+
+        :getter: Return whether the chart is inverted
+
+            :returns: bool
+
+        :setter: Set whether the chart is inverted
+
+            :accepts: bool
         """
         return self.chart.inverted
 
@@ -223,9 +283,8 @@ class Chart(easytree.dict):
 
             .. note::
 
-                If given a boolean value, sets the :code:`legend.enabled` value
-
-                Otherwise, sets the value as is
+                - If given a bool, value is assigned to :code:`chart.legend.enabled`
+                - If given a dict, value is assigned to :code:`chart.legend`
         """
         return super().__getattr__("legend")
 
@@ -254,9 +313,9 @@ class Chart(easytree.dict):
 
             .. note::
 
-                If given a boolean value, sets the :code:`marker.enabled` value
-
-                Otherwise, sets the value as is
+                - If given a bool, value is assigned to :code:`chart.plotOptions.series.marker.enabled`
+                - If given None, assigns False to :code:`chart.plotOptions.series.marker.enabled`
+                - If given a dict, value is assigned to :code:`chart.plotOptions.series.marker`
         """
         return self.plotOptions.series.marker
 
@@ -275,14 +334,14 @@ class Chart(easytree.dict):
     @property
     def stacked(self):
         """
-        Alias for :code:`Chart.stacking`
+        Alias for :code:`Chart.plotOptions.series.stacking`
         """
         return self.stacking
 
     @stacked.setter
     def stacked(self, value):
         """
-        Alias for :code:`Chart.stacking`
+        See :code:`Chart.plotOptions.series.stacking`
         """
         self.stacking = value
 
@@ -317,9 +376,10 @@ class Chart(easytree.dict):
 
         .. note::
 
-            See `Highcharts API <https://api.highcharts.com/highcharts/subtitle>`_ for full list of API options
+            See `Highcharts API <https://api.highcharts.com/highcharts/subtitle>`_ for
+            full list of available options
 
-        :getter: Return the chart subtitle configuration (if defined)
+        :getter: Return the chart subtitle configuration (if any)
 
             :returns: dict
 
@@ -329,9 +389,8 @@ class Chart(easytree.dict):
 
             .. note::
 
-                If given a string, the value is set under :code:`subtitle.text`
-
-                Otherwise, the value is set as :code:`subtitle`
+                - If given a str, assigns the value to :code:`chart.subtitle.text`
+                - If given a dict, assigns the value to :code:`chart.subtitle`
 
             :example:
             ::
@@ -360,7 +419,8 @@ class Chart(easytree.dict):
 
         .. note::
 
-            See `Highcharts API <https://api.highcharts.com/highcharts/title>`_ for full list of API options
+            See `Highcharts API <https://api.highcharts.com/highcharts/title>`_ for
+            full list of available options
 
         :getter: Return the chart title configuration (if defined)
 
@@ -372,9 +432,8 @@ class Chart(easytree.dict):
 
             .. note::
 
-                If given a string, the value is set under :code:`title.text`
-
-                Otherwise, the value is set as :code:`title`
+                - If given a str, assigns the value to :code:`chart.title.text`
+                - If given a dict, assigns the value to :code:`chart.title`
 
             :example:
             ::
@@ -411,13 +470,9 @@ class Chart(easytree.dict):
 
             .. note::
 
-                If given a boolean value, sets the :code:`tooltip.enabled` value
-
-                If given :code:`"shared"`, sets :code:`tooltip.shared = True`
-
-                If given a :code:`<prefix>{value:.4f}<suffix>`, parses it and sets
-                each of the :code:`tooltip.valuePrefix`, :code:`tooltip.valueDecimals`
-                and :code:`tooltipvalueSuffix`
+                - If given a bool, assigns the value to :code:`chart.tooltip.enabled`
+                - If given :code:`"shared"`, sets :code:`tooltip.shared = True`
+                - If given a str of the form :code:`<prefix>{value:.4f}<suffix>`, parses it and sets each of the :code:`tooltip.valuePrefix`, :code:`tooltip.valueDecimals` and :code:`tooltipvalueSuffix`
         """
         return super().__getattr__("tooltip")
 
@@ -457,22 +512,17 @@ class Chart(easytree.dict):
         """
         Get or set the default series type
 
+        .. note::
+
+            alias for :code:`chart.chart.type`
+
         :getter: Return the default series type
-
-            .. note::
-
-                alias for :code:`chart.chart.type`
 
             :returns: str
 
         :setter: Set the default series type
 
             :accepts: str
-
-            .. note::
-
-                alias for :code:`chart.chart.type = value`
-
         """
         return self.chart.get("type")
 
@@ -488,11 +538,11 @@ class Chart(easytree.dict):
         """
         Get or set the chart width
 
+        .. note::
+
+            alias for :code:`chart.chart.width`
+
         :getter: Return the chart width
-
-            .. note::
-
-                alias for :code:`chart.chart.width`
 
             :returns: int, str
 
@@ -528,25 +578,24 @@ class Chart(easytree.dict):
         """
         Get or set the zoom type for the chart
 
-        .. admonition:: Proxy property
+        .. note::
 
-            Alias for :code:`chart.zoomType`; see `here <https://api.highcharts.com/highcharts/chart.zooming.type>`_
+            Alias for :code:`chart.zoomType`; see `Highcharts API <https://api.highcharts.com/highcharts/chart.zooming.type>`_
+            for additional details on available options
 
         :getter: Return the zoom type (if defined)
 
             :returns: str
 
-        :setter: Set the xAxis categories
+        :setter: Set the zoom options
 
             :accepts: str, bool
 
             .. note::
 
-                If given a string, the value is set under :code:`chart.zoomType`
-
-                If given True (boolean), the value 'xy' is set under :code:`chart.zoomType`
-
-                If given False (boolean), the zoomType is set to :code:`None`
+                - If given a str, the value is set under :code:`chart.zoomType`
+                - If given True, the value 'xy' is set under :code:`chart.zoomType`
+                - If given False, the zoomType is set to :code:`None`
 
         """
         return self.chart.get("zoomType")
