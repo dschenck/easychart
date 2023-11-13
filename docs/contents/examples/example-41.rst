@@ -5,7 +5,7 @@ Map chart
     Experimental
 
 .. warning:: 
-    New in version 0.2.0
+    New in version 0.1.8
 
 .. note::
     Requires the `map` module:
