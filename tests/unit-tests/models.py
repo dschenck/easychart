@@ -51,3 +51,15 @@ def test_plot_width_changes_if_responsive():
 def test_chart_type():
     chart = easychart.new("column")
     assert chart.chart.type == "column"
+
+
+def test_chart_color_axis():
+    chart = easychart.new()
+    chart.cAxis = True
+    assert chart.colorAxis == {}
+    assert chart.cAxis == {}
+
+    chart = easychart.new()
+    chart.cAxis = {"minColor": 1, "maxColor": 2}
+    assert chart.colorAxis == {"minColor": 1, "maxColor": 2}
+    assert chart.cAxis == {"minColor": 1, "maxColor": 2}

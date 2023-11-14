@@ -66,6 +66,41 @@ class Chart(easytree.dict):
         self.xAxis.categories = value
 
     @property
+    def cAxis(self):
+        """
+        Get or set color axis configuration
+
+        .. note::
+
+            Alias for :code:`chart.colorAxis`. See `Highcharts API <https://api.highcharts.com/highcharts/colorAxis>`_
+            for additional details on the color axis
+
+        :getter: Return the colorAxis options (if any)
+
+            :returns: dict
+
+        :setter: Set the colorAxis options
+
+            :accepts: True, dict
+
+            .. note::
+
+                - If given True, assigns an empty dictionary to :code:`chart.colorAxis`
+                - If given a dict, assigns the valeu as is to :code:`chart.colorAxis`
+        """
+        return self.colorAxis
+
+    @cAxis.setter
+    def cAxis(self, value):
+        """
+        See above
+        """
+        if isinstance(value, bool) and value is True:
+            self.colorAxis = {}
+        else:
+            self.colorAxis = value
+
+    @property
     def datalabels(self):
         """
         Get or set data labels options
