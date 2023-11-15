@@ -63,3 +63,23 @@ def test_chart_color_axis():
     chart.cAxis = {"minColor": 1, "maxColor": 2}
     assert chart.colorAxis == {"minColor": 1, "maxColor": 2}
     assert chart.cAxis == {"minColor": 1, "maxColor": 2}
+
+
+def test_vline():
+    chart = easychart.new()
+    chart.vline(10)
+    assert chart.xAxis == {"plotLines": [{"value": 10, "color": "black"}]}
+
+    chart = easychart.new()
+    chart.vline(10, color="red")
+    assert chart.xAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+
+def test_hline():
+    chart = easychart.new()
+    chart.hline(10)
+    assert chart.yAxis == {"plotLines": [{"value": 10, "color": "black"}]}
+
+    chart = easychart.new()
+    chart.hline(10, color="red")
+    assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}
