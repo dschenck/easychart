@@ -74,6 +74,10 @@ def test_vline():
     chart.vline(10, color="red")
     assert chart.xAxis == {"plotLines": [{"value": 10, "color": "red"}]}
 
+    chart = easychart.new()
+    chart.vline(10, c="red")
+    assert chart.xAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
 
 def test_hline():
     chart = easychart.new()
@@ -82,4 +86,8 @@ def test_hline():
 
     chart = easychart.new()
     chart.hline(10, color="red")
+    assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+    chart = easychart.new()
+    chart.hline(10, c="red")
     assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}

@@ -4,6 +4,7 @@ from easychart.models import Chart, Plot, Grid
 import easychart.ipynb
 import easychart.datasets
 import easychart.themes
+import easychart.colormaps
 
 __version__ = "0.1.18"
 
