@@ -1,3 +1,4 @@
 include easychart/template.jinja
 include easychart/datasets/*
 include easychart/themes/*
+include easychart/colormaps/*
