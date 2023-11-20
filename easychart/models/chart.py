@@ -66,6 +66,51 @@ class Chart(easytree.dict):
         self.xAxis.categories = value
 
     @property
+    def cAxis(self):
+        """
+        Get or set color axis configuration
+
+        .. note::
+
+            Alias for :code:`chart.colorAxis`. See `Highcharts API <https://api.highcharts.com/highcharts/colorAxis>`_
+            for additional details on the color axis
+
+        :getter: Return the colorAxis options (if any)
+
+            :returns: dict
+
+        :setter: Set the colorAxis options
+
+            :accepts: True, dict
+
+            .. note::
+
+                - If given True, assigns an empty dictionary to :code:`chart.colorAxis`
+                - If given a str, loads and assigns the colormap to :code:`chart.colorAxis.stops`
+                - If given a dict, assigns the valeu as is to :code:`chart.colorAxis`
+        """
+        return self.colorAxis
+
+    @cAxis.setter
+    def cAxis(self, value):
+        """
+        See above
+        """
+        if isinstance(value, bool) and value is True:
+            self.colorAxis = {}
+        elif isinstance(value, str):
+            colormap = easychart.colormaps.get(value)
+
+            self.colorAxis = {
+                "stops": [
+                    (i / (len(colormap["colors"]) - 1), color)
+                    for i, color in enumerate(colormap["colors"])
+                ]
+            }
+        else:
+            self.colorAxis = value
+
+    @property
     def datalabels(self):
         """
         Get or set data labels options
@@ -637,7 +682,11 @@ class Chart(easytree.dict):
         self.series.append(data, **kwargs)
         return self
 
-    def vline(self, x, **kwargs):
+    @internals.alias("dashStyle", "linestyle", "ls")
+    @internals.alias("color", "c")
+    @internals.alias("width", "linewidth", "lw", "w")
+    @internals.alias("zIndex", "zindex", "zorder", "z")
+    def vline(self, x, *, color="black", **kwargs):
         """
         Adds a vertical line across the chart
 
@@ -646,14 +695,18 @@ class Chart(easytree.dict):
 
             self.xAxis.plotLines.append(value=x, **kwargs)
         """
-        if "color" not in kwargs:
-            kwargs["color"] = "black"
         if self.xAxis.type == "datetime":
             if isinstance(x, str):
                 x = pd.Timestamp(x)
-        self.xAxis.plotLines.append(value=x, **kwargs)
+        if "label" in kwargs and isinstance(kwargs["label"], str):
+            kwargs["label"] = {"text": kwargs["label"]}
+        self.xAxis.plotLines.append(value=x, color=color, **kwargs)
 
-    def hline(self, y, **kwargs):
+    @internals.alias("dashStyle", "linestyle", "ls")
+    @internals.alias("color", "c")
+    @internals.alias("width", "linewidth", "lw", "w")
+    @internals.alias("zIndex", "zindex", "zorder", "z")
+    def hline(self, y, *, color="black", **kwargs):
         """
         Adds a horizontal line across the chart
 
@@ -662,31 +715,32 @@ class Chart(easytree.dict):
 
             self.yAxis.plotLines.append(value=x, **kwargs)
         """
-        if "color" not in kwargs:
-            kwargs["color"] = "black"
-        self.yAxis.plotLines.append(value=y, **kwargs)
+        if "label" in kwargs and isinstance(kwargs["label"], str):
+            kwargs["label"] = {"text": kwargs["label"]}
+        self.yAxis.plotLines.append(value=y, color=color, **kwargs)
 
-    def vband(self, xmin, xmax, **kwargs):
+    def vband(self, xmin, xmax, *, color="rgba(68, 170, 213, 0.2)", **kwargs):
         """
         Adds a vertical band (mask) from xmin to xmax across the chart
         """
-        if "color" not in kwargs:
-            kwargs["color"] = "rgba(68, 170, 213, 0.2)"
         if self.xAxis.type == "datetime":
             if isinstance(xmin, str):
                 xmin = pd.Timestamp(xmin)
             if isinstance(xmax, str):
                 xmax = pd.Timestamp(xmax)
-        self.xAxis.plotBands.append(**{**kwargs, "from": xmin, "to": xmax})
+
+        self.xAxis.plotBands.append(
+            **{**kwargs, "from": xmin, "to": xmax, "color": color}
+        )
         return self
 
-    def hband(self, ymin, ymax, **kwargs):
+    def hband(self, ymin, ymax, *, color="rgba(68, 170, 213, 0.2)", **kwargs):
         """
         Adds a horizontal band (mask) from ymin to ymax across the chart
         """
-        if "color" not in kwargs:
-            kwargs["color"] = "rgba(68, 170, 213, 0.2)"
-        self.yAxis.plotBands.append(**{**kwargs, "from": ymin, "to": ymax})
+        self.yAxis.plotBands.append(
+            **{**kwargs, "from": ymin, "to": ymax, "color": color}
+        )
         return self
 
     def regress(self, y, x, intercept=True, **kwargs):

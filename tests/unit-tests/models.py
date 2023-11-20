@@ -51,3 +51,43 @@ def test_plot_width_changes_if_responsive():
 def test_chart_type():
     chart = easychart.new("column")
     assert chart.chart.type == "column"
+
+
+def test_chart_color_axis():
+    chart = easychart.new()
+    chart.cAxis = True
+    assert chart.colorAxis == {}
+    assert chart.cAxis == {}
+
+    chart = easychart.new()
+    chart.cAxis = {"minColor": 1, "maxColor": 2}
+    assert chart.colorAxis == {"minColor": 1, "maxColor": 2}
+    assert chart.cAxis == {"minColor": 1, "maxColor": 2}
+
+
+def test_vline():
+    chart = easychart.new()
+    chart.vline(10)
+    assert chart.xAxis == {"plotLines": [{"value": 10, "color": "black"}]}
+
+    chart = easychart.new()
+    chart.vline(10, color="red")
+    assert chart.xAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+    chart = easychart.new()
+    chart.vline(10, c="red")
+    assert chart.xAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+
+def test_hline():
+    chart = easychart.new()
+    chart.hline(10)
+    assert chart.yAxis == {"plotLines": [{"value": 10, "color": "black"}]}
+
+    chart = easychart.new()
+    chart.hline(10, color="red")
+    assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+    chart = easychart.new()
+    chart.hline(10, c="red")
+    assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}

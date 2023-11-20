@@ -5,7 +5,7 @@ name: testing
 
 on:
   push:
-    branches: ["latest"]
+    branches: ["*"]
   pull_request:
     branches: ["latest"]
 
@@ -15,7 +15,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        python-version: ["3.7", "3.8", "3.9", "3.10", "3.11", "3.12"]
+        python-version: ["3.8", "3.9", "3.10", "3.11", "3.12"]
 
     steps:
       - uses: actions/checkout@v3
@@ -28,6 +28,10 @@ jobs:
           python -m pip install --upgrade pip
           python -m pip install flake8 pytest coverage
           if [ -f requirements.txt ]; then pip install -r requirements.txt; fi
+      - name: blacken
+        uses: psf/black@stable
+        with:
+          src: "./easychart"
       - name: Lint with flake8
         run: |
           # stop the build if there are Python syntax errors or undefined names

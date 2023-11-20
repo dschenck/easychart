@@ -4,8 +4,10 @@ from easychart.models import Chart, Plot, Grid
 import easychart.ipynb
 import easychart.datasets
 import easychart.themes
+import easychart.colormaps
+import easychart.extensions as ext
 
-__version__ = "0.1.18"
+__version__ = "0.1.20"
 
 
 def new(
@@ -16,6 +18,9 @@ def new(
     tooltip=None,
     title=None,
     subtitle=None,
+    xAxis=None,
+    yAxis=None,
+    cAxis=None,
     xtitle=None,
     ytitle=None,
     xformat=None,
@@ -24,6 +29,8 @@ def new(
     ymax=None,
     xmin=None,
     xmax=None,
+    cmin=None,
+    cmax=None,
     legend=None,
     categories=None,
     stacked=None,
@@ -31,7 +38,8 @@ def new(
     height=None,
     exporting=None,
     xtype=None,
-    ytype=None
+    ytype=None,
+    ctype=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -55,6 +63,15 @@ def new(
 
     subtitle : str
         subtitle text of the chart
+
+    xAxis : dict
+        The xAxis options
+
+    yAxis : dict
+        the yAxis options
+
+    cAxis : str, dict
+        the colorAxis options
 
     xtitle : str
         x-axis title
@@ -92,6 +109,9 @@ def new(
     ytype : str
         The axis type for the y-axis
 
+    ctype : str
+        The axis type for the color axis
+
     Returns
     -------
     easychart.Chart
@@ -117,6 +137,15 @@ def new(
     if subtitle is not None:
         chart.subtitle = subtitle
 
+    if xAxis is not None:
+        chart.xAxis = xAxis
+
+    if yAxis is not None:
+        chart.yAxis = yAxis
+
+    if cAxis is not None:
+        chart.cAxis = cAxis
+
     if xtitle is not None:
         chart.xAxis.title.text = xtitle
 
@@ -141,6 +170,12 @@ def new(
     if xmax is not None:
         chart.xAxis.max = xmax
 
+    if cmin is not None:
+        chart.colorAxis.min = cmin
+
+    if cmax is not None:
+        chart.colorAxis.max = cmax
+
     if legend is not None:
         chart.legend = legend
 
@@ -164,6 +199,9 @@ def new(
 
     if ytype is not None:
         chart.yAxis.type = ytype
+
+    if ctype is not None:
+        chart.colorAxis.type = type
 
     return chart
 
@@ -207,6 +245,8 @@ def plot(data, **kwargs):
             "ymax",
             "xmin",
             "xmax",
+            "cmin",
+            "cmax",
             "legend",
             "categories",
             "stacked",
@@ -215,6 +255,10 @@ def plot(data, **kwargs):
             "exporting",
             "xtype",
             "ytype",
+            "ctype",
+            "xAxis",
+            "yAxis",
+            "cAxis",
         ]
     }
     serieskwargs = {k: v for k, v in kwargs.items() if k not in chartkwargs}
