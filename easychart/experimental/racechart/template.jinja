@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        
+        {% for stylesheet in stylesheets %}
+            <link href="{{ stylesheet }}" rel="stylesheet" />
+        {% endfor %} 
+        <style>
+            @import "https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css";
+        </style>
+        
+        {% for script in scripts %}
+            <script type="text/javascript" src="{{ script }}"></script>
+        {% endfor %}
+    </head>
+    
+    <body style="margin: 0; padding: 0">
+        <div id="root">
+            <div id="chart" style="display: flex; flex-wrap: wrap; width:100%;"
+            ></div>
+            <div style="width:100%;display:flex">
+                <button id="play-button" class="fa fa-play" style="width:30xp;height:30px;border:1px solid silver;border-radius:3px;margin-right:2px;background: #f8f8f8;"></button>
+                <input id="play-range" type="range" value="0" min="0" max="{{ count - 1 }}" style="width:100%"/>
+            </div>
+        </div>
+        
+        <script>
+            var plot    = {{ plot }}; 
+            var updates = {{ updates }}; 
+            var theme   = {{ theme }};
+            var options = {{ options }};
+        </script>
+        <script>
+            var createElement = function(tagname, props, children){
+                const element = document.createElement(tagname)
+
+                if(props){
+                    for(var key in props){
+                        if(typeof props[key]  === 'object'){
+                            props[key] = Object.entries(props[key]).map(function(value){
+                                return `${value[0]}:${value[1]};`
+                            }).reduce((prev, curr) => prev + curr)
+                        }
+                        element.setAttribute(key, props[key]);
+                    }
+                }
+                if(children){
+                    if(Array.isArray(children)){
+                        for(let i = 0; i < children.length; i++){
+                            if(typeof children[i] == "string"){
+                                element.innerHTML += children[i];
+                            }
+                            else{
+                                element.appendChild(children[i])
+                            }
+                        }
+                    }
+                    else{
+                        if(typeof children == "string"){
+                            element.innerHTML += children;
+                        }
+                        else{
+                            element.appendChild(children)
+                        }
+                    }
+                }
+                return element
+            }
+
+            document.addEventListener('DOMContentLoaded', function () {
+                Highcharts.setOptions(theme);
+
+                try{
+                    document.getElementById("root").style.width = plot.width; 
+                    document.getElementById("chart").style.width = plot.width; 
+
+                    if(plot.chart.chart && plot.chart.chart.type == "map"){
+                        var chart = Highcharts.mapChart(`chart`, plot.chart);
+                    }
+                    else {
+                        var chart = Highcharts.chart(`chart`, plot.chart);
+                    }
+
+                    function play(){
+                        var button = document.getElementById("play-button");
+                            button.className = "fa fa-pause"
+
+                        var range = document.getElementById("play-range");
+
+                        if(range.value >= parseInt(range.max)){
+                            range.value = 0;
+                        }
+
+                        chart.meta = {
+                            timer: setInterval(
+                                function(){
+                                    update(1)
+                                },
+                                options.interval
+                            )
+                        }
+                    }
+
+                    function pause(){
+                        var button = document.getElementById("play-button");
+                            button.className = "fa fa-play"
+
+                        clearTimeout(chart.meta && chart.meta.timer)
+
+                        chart.meta = {
+                            timer: undefined
+                        }
+                    }
+
+                    function update(step){
+                        var range = document.getElementById("play-range"); 
+
+                        if(step){
+                            range.value = Math.min(parseInt(range.value) + step, parseInt(range.max))
+                        }
+
+                        var value = parseInt(range.value);
+                        chart.update(updates[value], true, options["one:one"], options["animate"]);
+
+                        if(range.value >= parseInt(range.max)){
+                            pause();
+
+                            var button = document.getElementById("play-button");
+                            button.className = "fa fa-repeat"
+                            return 
+                        }
+                    }
+
+                    document.getElementById("play-button").addEventListener("click", function() {
+                        if(chart.meta && chart.meta.timer){
+                            pause()
+                        }
+                        else{
+                            play()
+                        }
+                    })
+
+                    document.getElementById("play-range").addEventListener("click", function(){
+                        return update()
+                    })
+                }
+                catch(error){
+                    var container = createElement(
+                        "div",
+                        {
+                            "style":{
+                                "background-color":"rgba(255, 82, 82, 0.1)",
+                                "border":"1px solid rgba(255, 82, 82, 1)",
+                                "box-sizing":"border-box",
+                                "padding":"8px",
+                                "width":"100%"
+
+                            }
+                        },
+                        [
+                            createElement(
+                                "p",
+                                {"style":"font-family:sans-serif;margin:0;font-size:0.9rem;border-bottom:1px dashed red;"},
+                                ["There was an error rendering your chart. Check the error message below and your chart definition"]
+                            ),
+                                createElement(
+                                "p",
+                                {"style":"font-family:sans-serif;font-family:Monospace;"},
+                                [error.message]
+                            ),
+                                createElement("p", {"style":"font-family:sans-serif;font-size:0.9rem;border-bottom:1px dashed red;"}, [
+                                "Chart definition"
+                            ]),
+                            createElement("code", null, [
+                                createElement("pre", null, JSON.stringify(plot.chart, null, 2))
+                            ]),
+                            createElement(
+                                "p",
+                                {"style":"font-family:sans-serif;margin:0;font-size:0.9rem;border-bottom:1px dashed red;"},
+                                "If you believe this a bug, please report it on the easychart github page"
+                            )
+                        ]
+                    )
+                    document.getElementById("root").appendChild(
+                        container
+                    )
+                }
+            });
+        </script>
+    </body>
+</html>
