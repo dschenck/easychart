@@ -1,5 +1,3 @@
-import IPython
-import IPython.display
 import os
 import simplejson
 import html
@@ -51,6 +49,11 @@ def render(plot: easychart.Plot, updates: list, *, theme: str = None, options=No
             the number of milliseconds between each update
 
     """
+    # import IPython only if function is called
+    # IPython is a soft dependency
+    import IPython
+    import IPython.display
+
     if not isinstance(plot, easychart.Plot):
         plot = easychart.Plot(plot)
 
