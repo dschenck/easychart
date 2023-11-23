@@ -2,4 +2,4 @@ include easychart/template.jinja
 include easychart/datasets/*
 include easychart/themes/*
 include easychart/colormaps/*
-include easychart/experimental/racechart/template.jinja
+include easychart/extensions/racechart/template.jinja
