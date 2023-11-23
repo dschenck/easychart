@@ -25,6 +25,7 @@ setuptools.setup(
         "simplejson",
         "jinja2",
         "requests",
+        "ipython",
     ],
     include_package_data=True,
 )
