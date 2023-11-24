@@ -15,7 +15,9 @@ environment = Environment(
 )
 
 
-def render(plot: easychart.Plot, updates: list, *, theme: str = None, options=None):
+def render(
+    charts: list, *, init: easychart.Chart = None, theme: str = None, options=None
+):
     """
     Render a simple race chart
 
@@ -24,14 +26,14 @@ def render(plot: easychart.Plot, updates: list, *, theme: str = None, options=No
 
     Parameters
     ----------
-    plot : easychart.Chart, easychart.Plot
-        the initial chart
-
-    update : list[dict]
-        incremental updates
+    charts : list[easychart.Chart]
+        plots
 
     theme : str
         theme name
+
+    init : easychart.Chart
+        the initial chart
 
     options : dict
         rendering options, including:
@@ -54,16 +56,19 @@ def render(plot: easychart.Plot, updates: list, *, theme: str = None, options=No
     import IPython
     import IPython.display
 
-    if not isinstance(plot, easychart.Plot):
-        plot = easychart.Plot(plot)
+    if init is None:
+        init = charts[0]
+
+    if not isinstance(init, easychart.Plot):
+        init = easychart.Plot(init)
 
     # get the template and render
     template = environment.get_template("template.jinja").render(
         **{
-            "plot": simplejson.dumps(
-                plot.serialize(), default=easychart.encoders.default
+            "init": simplejson.dumps(
+                init.serialize(), default=easychart.encoders.default
             ),
-            "updates": simplejson.dumps(updates, default=easychart.encoders.default),
+            "charts": simplejson.dumps(charts, default=easychart.encoders.default),
             "theme": simplejson.dumps(easychart.themes.get(theme)),
             "scripts": easychart.config.scripts,
             "stylesheets": easychart.config.stylesheets,
@@ -75,7 +80,7 @@ def render(plot: easychart.Plot, updates: list, *, theme: str = None, options=No
                     **(options or {}),
                 }
             ),
-            "count": len(updates),
+            "count": len(charts),
         }
     )
 
