@@ -9,10 +9,10 @@ def test_racechart_rendering():
         chart.plot([j for j in range(10, 30)])
         charts.append(chart)
 
-    assert easychart.ext.racechart.render(charts[0], charts)
-    assert easychart.ext.racechart.render(charts[0], charts, options={"animate": True})
-    assert easychart.ext.racechart.render(charts[0], charts, options={"animate": False})
+    assert easychart.ext.racechart.render(charts)
+    assert easychart.ext.racechart.render(charts, options={"animate": True})
+    assert easychart.ext.racechart.render(charts, options={"animate": False})
 
     assert easychart.ext.racechart.render(
-        charts[0], charts, options={"animate": False, "interval": 50}
+        charts, options={"animate": False, "interval": 50}
     )
