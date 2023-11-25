@@ -1,6 +1,8 @@
 import os
 import simplejson
 import html
+import IPython
+import IPython.display
 
 import easychart
 import easychart.encoders
@@ -9,21 +11,9 @@ import easychart.internals
 
 from jinja2 import Environment, FileSystemLoader
 
-# create the environment
-environment = Environment(
-    loader=FileSystemLoader(os.path.join(os.path.dirname(__file__)))
-)
 
-
-def render(
-    charts: list, *, init: easychart.Chart = None, theme: str = None, options=None
-):
+class racechart:
     """
-    Render a simple race chart
-
-    .. warning::
-        Experimental
-
     Parameters
     ----------
     charts : list[easychart.Chart]
@@ -51,45 +41,54 @@ def render(
             the number of milliseconds between each update
 
     """
-    # import IPython only if function is called
-    # IPython is a soft dependency
-    import IPython
-    import IPython.display
 
-    if init is None:
-        init = charts[0]
+    def __init__(self, charts: list, *, init: easychart.Chart = None, options=None):
+        self.charts = charts
+        self.init = easychart.Plot(init or charts[0])
+        self.options = options or {}
 
-    if not isinstance(init, easychart.Plot):
-        init = easychart.Plot(init)
-
-    # get the template and render
-    template = environment.get_template("template.jinja").render(
-        **{
-            "init": simplejson.dumps(
-                init.serialize(), default=easychart.encoders.default
-            ),
-            "charts": simplejson.dumps(charts, default=easychart.encoders.default),
-            "theme": simplejson.dumps(easychart.themes.get(theme)),
-            "scripts": easychart.config.scripts,
-            "stylesheets": easychart.config.stylesheets,
-            "options": simplejson.dumps(
-                {
-                    "one:one": False,
-                    "animate": False,
-                    "interval": 500,
-                    **(options or {}),
-                }
-            ),
-            "count": len(charts),
-        }
-    )
-
-    return IPython.display.HTML(
-        f"""
-            <iframe 
-                style="border:0;outline:none;width:{easychart.internals.Size(easychart.config.rendering.container.width)};max-width:{easychart.internals.Size(easychart.config.rendering.container.get("max-width", "100%"))}" 
-                onload='javascript:(function(o){{o.style.height=o.contentWindow.document.body.scrollHeight+"px";}}(this));' 
-                srcdoc="{html.escape(template)}">
-            </iframe>
+    def render(self, *, theme=None):
         """
-    )
+        Returns
+        -------
+        IPython.display.HTML
+        """
+
+        # create the environment
+        environment = Environment(
+            loader=FileSystemLoader(os.path.join(os.path.dirname(__file__)))
+        )
+
+        # get the template and render
+        template = environment.get_template("template.jinja").render(
+            **{
+                "init": simplejson.dumps(
+                    self.init.serialize(), default=easychart.encoders.default
+                ),
+                "charts": simplejson.dumps(
+                    self.charts, default=easychart.encoders.default
+                ),
+                "theme": simplejson.dumps(easychart.themes.get(theme)),
+                "scripts": easychart.config.scripts,
+                "stylesheets": easychart.config.stylesheets,
+                "options": simplejson.dumps(
+                    {
+                        "one:one": False,
+                        "animate": False,
+                        "interval": 500,
+                        **self.options,
+                    }
+                ),
+                "count": len(self.charts),
+            }
+        )
+
+        return IPython.display.HTML(
+            f"""
+                <iframe 
+                    style="border:0;outline:none;width:{easychart.internals.Size(easychart.config.rendering.container.width)};max-width:{easychart.internals.Size(easychart.config.rendering.container.get("max-width", "100%"))}" 
+                    onload='javascript:(function(o){{o.style.height=o.contentWindow.document.body.scrollHeight+"px";}}(this));' 
+                    srcdoc="{html.escape(template)}">
+                </iframe>
+            """
+        )

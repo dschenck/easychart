@@ -1,2 +1,2 @@
-from . import racechart
+from .racechart import racechart
 from .heatmap import heatmap
