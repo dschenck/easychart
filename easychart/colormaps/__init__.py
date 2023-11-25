@@ -19,15 +19,28 @@ def get(name) -> dict:
             f"Expected colormap name to be a string, received '{type(name).__name__}'"
         )
 
-    if name.endswith(".reversed"):
-        name, reversed = name.lower()[:-9], True
+    if ".reversed" in name:
+        name, reversed = name.replace(".reversed", ""), True
     else:
-        name, reversed = name.lower(), False
+        reversed = False
 
-    with open(os.path.join(os.path.dirname(__file__), f"{name}.json"), "r") as file:
-        colormap = json.load(file)
+    if ".symmetric" in name:
+        name, symmetric = name.replace(".symmetric", ""), True
+    else:
+        symmetric = False
+
+    try:
+        with open(
+            os.path.join(os.path.dirname(__file__), f"{name.lower()}.json"), "r"
+        ) as file:
+            colormap = json.load(file)
+    except FileNotFoundError:
+        raise ValueError(f"Colormap '{name}' does not exist.") from None
 
     if reversed:
         colormap = {**colormap, "colors": colormap["colors"][::-1]}
+
+    if symmetric:
+        colormap = {**colormap, "colors": colormap["colors"] + colormap["colors"][::-1]}
 
     return {**colormap, "name": name}
