@@ -1,1 +1,1 @@
-from . import racechart
+from .racechart import racechart

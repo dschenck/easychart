@@ -5,3 +5,4 @@ easytree>=0.2.3
 jinja2
 simplejson
 requests
+ipython

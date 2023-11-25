@@ -26,8 +26,8 @@
         </div>
         
         <script>
-            var plot    = {{ plot }}; 
-            var updates = {{ updates }}; 
+            var init    = {{ init }}; 
+            var charts  = {{ charts }}; 
             var theme   = {{ theme }};
             var options = {{ options }};
         </script>
@@ -72,14 +72,14 @@
                 Highcharts.setOptions(theme);
 
                 try{
-                    document.getElementById("root").style.width = plot.width; 
-                    document.getElementById("chart").style.width = plot.width; 
+                    document.getElementById("root").style.width = init.width; 
+                    document.getElementById("chart").style.width = init.width; 
 
-                    if(plot.chart.chart && plot.chart.chart.type == "map"){
-                        var chart = Highcharts.mapChart(`chart`, plot.chart);
+                    if(init.chart.chart && init.chart.chart.type == "map"){
+                        var chart = Highcharts.mapChart(`chart`, init.chart);
                     }
                     else {
-                        var chart = Highcharts.chart(`chart`, plot.chart);
+                        var chart = Highcharts.chart(`chart`, init.chart);
                     }
 
                     function play(){
@@ -121,7 +121,7 @@
                         }
 
                         var value = parseInt(range.value);
-                        chart.update(updates[value], true, options["one:one"], options["animate"]);
+                        chart.update(charts[value], true, options["one:one"], options["animate"]);
 
                         if(range.value >= parseInt(range.max)){
                             pause();
@@ -141,7 +141,7 @@
                         }
                     })
 
-                    document.getElementById("play-range").addEventListener("click", function(){
+                    document.getElementById("play-range").addEventListener("input", function(){
                         return update()
                     })
                 }
@@ -173,7 +173,7 @@
                                 "Chart definition"
                             ]),
                             createElement("code", null, [
-                                createElement("pre", null, JSON.stringify(plot.chart, null, 2))
+                                createElement("pre", null, JSON.stringify(init.chart, null, 2))
                             ]),
                             createElement(
                                 "p",
