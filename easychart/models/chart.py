@@ -87,7 +87,7 @@ class Chart(easytree.dict):
 
                 - If given True, assigns an empty dictionary to :code:`chart.colorAxis`
                 - If given a str, loads and assigns the colormap to :code:`chart.colorAxis.stops`
-                - If given a dict, assigns the valeu as is to :code:`chart.colorAxis`
+                - If given a dict, assigns the value as is to :code:`chart.colorAxis`
         """
         return self.colorAxis
 
@@ -101,12 +101,10 @@ class Chart(easytree.dict):
         elif isinstance(value, str):
             colormap = easychart.colormaps.get(value)
 
-            self.colorAxis = {
-                "stops": [
-                    (i / (len(colormap["colors"]) - 1), color)
-                    for i, color in enumerate(colormap["colors"])
-                ]
-            }
+            self.colorAxis.stops = [
+                (i / (len(colormap["colors"]) - 1), color)
+                for i, color in enumerate(colormap["colors"])
+            ]
         else:
             self.colorAxis = value
 
