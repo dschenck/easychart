@@ -2,6 +2,21 @@ import json
 import os
 
 
+def all() -> list:
+    """
+    Iterates through all colormaps, yielding one at a time
+
+    Returns
+    -------
+    generator
+    """
+    for filename in os.listdir(os.path.dirname(__file__)):
+        try:
+            yield get(filename.replace(".json", ""))
+        except Exception:
+            pass
+
+
 def get(name) -> dict:
     """
     Load and return a color map
