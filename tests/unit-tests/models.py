@@ -91,3 +91,11 @@ def test_hline():
     chart = easychart.new()
     chart.hline(10, c="red")
     assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+
+def test_new_axis_format_percentage():
+    chart = easychart.new(yformat="%")
+    assert chart.yAxis.labels.format == "{(multiply value 100)}%"
+
+    chart = easychart.new(xformat="%")
+    assert chart.xAxis.labels.format == "{(multiply value 100)}%"
