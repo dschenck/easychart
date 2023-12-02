@@ -159,14 +159,20 @@ def new(
     if xtitle is not None:
         chart.xAxis.title.text = xtitle
 
-    if xformat is not None:
-        chart.xAxis.labels.format = xformat
-
     if ytitle is not None:
         chart.yAxis.title.text = ytitle
 
     if yformat is not None:
-        chart.yAxis.labels.format = yformat
+        if yformat in ["percent", "percentage", "pct", "%"]:
+            chart.yAxis.labels.format = "{(multiply value 100)}%"
+        else:
+            chart.yAxis.labels.format = yformat
+
+    if xformat is not None:
+        if xformat in ["percent", "percentage", "pct", "%"]:
+            chart.xAxis.labels.format = "{(multiply value 100)}%"
+        else:
+            chart.xAxis.labels.format = xformat
 
     if ymin is not None:
         chart.yAxis.min = ymin
