@@ -576,6 +576,40 @@ class Chart(easytree.dict):
         """
         self.chart.type = value
 
+    def twinx(self, opposite=True, linkedTo=0, **kwargs):
+        """
+        Duplicate the xAxis
+        """
+        if isinstance(self.xAxis, easytree.undefined):
+            self.xAxis = [{}]
+        if not isinstance(self.xAxis, list):
+            self.xAxis = [self.xAxis]
+        self.xAxis.append(
+            {
+                **self.xAxis[linkedTo],
+                "opposite": opposite,
+                "linkedTo": linkedTo,
+                **kwargs,
+            }
+        )
+
+    def twiny(self, opposite=True, linkedTo=0, **kwargs):
+        """
+        Duplicate the yAxis
+        """
+        if isinstance(self.yAxis, easytree.undefined):
+            self.yAxis = [{}]
+        if not isinstance(self.yAxis, list):
+            self.yAxis = [self.yAxis]
+        self.yAxis.append(
+            {
+                **self.yAxis[linkedTo],
+                "opposite": opposite,
+                "linkedTo": linkedTo,
+                **kwargs,
+            }
+        )
+
     @property
     def width(self):
         """
