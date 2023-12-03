@@ -122,6 +122,30 @@ def new(
     ctype : str
         The axis type for the color axis
 
+    xreversed : bool
+        Whether to reverse the xAxis
+
+    yreversed : bool
+        Whether to reverse the yAxis
+
+    creversed : bool
+        Whether to reversed the colorAxis
+
+    ycategories : list
+        the yAxis category labels
+
+    xcategories : list
+        the xAxis category labels
+
+    xopposite : bool
+        Whether to draw the xAxis on the opposite side (right)
+
+    yopposite : bool
+        Whether to draw the yAxis on the opposite side (top)
+
+    labels : bool, list, dict
+        Series labels
+
     Returns
     -------
     easychart.Chart
