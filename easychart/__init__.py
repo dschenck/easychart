@@ -9,7 +9,7 @@ import easychart.themes
 import easychart.colormaps
 import easychart.extensions as ext
 
-__version__ = "0.1.21"
+__version__ = "0.1.22"
 
 
 def new(
@@ -49,7 +49,9 @@ def new(
     xcategories=None,
     xopposite=None,
     yopposite=None,
-    labels=None
+    labels=None,
+    twinx=None,
+    twiny=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -122,6 +124,36 @@ def new(
     ctype : str
         The axis type for the color axis
 
+    xreversed : bool
+        Whether to reverse the xAxis
+
+    yreversed : bool
+        Whether to reverse the yAxis
+
+    creversed : bool
+        Whether to reversed the colorAxis
+
+    ycategories : list
+        the yAxis category labels
+
+    xcategories : list
+        the xAxis category labels
+
+    xopposite : bool
+        Whether to draw the xAxis on the opposite side (right)
+
+    yopposite : bool
+        Whether to draw the yAxis on the opposite side (top)
+
+    labels : bool, list, dict
+        Series labels
+
+    twinx : bool
+        Whether to duplicate the xAxis on the opposite side
+
+    twiny = bool
+        Whether to duplicate the yAxis on the opposite side
+
     Returns
     -------
     easychart.Chart
@@ -159,14 +191,20 @@ def new(
     if xtitle is not None:
         chart.xAxis.title.text = xtitle
 
-    if xformat is not None:
-        chart.xAxis.labels.format = xformat
-
     if ytitle is not None:
         chart.yAxis.title.text = ytitle
 
     if yformat is not None:
-        chart.yAxis.labels.format = yformat
+        if yformat in ["percent", "percentage", "pct", "%"]:
+            chart.yAxis.labels.format = "{(multiply value 100)}%"
+        else:
+            chart.yAxis.labels.format = yformat
+
+    if xformat is not None:
+        if xformat in ["percent", "percentage", "pct", "%"]:
+            chart.xAxis.labels.format = "{(multiply value 100)}%"
+        else:
+            chart.xAxis.labels.format = xformat
 
     if ymin is not None:
         chart.yAxis.min = ymin
@@ -237,6 +275,12 @@ def new(
     if labels is not None:
         chart.labels = labels
 
+    if twinx is True:
+        chart.twinx()
+
+    if twiny is True:
+        chart.twiny()
+
     return chart
 
 
@@ -287,6 +331,9 @@ def heatmap(
     interpolation : bool
         whether to render the heatmap by interpolating each point
         defaults to False
+
+    **kwargs
+        any additional argument to pass to :code:`easychart.new`
 
     Returns
     -------
