@@ -1,0 +1,25 @@
+name: Publish distribution to PyPI on new release
+
+on:
+  workflow_dispatch:
+
+# .github/workflows/ci-cd.yml
+# https://github.com/marketplace/actions/pypi-publish
+jobs:
+  pypi-publish:
+    name: Upload release to PyPI
+    runs-on: ubuntu-latest
+    environment:
+      name: pypi
+      url: https://pypi.org/p/easychart
+    permissions:
+      id-token: write # IMPORTANT: this permission is mandatory for trusted publishing
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Set up Python 3.10
+        uses: actions/setup-python@v3
+        with:
+          python-version: "3.10"
+      - name: Build
+        run: python -m pip install --upgrade build && python -m build
