@@ -49,7 +49,9 @@ def new(
     xcategories=None,
     xopposite=None,
     yopposite=None,
-    labels=None
+    labels=None,
+    twinx=None,
+    twiny=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -145,6 +147,12 @@ def new(
 
     labels : bool, list, dict
         Series labels
+
+    twinx : bool
+        Whether to duplicate the xAxis on the opposite side
+
+    twiny = bool
+        Whether to duplicate the yAxis on the opposite side
 
     Returns
     -------
@@ -266,6 +274,12 @@ def new(
 
     if labels is not None:
         chart.labels = labels
+
+    if twinx is True:
+        chart.twinx()
+
+    if twiny is True:
+        chart.twiny()
 
     return chart
 

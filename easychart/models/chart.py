@@ -576,39 +576,85 @@ class Chart(easytree.dict):
         """
         self.chart.type = value
 
-    def twinx(self, opposite=True, linkedTo=0, **kwargs):
+    def twinx(self, index=0, *, opposite=True, linked=True, **kwargs):
         """
         Duplicate the xAxis
+
+        Parameters
+        ----------
+        index : int
+            the index of the xAxis to duplicate
+        opposite : bool
+            whether to plot the new axis on the opposite side (usually right)
+        linked : bool
+            whether to link the new axis with the xAxis that is being
+            duplicated
+        **kwargs
+            additional paramters to pass to the new axis
+
+        Note
+        ----
+        If the chart has no xAxis at the time this method is called, a new
+        xAxis is first created, and then duplicated.
+
+        Returns
+        -------
+        the new xAxis
         """
         if isinstance(self.xAxis, easytree.undefined):
             self.xAxis = [{}]
         if not isinstance(self.xAxis, list):
             self.xAxis = [self.xAxis]
+        if linked is True:
+            kwargs["linkedTo"] = index
         self.xAxis.append(
             {
-                **self.xAxis[linkedTo],
+                **self.xAxis[index],
                 "opposite": opposite,
-                "linkedTo": linkedTo,
                 **kwargs,
             }
         )
+        return self.xAxis[-1]
 
-    def twiny(self, opposite=True, linkedTo=0, **kwargs):
+    def twiny(self, index=0, *, opposite=True, linked=True, **kwargs):
         """
         Duplicate the yAxis
+
+        Parameters
+        ----------
+        index : int
+            the index of the yAxis to duplicate
+        opposite : bool
+            whether to plot the new axis on the opposite side (usually top)
+        linked : bool
+            whether to link the new axis with the yAxis that is being
+            duplicated
+        **kwargs
+            additional paramters to pass to the new axis
+
+        Note
+        ----
+        If the chart has no yAxis at the time this method is called, a new
+        yAxis is first created, and then duplicated.
+
+        Returns
+        -------
+        the new xAxis
         """
         if isinstance(self.yAxis, easytree.undefined):
             self.yAxis = [{}]
         if not isinstance(self.yAxis, list):
             self.yAxis = [self.yAxis]
+        if linked is True:
+            kwargs["linkedTo"] = index
         self.yAxis.append(
             {
-                **self.yAxis[linkedTo],
+                **self.yAxis[index],
                 "opposite": opposite,
-                "linkedTo": linkedTo,
                 **kwargs,
             }
         )
+        return self.yAxis[-1]
 
     @property
     def width(self):

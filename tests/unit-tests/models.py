@@ -1,3 +1,5 @@
+import pytest
+
 import easychart
 import easychart.models
 
@@ -99,3 +101,40 @@ def test_new_axis_format_percentage():
 
     chart = easychart.new(xformat="%")
     assert chart.xAxis.labels.format == "{(multiply value 100)}%"
+
+
+def test_chart_twinx():
+    chart = easychart.new()
+    chart.twinx()
+
+    assert len(chart.xAxis) == 2
+    assert chart.xAxis[0] == {}
+    assert chart.xAxis[1] == {"opposite": True, "linkedTo": 0}
+
+    chart = easychart.new()
+    chart.twinx(title={"text": "opposite title"})
+    assert chart.xAxis[0] == {}
+    assert chart.xAxis[1] == {
+        "opposite": True,
+        "linkedTo": 0,
+        "title": {"text": "opposite title"},
+    }
+
+    chart = easychart.new()
+    chart.twinx(linked=False)
+    assert len(chart.xAxis) == 2
+    assert chart.xAxis[1] == {"opposite": True}
+
+
+def test_chart_twiny():
+    chart = easychart.new()
+    chart.yAxis.title.text = "yAxis"
+    chart.twiny()
+
+    assert len(chart.yAxis) == 2
+    assert chart.yAxis[0] == {"title": {"text": "yAxis"}}
+    assert chart.yAxis[1] == {
+        "opposite": True,
+        "linkedTo": 0,
+        "title": {"text": "yAxis"},
+    }
