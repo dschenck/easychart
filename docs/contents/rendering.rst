@@ -1,5 +1,8 @@
+Rendering
+=========
+
 Modules and extensions
-============================
+----------------------
 
 Some chart types (e.g. Sankey) or features (e.g. `exporting <https://www.highcharts.com/docs/export-module/export-module-overview>`_) require additional javascript modules to render in your Jupyter notebook. 
 
