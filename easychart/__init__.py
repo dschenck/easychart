@@ -332,6 +332,9 @@ def heatmap(
         whether to render the heatmap by interpolating each point
         defaults to False
 
+    **kwargs
+        any additional argument to pass to :code:`easychart.new`
+
     Returns
     -------
     easychart.Chart
