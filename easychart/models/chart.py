@@ -746,6 +746,10 @@ class Chart(easytree.dict):
         """
         Shortcut for :code:`chart.series.append(data, **kwargs)`
         """
+        warnings.warn(
+            "chart.append is deprecated and will be removed in future version. Use chart.plot instead",
+            DeprecationWarning,
+        )
         return self.series.append(data, **kwargs)
 
     def plot(self, data=None, **kwargs):
