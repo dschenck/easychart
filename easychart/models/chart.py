@@ -801,6 +801,9 @@ class Chart(easytree.dict):
             kwargs["label"] = {"text": kwargs["label"]}
         self.yAxis.plotLines.append(value=y, color=color, **kwargs)
 
+    @internals.alias("color", "c")
+    @internals.alias("xmin", "min")
+    @internals.alias("xmax", "max")
     def vband(self, xmin, xmax, *, color="rgba(68, 170, 213, 0.2)", **kwargs):
         """
         Adds a vertical band (mask) from xmin to xmax across the chart
@@ -816,6 +819,9 @@ class Chart(easytree.dict):
         )
         return self
 
+    @internals.alias("color", "c")
+    @internals.alias("ymin", "min")
+    @internals.alias("ymax", "max")
     def hband(self, ymin, ymax, *, color="rgba(68, 170, 213, 0.2)", **kwargs):
         """
         Adds a horizontal band (mask) from ymin to ymax across the chart
