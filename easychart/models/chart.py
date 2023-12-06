@@ -808,6 +808,9 @@ class Chart(easytree.dict):
         """
         Adds a vertical band (mask) from xmin to xmax across the chart
         """
+        if "label" in kwargs and isinstance(kwargs["label"], str):
+            kwargs["label"] = {"text": kwargs["label"]}
+
         if self.xAxis.type == "datetime":
             if isinstance(xmin, str):
                 xmin = pd.Timestamp(xmin)
@@ -826,6 +829,9 @@ class Chart(easytree.dict):
         """
         Adds a horizontal band (mask) from ymin to ymax across the chart
         """
+        if "label" in kwargs and isinstance(kwargs["label"], str):
+            kwargs["label"] = {"text": kwargs["label"]}
+
         self.yAxis.plotBands.append(
             **{**kwargs, "from": ymin, "to": ymax, "color": color}
         )
