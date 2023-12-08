@@ -1,4 +1,5 @@
 import pandas as pd
+import inspect
 
 from easychart.config import config
 from easychart.models import Chart, Plot, Grid
@@ -390,53 +391,16 @@ def plot(data, **kwargs):
     if isinstance(data, Chart):
         return render(data, width=kwargs.get("width"), theme=kwargs.get("theme"))
 
-    chartkwargs = {
-        k: v
-        for k, v in kwargs.items()
-        if k
-        in [
-            "type",
-            "datetime",
-            "zoom",
-            "tooltip",
-            "title",
-            "subtitle",
-            "xtitle",
-            "ytitle",
-            "xformat",
-            "yformat",
-            "ymin",
-            "ymax",
-            "xmin",
-            "xmax",
-            "cmin",
-            "cmax",
-            "legend",
-            "categories",
-            "stacked",
-            "width",
-            "height",
-            "exporting",
-            "xtype",
-            "ytype",
-            "ctype",
-            "xAxis",
-            "yAxis",
-            "cAxis",
-            "xreversed",
-            "yreversed",
-            "creversed",
-            "ycategories",
-            "xcategories",
-            "xopposite",
-            "yopposite",
-            "labels",
-        ]
-    }
-    serieskwargs = {k: v for k, v in kwargs.items() if k not in chartkwargs}
+    chart = new(
+        **{
+            k: kwargs.pop(k)
+            for k in list(kwargs)
+            if k in inspect.signature(new).parameters
+        }
+    )
 
-    chart = new(**chartkwargs)
-    chart.plot(data, **serieskwargs)
+    chart.plot(data, **kwargs)
+
     return chart
 
 
