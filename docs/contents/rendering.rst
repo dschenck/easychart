@@ -1,5 +1,6 @@
 Rendering
 =========
+Rendering is the process by which a chart configuration is serialized and displayed as a Highcharts instance in your Jupyter notebook in your browser.
 
 Modules and extensions
 ----------------------
@@ -44,7 +45,7 @@ To see which modules are already imported in your config, simply print the confi
 
     print(easychart.config)
 
-The config file is saved at the following location
+Once customized and saved the config file is saved at the following location
 ::
 
     import os
