@@ -52,7 +52,8 @@ def new(
     yopposite=None,
     labels=None,
     twinx=None,
-    twiny=None
+    twiny=None,
+    colormap=None
 ):
     """
     Creates a new chart with some preset defaults
@@ -152,8 +153,11 @@ def new(
     twinx : bool
         Whether to duplicate the xAxis on the opposite side
 
-    twiny = bool
+    twiny : bool
         Whether to duplicate the yAxis on the opposite side
+
+    colormap: str
+        A colormap name to create the colorAxis
 
     Returns
     -------
@@ -281,6 +285,9 @@ def new(
 
     if twiny is True:
         chart.twiny()
+
+    if colormap is not None:
+        chart.cAxis = colormap
 
     return chart
 
