@@ -37,6 +37,7 @@ Open up a new Jupyter notebook and start creating your charts:
    contents/dimensions
    contents/themes
    contents/rendering
+   contents/colormaps
    contents/API/index
    contents/about
 
