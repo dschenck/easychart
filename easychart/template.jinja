@@ -74,7 +74,59 @@
                             var chart = Highcharts.mapChart(`container[${i}]`, plot.chart);
                         }
                         else {
-                            var chart = Highcharts.chart(`container[${i}]`, plot.chart);
+                            var chart = Highcharts.chart(
+                                `container[${i}]`, 
+                                {
+                                    ...plot.chart, 
+                                    exporting:{
+                                        ...plot.chart.exporting, 
+                                        "menuItemDefinitions": {
+                                            "copy": {
+                                                onclick: function () {
+                                                    return callback()
+                                                },
+                                                text: 'Copy as PNG'
+                                            }
+                                        },
+                                        "buttons": {
+                                            "contextButton": {
+                                                "menuItems": ["copy", "separator", "viewFullscreen", "printChart", "separator", "downloadPNG", "downloadJPEG", "downloadPDF", "downloadSVG",]
+                                            }
+                                        }
+                                    }
+                                }
+                            );
+
+                            var callback = function (chart, options) {
+                                // copy chart to clipboard as PNG
+                                var callback = function () {
+                                    var canvas = document.createElement('canvas');
+                                    canvas.height = chart.chartHeight * options.scale;
+                                    canvas.width = chart.chartWidth * options.scale;
+
+                                    var image = new Image(
+                                        canvas.width,
+                                        canvas.height
+                                    );
+
+                                    image.onload = function () {
+                                        canvas.getContext("2d").drawImage(image, 0, 0, image.width, image.height);
+
+                                        canvas.toBlob(blob => {
+                                            return navigator.clipboard.write([
+                                                new ClipboardItem({
+                                                    'image/png': blob
+                                                })
+                                            ]).catch(e => {
+                                                console.log("Error", e)
+                                            });
+                                        }, "image/png")
+                                    };
+
+                                    image.src = 'data:image/svg+xml,' + encodeURIComponent(chart.getSVG());
+                                }
+                                return callback
+                            }(chart, { scale: 2 })
                         }
                     }
                     catch(error){

@@ -39,6 +39,10 @@ class Series(easytree.list):
             else:
                 kwargs["dataLabels"] = kwargs.pop("dataLabels")
 
+        if "color" in kwargs:
+            if isinstance(kwargs["color"], int):
+                kwargs["colorIndex"] = kwargs.pop("color")
+
         if isinstance(data, pd.Series):
             if "name" not in kwargs:
                 kwargs["name"] = data.name

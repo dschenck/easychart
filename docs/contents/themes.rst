@@ -1,5 +1,5 @@
 Themes and styling
-============================
+==================
 A theme is a set of pre-defined options that are applied as default options before each chart is rendered. You can read more about themes on the Highcharts documentation page.
 
 Changing the theme on the fly
