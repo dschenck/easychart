@@ -49,7 +49,8 @@ if ip and (
         return f"""
             <iframe 
                 style="border:0;outline:none;width:{easychart.internals.Size(grid.width or easychart.config.rendering.container.width)};max-width:{easychart.internals.Size(easychart.config.rendering.container.get("max-width", "100%"))}" 
-                onload='javascript:(function(o){{o.style.height=Math.max(400, o.contentWindow.document.body.scrollHeight)+"px";}}(this));' 
+                onload='javascript:(function(o){{o.style.height=Math.max(400, o.contentWindow.document.body.scrollHeight)+"px"; o.contentWindow.focus()}}(this));' 
+                allow="clipboard-read; clipboard-write"
                 srcdoc="{html.escape(template)}">
             </iframe>
         """
