@@ -61,79 +61,89 @@ def new(
     Parameters
     ------------------
     type : str
-        the default type of series
+        The default series type (e.g. "line", "scatter", "column", "arearange", etc...)
 
     datetime : bool
-        sets the x-axis as a datetime axis
+        Sets the type of the xAxis to 'datetime'
 
     zoom : str
-        one of None, "x", "y" or "xy"
+        Sets the interactive zoom options;
+        Value must be one of None (no zoom), "x" (horizontal), "y" (vertical) or "xy" (both)
 
     tooltip : str
-        one of None or "shared"
+        Sets the tooltip options;
+        A dict of options, "shared", True or None
 
     title : str
-        title text of the chart
+        The chart title options
+        Value can be a dict of options or a string (the title text)
 
     subtitle : str
-        subtitle text of the chart
+        The chart subtitle options
+        Value can be a dict of options or a string (the subtitle text)
 
     xAxis : dict
         The xAxis options
 
     yAxis : dict
-        the yAxis options
+        The yAxis options
 
     cAxis : str, dict
-        the colorAxis options
+        The colorAxis options
+        Can be a dict of options or a colormap name
 
     xtitle : str
-        x-axis title
+        The xAxis title
 
     ytitle : str
-        y-axis title
+        The yAxis title
 
     xformat : str
-        format of the x-axis labels
+        The format of the xAxis labels
 
     yformat : str
-        format of the y-axis labels
+        The format of the yAxis labels
 
     ymin : float
-        minimum of the y-axis
+        The minimum of the yAxis
 
     ymax : float
-        maximum of the y-axis
+        The maximum of the yAxis
 
     stacked : bool
         True to stack the series, False otherwise
 
     width : int
-        The chart width, in pixels
+        The chart width, in pixels or in percentages
+        If given a percentage value (e.g. "50%"), then value is computed as a fraction of '600px'.
+        See chart dimensions for more details.
 
     height : int or str
-        The chart height, in pixels, or in percentage of the chart width
+        The chart height, in pixels, or in percentages.
+        If given a percentage value (e.g. "60%"), then value is computed as a fraction of
+        the chart width.
 
     exporting : bool
-        True to enable exporting menu on chart, False to disable
+        True to enable exporting menu on chart,
+        False to disable
 
     xtype : str
-        The axis type for the x-axis
+        The axis type for the xAxis (e.g. "log", "datetime")
 
     ytype : str
-        The axis type for the y-axis
+        The axis type for the yAxis (e.g. "log", "datetime")
 
     ctype : str
-        The axis type for the color axis
+        The axis type for the color axis (e.g. "log")
 
     xreversed : bool
-        Whether to reverse the xAxis
+        Whether to reverse the xAxis (from high to low)
 
     yreversed : bool
-        Whether to reverse the yAxis
+        Whether to reverse the yAxis (from high to low)
 
     creversed : bool
-        Whether to reversed the colorAxis
+        Whether to reversed the colorAxis (from high to low)
 
     ycategories : list
         the yAxis category labels
@@ -142,19 +152,19 @@ def new(
         the xAxis category labels
 
     xopposite : bool
-        Whether to draw the xAxis on the opposite side (right)
+        Whether to draw the xAxis on the opposite side (generally right of chart)
 
     yopposite : bool
-        Whether to draw the yAxis on the opposite side (top)
+        Whether to draw the yAxis on the opposite side (generally top of chart)
 
     labels : bool, list, dict
         Series labels
 
     twinx : bool
-        Whether to duplicate the xAxis on the opposite side
+        True to twin the xAxis on the opposite side
 
     twiny : bool
-        Whether to duplicate the yAxis on the opposite side
+        True to twin the yAxis on the opposite side
 
     colormap: str
         A colormap name to create the colorAxis
