@@ -369,10 +369,23 @@ def heatmap(
     else:
         data = pd.DataFrame(data)
 
-    chart = easychart.new("heatmap", yreversed=yreversed, xopposite=xopposite, **kwargs)
-    chart.cAxis = colormap
+    chart = easychart.new(
+        "heatmap",
+        yreversed=yreversed,
+        xopposite=xopposite,
+        **{
+            k: kwargs.pop(k)
+            for k in list(kwargs)
+            if k in inspect.signature(new).parameters
+        }
+    )
+
     chart.plot(
-        data.T.stack(), colsize=colsize, rowsize=rowsize, interpolation=interpolation
+        data.rename_axis(index="index", columns="columns").T.stack(),
+        colsize=colsize,
+        rowsize=rowsize,
+        interpolation=interpolation,
+        **kwargs
     )
 
     return chart
