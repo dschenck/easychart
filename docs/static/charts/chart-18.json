@@ -54,7 +54,7 @@
             "name": "Tokyo",
             "dataLabels": {
                 "enabled": true,
-                "format": "{point.y}\u00b0C"
+                "format": "{point.y}\u00c2\u00b0C"
             }
         },
         {
@@ -111,7 +111,7 @@
             "name": "London",
             "dataLabels": {
                 "enabled": true,
-                "format": "{point.y}\u00b0C"
+                "format": "{point.y}\u00c2\u00b0C"
             }
         }
     ],
@@ -143,7 +143,7 @@
     },
     "yAxis": {
         "title": {
-            "text": "Temperature (\u00b0C)"
+            "text": "Temperature (\u00c2\u00b0C)"
         }
     }
 }

@@ -5,7 +5,9 @@ API
    :maxdepth: 1
    :caption: Table of contents
 
-   utilities/index
+   utilities/new
+   utilities/plot
+   utilities/render
    Chart
    Plot
    Grid

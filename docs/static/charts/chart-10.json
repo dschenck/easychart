@@ -171,10 +171,8 @@
         "valueSuffix": "%"
     },
     "xAxis": {
-        "type": null,
         "plotBands": [
             {
-                "color": "rgba(200,200,200,0.2)",
                 "zIndex": 20,
                 "label": {
                     "text": "forecast",
@@ -183,7 +181,8 @@
                     }
                 },
                 "from": 2020,
-                "to": 2100
+                "to": 2100,
+                "color": "rgba(200,200,200,0.2)"
             }
         ]
     }

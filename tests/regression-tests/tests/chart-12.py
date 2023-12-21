@@ -35,6 +35,6 @@ def regress(regression):
     chart.tooltip.pointFormat = "{point.x} km: {point.y}°C"
 
     chart.legend.enabled = False
-    chart.append(data, name="temperature")
+    chart.plot(data, name="temperature")
 
     regression.check(chart.serialize())
