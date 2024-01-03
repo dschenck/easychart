@@ -10,7 +10,7 @@ Annotations
         easychart.config.scripts.append("https://code.highcharts.com/modules/annotations.js")
         easychart.config.save() 
 
-    See section on `extensions <https://easychart.readthedocs.io/en/latest/contents/extensions.html>`_ for more details.
+    See section on `extensions <https://easychart.readthedocs.io/en/latest/contents/rendering.html>`_ for more details.
 
 .. raw:: html 
 
