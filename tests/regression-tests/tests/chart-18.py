@@ -31,8 +31,8 @@ def regress(regression):
     chart.title = "Monthly Average Temperature"
     chart.subtitle = "Source: WorldClimate.com"
     chart.categories = data.columns
-    chart.yAxis.title.text = "Temperature (°C)"
+    chart.yAxis.title.text = "Temperature (&deg;C)"
     for city in data.index:
-        chart.plot(data.loc[city], name=city, labels="{point.y}°C")
+        chart.plot(data.loc[city], name=city, labels="{point.y}&deg;C")
 
     regression.check(chart.serialize())

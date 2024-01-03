@@ -22,8 +22,8 @@ def regress(regression):
     chart = easychart.new("columnrange")
     chart.title = "Temperature variation by month"
     chart.subtitle = "Observed in Vik i Sogn, Norway, 2017"
-    chart.tooltip = "{value}°C"
-    chart.yAxis.title.text = "Temperature ( °C )"
+    chart.tooltip = "{value}&deg;C"
+    chart.yAxis.title.text = "Temperature ( &deg;C )"
     chart.legend = False
     chart.inverted = True
     chart.categories = [

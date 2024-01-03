@@ -23,7 +23,9 @@ def regress(regression):
     ]
 
     # add two axes
-    chart.yAxis.append(title={"text": "Temperature"}, labels={"format": "{value}°C"})
+    chart.yAxis.append(
+        title={"text": "Temperature"}, labels={"format": "{value}&deg;C"}
+    )
     chart.yAxis.append(
         title={"text": "Rainfall"}, labels={"format": "{value} mm"}, opposite=True
     )
@@ -53,7 +55,7 @@ def regress(regression):
         name="Temperature",
         type="spline",
         yAxis=0,
-        tooltip={"valueSuffix": "°C"},
+        tooltip={"valueSuffix": "&deg;C"},
     )
 
     regression.check(chart.serialize())

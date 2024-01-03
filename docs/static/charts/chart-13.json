@@ -41,7 +41,7 @@
             "type": "spline",
             "yAxis": 0,
             "tooltip": {
-                "valueSuffix": "\u00c2\u00b0C"
+                "valueSuffix": "&deg;C"
             }
         }
     ],
@@ -79,7 +79,7 @@
                 "text": "Temperature"
             },
             "labels": {
-                "format": "{value}\u00c2\u00b0C"
+                "format": "{value}&deg;C"
             }
         },
         {

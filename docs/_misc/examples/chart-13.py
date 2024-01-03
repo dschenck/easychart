@@ -19,7 +19,7 @@ chart.categories = [
 ]
 
 # add two axes
-chart.yAxis.append(title={"text": "Temperature"}, labels={"format": "{value}°C"})
+chart.yAxis.append(title={"text": "Temperature"}, labels={"format": "{value}&deg;C"})
 chart.yAxis.append(
     title={"text": "Rainfall"}, labels={"format": "{value} mm"}, opposite=True
 )
@@ -36,6 +36,6 @@ chart.plot(
     name="Temperature",
     type="spline",
     yAxis=0,
-    tooltip={"valueSuffix": "°C"},
+    tooltip={"valueSuffix": "&deg;C"},
 )
 chart

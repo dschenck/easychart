@@ -63,7 +63,7 @@
     },
     "yAxis": {
         "labels": {
-            "format": "{value}\u00c2\u00b0"
+            "format": "{value}&deg;"
         },
         "title": {
             "text": "Temperature",
@@ -72,7 +72,7 @@
     },
     "tooltip": {
         "headerFormat": "<b>{series.name}</b><br/>",
-        "pointFormat": "{point.x} km: {point.y}\u00c2\u00b0C"
+        "pointFormat": "{point.x} km: {point.y}&deg;C"
     },
     "legend": {
         "enabled": false

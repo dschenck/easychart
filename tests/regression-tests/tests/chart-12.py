@@ -27,12 +27,12 @@ def regress(regression):
         axis.labels.format = "{value} km"
 
     with chart.yAxis as axis:
-        axis.labels.format = "{value}°"
+        axis.labels.format = "{value}&deg;"
         axis.title.text = "Temperature"
         axis.title.rotation = 0
 
     chart.tooltip.headerFormat = "<b>{series.name}</b><br/>"
-    chart.tooltip.pointFormat = "{point.x} km: {point.y}°C"
+    chart.tooltip.pointFormat = "{point.x} km: {point.y}&deg;C"
 
     chart.legend.enabled = False
     chart.plot(data, name="temperature")
