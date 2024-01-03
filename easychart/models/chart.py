@@ -777,12 +777,24 @@ class Chart(easytree.dict):
 
             self.xAxis.plotLines.append(value=x, **kwargs)
         """
-        if self.xAxis.type == "datetime":
+        if isinstance(self.xAxis, list):
+            if self.xAxis[kwargs.get("xAxis", 0)].type == "datetime":
+                if isinstance(x, str):
+                    x = pd.Timestamp(x)
+        elif self.xAxis.type == "datetime":
             if isinstance(x, str):
                 x = pd.Timestamp(x)
+
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
-        self.xAxis.plotLines.append(value=x, color=color, **kwargs)
+
+        if isinstance(self.xAxis, list):
+            self.xAxis[kwargs.get("xAxis", 0)].plotLines.aappend(
+                value=x, color=color, **kwargs
+            )
+
+        else:
+            self.xAxis.plotLines.append(value=x, color=color, **kwargs)
 
     @internals.alias("dashStyle", "linestyle", "ls")
     @internals.alias("color", "c")
@@ -799,7 +811,14 @@ class Chart(easytree.dict):
         """
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
-        self.yAxis.plotLines.append(value=y, color=color, **kwargs)
+
+        if isinstance(self.yAxis, list):
+            self.yAxis[kwargs.get("yAxis", 0)].plotLines.append(
+                value=y, color=color, **kwargs
+            )
+
+        else:
+            self.yAxis.plotLines.append(value=y, color=color, **kwargs)
 
     @internals.alias("color", "c")
     @internals.alias("xmin", "min")
@@ -811,15 +830,26 @@ class Chart(easytree.dict):
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
 
-        if self.xAxis.type == "datetime":
+        if isinstance(self.xAxis, list):
+            if self.xAxis[kwargs.get("xAxis", 0)].type == "datetime":
+                if isinstance(xmin, str):
+                    xmin = pd.Timestamp(xmin)
+                if isinstance(xmax, str):
+                    xmax = pd.Timestamp(xmax)
+        elif self.xAxis.type == "datetime":
             if isinstance(xmin, str):
                 xmin = pd.Timestamp(xmin)
             if isinstance(xmax, str):
                 xmax = pd.Timestamp(xmax)
 
-        self.xAxis.plotBands.append(
-            **{**kwargs, "from": xmin, "to": xmax, "color": color}
-        )
+        if isinstance(self.xAxis, list):
+            self.xAxis[kwargs.get("xAxis", 0)].plotBands.append(
+                **{**kwargs, "from": xmin, "to": xmax, "color": color}
+            )
+        else:
+            self.xAxis.plotBands.append(
+                **{**kwargs, "from": xmin, "to": xmax, "color": color}
+            )
         return self
 
     @internals.alias("color", "c")
@@ -832,9 +862,14 @@ class Chart(easytree.dict):
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
 
-        self.yAxis.plotBands.append(
-            **{**kwargs, "from": ymin, "to": ymax, "color": color}
-        )
+        if isinstance(self.yAxis, list):
+            self.yAxis[kwargs.get("yAxis", 0)].plotBands.append(
+                **{**kwargs, "from": ymin, "to": ymax, "color": color}
+            )
+        else:
+            self.yAxis.plotBands.append(
+                **{**kwargs, "from": ymin, "to": ymax, "color": color}
+            )
         return self
 
     def regress(self, y, x, intercept=True, **kwargs):
