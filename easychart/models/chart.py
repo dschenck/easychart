@@ -1112,13 +1112,25 @@ class Chart(easytree.dict):
         """
         return easychart.Grid([easychart.Plot(self, width=width)], theme=theme)
 
-    def save(self, filename, indent=4):
+    def save(self, filename, *, indent=4):
         """
         Serializes and dumps the chart configuration to file
+
+        Parameters
+        ----------
+        filename : str, Path
+            target location
+
+        indent : int
+            the JSON indentation (number of spaces)
         """
         with open(filename, "w") as file:
             simplejson.dump(
-                self, file, default=easychart.encoders.default, indent=indent
+                self,
+                file,
+                default=easychart.encoders.default,
+                indent=indent,
+                ignore_nan=True,
             )
         return
 
