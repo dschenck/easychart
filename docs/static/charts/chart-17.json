@@ -66,11 +66,11 @@
         "text": "Observed in Vik i Sogn, Norway, 2017"
     },
     "tooltip": {
-        "valueSuffix": "\u00c2\u00b0C"
+        "valueSuffix": "&deg;C"
     },
     "yAxis": {
         "title": {
-            "text": "Temperature ( \u00c2\u00b0C )"
+            "text": "Temperature ( &deg;C )"
         }
     },
     "legend": {

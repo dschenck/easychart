@@ -14,7 +14,7 @@ The :code:`easychart` package comes pre-loaded with the 83 colormaps available i
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-61.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-61.json?v=1"></div>
 
 
 Each colormap can be reversed by appending :code:`.reversed` to its name.
@@ -23,7 +23,7 @@ Each colormap can be reversed by appending :code:`.reversed` to its name.
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-62.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-62.json?v=1"></div>
 
 Each colormap can also be mirrored by appending :code:`.symmetric` to its name.
 
@@ -31,7 +31,7 @@ Each colormap can also be mirrored by appending :code:`.symmetric` to its name.
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-63.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-63.json?v=1"></div>
 
 And :code:`.reversed` and :code:`.symmetric` can be used jointly.
 
@@ -39,7 +39,7 @@ And :code:`.reversed` and :code:`.symmetric` can be used jointly.
 
 .. raw:: html 
 
-    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-64.json?v=1"></div>
+    <div class="chart-container" style="min-height:400px" data-filename="../_static/charts/chart-64.json?v=1"></div>
 
 
 Colormaps
