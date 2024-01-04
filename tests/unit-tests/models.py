@@ -81,6 +81,19 @@ def test_vline():
     assert chart.xAxis == {"plotLines": [{"value": 10, "color": "red"}]}
 
 
+def test_vline_with_two_axes():
+    chart = easychart.new()
+    chart.xAxis.append({})
+    chart.xAxis.append({"opposite": True})
+
+    chart.vline(10, c="red")
+
+    assert chart.xAxis == [
+        {"plotLines": [{"value": 10, "color": "red"}]},
+        {"opposite": True},
+    ]
+
+
 def test_hline():
     chart = easychart.new()
     chart.hline(10)
@@ -93,6 +106,149 @@ def test_hline():
     chart = easychart.new()
     chart.hline(10, c="red")
     assert chart.yAxis == {"plotLines": [{"value": 10, "color": "red"}]}
+
+
+def test_hline_with_two_axes():
+    chart = easychart.new()
+    chart.yAxis.append({})
+    chart.yAxis.append({"opposite": True})
+
+    chart.hline(10, c="red")
+
+    assert chart.yAxis == [
+        {"plotLines": [{"value": 10, "color": "red"}]},
+        {"opposite": True},
+    ]
+
+    chart.hline(5, yAxis=1)
+
+    assert chart.yAxis == [
+        {"plotLines": [{"value": 10, "color": "red"}]},
+        {"opposite": True, "plotLines": [{"value": 5, "color": "black"}]},
+    ]
+
+
+def test_vband():
+    chart = easychart.new()
+    chart.vband(3, 5)
+
+    assert chart.xAxis.plotBands == [
+        {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"}
+    ]
+
+    chart.vband(8, 9, color="red")
+
+    assert chart.xAxis == {
+        "plotBands": [
+            {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+            {"from": 8, "to": 9, "color": "red"},
+        ]
+    }
+
+    chart.vband(11, 12, label="test", color="blue")
+
+    assert chart.xAxis == {
+        "plotBands": [
+            {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+            {"from": 8, "to": 9, "color": "red"},
+            {"from": 11, "to": 12, "color": "blue", "label": {"text": "test"}},
+        ]
+    }
+
+
+def test_vband_multiple_axes():
+    chart = easychart.new()
+    chart.xAxis.append({})
+    chart.xAxis.append({})
+
+    chart.vband(3, 5)
+
+    assert chart.xAxis == [
+        {"plotBands": [{"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"}]},
+        {},
+    ]
+
+    chart.vband(8, 9)
+
+    assert chart.xAxis == [
+        {
+            "plotBands": [
+                {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+                {"from": 8, "to": 9, "color": "rgba(68, 170, 213, 0.2)"},
+            ]
+        },
+        {},
+    ]
+
+    chart.vband(3, 5, xAxis=1)
+    chart.vband(7, 8, color="red", xAxis=1)
+
+    assert chart.xAxis == [
+        {
+            "plotBands": [
+                {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+                {"from": 8, "to": 9, "color": "rgba(68, 170, 213, 0.2)"},
+            ]
+        },
+        {
+            "plotBands": [
+                {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+                {"from": 7, "to": 8, "color": "red"},
+            ]
+        },
+    ]
+
+
+def test_hband():
+    chart = easychart.new()
+    chart.hband(3, 5)
+
+    assert chart.yAxis.plotBands == [
+        {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"}
+    ]
+
+
+def test_hband_multiple_axes():
+    chart = easychart.new()
+    chart.yAxis.append({})
+    chart.yAxis.append({})
+
+    chart.hband(3, 5)
+
+    assert chart.yAxis == [
+        {"plotBands": [{"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"}]},
+        {},
+    ]
+
+    chart.hband(8, 9)
+
+    assert chart.yAxis == [
+        {
+            "plotBands": [
+                {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+                {"from": 8, "to": 9, "color": "rgba(68, 170, 213, 0.2)"},
+            ]
+        },
+        {},
+    ]
+
+    chart.hband(3, 5, yAxis=1)
+    chart.hband(7, 8, color="red", yAxis=1)
+
+    assert chart.yAxis == [
+        {
+            "plotBands": [
+                {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+                {"from": 8, "to": 9, "color": "rgba(68, 170, 213, 0.2)"},
+            ]
+        },
+        {
+            "plotBands": [
+                {"from": 3, "to": 5, "color": "rgba(68, 170, 213, 0.2)"},
+                {"from": 7, "to": 8, "color": "red"},
+            ]
+        },
+    ]
 
 
 def test_new_axis_format_percentage():
