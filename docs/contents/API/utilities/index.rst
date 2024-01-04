@@ -6,5 +6,6 @@ Utility functions
    :caption: Table of contents
 
    new
+   heatmap
    plot
    render
