@@ -14,7 +14,7 @@ The below license covers the use of easychart only. For the use of Highcharts, p
 
     MIT License
 
-    Copyright (c) 2023 David Schenck
+    Copyright (c) 2022-24 David Schenck
 
     Permission is hereby granted, free of charge, to any person obtaining a copy
     of this software and associated documentation files (the "Software"), to deal
