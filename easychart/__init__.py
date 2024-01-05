@@ -385,9 +385,15 @@ def heatmap(
         xopposite=xopposite,
         colormap=colormap,
         **{
-            k: kwargs.pop(k)
-            for k in list(kwargs)
-            if k in inspect.signature(new).parameters
+            "ymin": min(data.index),
+            "ymax": max(data.index),
+            "xmin": min(data.columns),
+            "xmax": max(data.columns),
+            **{
+                k: kwargs.pop(k)
+                for k in list(kwargs)
+                if k in inspect.signature(new).parameters
+            },
         },
     )
 
