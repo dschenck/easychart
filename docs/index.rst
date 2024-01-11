@@ -2,6 +2,8 @@ easychart
 ======================================
 Highcharts meets python in your jupyter notebook
 
+.. include:: fragments/badges.rst
+    
 Quickstart
 -------------------------------------
 Installing :code:`easychart` is simple with pip: 

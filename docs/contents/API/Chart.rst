@@ -6,6 +6,7 @@ easychart.Chart
         categories, 
         datalabels, 
         datetime, 
+        draw,
         decimals, 
         exporting, 
         height, 

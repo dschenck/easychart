@@ -74,7 +74,7 @@ class Config(easytree.dict):
                 os.mkdir(os.path.dirname(filename))
 
         with open(filename, "w") as file:
-            json.dump(self, file)
+            json.dump(self, file, indent=4)
 
     def reload(self):
         """

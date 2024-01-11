@@ -777,12 +777,25 @@ class Chart(easytree.dict):
 
             self.xAxis.plotLines.append(value=x, **kwargs)
         """
-        if self.xAxis.type == "datetime":
+        if isinstance(self.xAxis, list):
+            if self.xAxis[kwargs.get("xAxis", 0)].type == "datetime":
+                if isinstance(x, str):
+                    x = pd.Timestamp(x)
+
+        elif self.xAxis.type == "datetime":
             if isinstance(x, str):
                 x = pd.Timestamp(x)
+
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
-        self.xAxis.plotLines.append(value=x, color=color, **kwargs)
+
+        if isinstance(self.xAxis, list):
+            self.xAxis[kwargs.pop("xAxis", 0)].plotLines.append(
+                value=x, color=color, **kwargs
+            )
+
+        else:
+            self.xAxis.plotLines.append(value=x, color=color, **kwargs)
 
     @internals.alias("dashStyle", "linestyle", "ls")
     @internals.alias("color", "c")
@@ -799,7 +812,14 @@ class Chart(easytree.dict):
         """
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
-        self.yAxis.plotLines.append(value=y, color=color, **kwargs)
+
+        if isinstance(self.yAxis, list):
+            self.yAxis[kwargs.pop("yAxis", 0)].plotLines.append(
+                value=y, color=color, **kwargs
+            )
+
+        else:
+            self.yAxis.plotLines.append(value=y, color=color, **kwargs)
 
     @internals.alias("color", "c")
     @internals.alias("xmin", "min")
@@ -807,19 +827,40 @@ class Chart(easytree.dict):
     def vband(self, xmin, xmax, *, color="rgba(68, 170, 213, 0.2)", **kwargs):
         """
         Adds a vertical band (mask) from xmin to xmax across the chart
+
+        Parameters
+        ----------
+        xmin : float, int
+            the start x coordinate of the vertical band
+        xmax : float, int
+            the end x coordinate of the vertical band
+        color : str
+            the color of the band, either as a HEX or RGBA value
         """
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
 
-        if self.xAxis.type == "datetime":
+        if isinstance(self.xAxis, list):
+            if self.xAxis[kwargs.get("xAxis", 0)].type == "datetime":
+                if isinstance(xmin, str):
+                    xmin = pd.Timestamp(xmin)
+                if isinstance(xmax, str):
+                    xmax = pd.Timestamp(xmax)
+
+        elif self.xAxis.type == "datetime":
             if isinstance(xmin, str):
                 xmin = pd.Timestamp(xmin)
             if isinstance(xmax, str):
                 xmax = pd.Timestamp(xmax)
 
-        self.xAxis.plotBands.append(
-            **{**kwargs, "from": xmin, "to": xmax, "color": color}
-        )
+        if isinstance(self.xAxis, list):
+            self.xAxis[kwargs.pop("xAxis", 0)].plotBands.append(
+                **{**kwargs, "from": xmin, "to": xmax, "color": color}
+            )
+        else:
+            self.xAxis.plotBands.append(
+                **{**kwargs, "from": xmin, "to": xmax, "color": color}
+            )
         return self
 
     @internals.alias("color", "c")
@@ -828,13 +869,27 @@ class Chart(easytree.dict):
     def hband(self, ymin, ymax, *, color="rgba(68, 170, 213, 0.2)", **kwargs):
         """
         Adds a horizontal band (mask) from ymin to ymax across the chart
+
+        Parameters
+        ----------
+        ymin : float, int
+            the start y coordinate of the vertical band
+        ymax : float, int
+            the end y coordinate of the vertical band
+        color : str
+            the color of the band, either as a HEX or RGBA value
         """
         if "label" in kwargs and isinstance(kwargs["label"], str):
             kwargs["label"] = {"text": kwargs["label"]}
 
-        self.yAxis.plotBands.append(
-            **{**kwargs, "from": ymin, "to": ymax, "color": color}
-        )
+        if isinstance(self.yAxis, list):
+            self.yAxis[kwargs.pop("yAxis", 0)].plotBands.append(
+                **{**kwargs, "from": ymin, "to": ymax, "color": color}
+            )
+        else:
+            self.yAxis.plotBands.append(
+                **{**kwargs, "from": ymin, "to": ymax, "color": color}
+            )
         return self
 
     def regress(self, y, x, intercept=True, **kwargs):
@@ -1015,6 +1070,9 @@ class Chart(easytree.dict):
         zIndex=None,
         **kwargs,
     ):
+        """
+        Draw a shape
+        """
         # easychart feature: drawing line segments
         if shape == "line":
             shape = "path"
@@ -1112,13 +1170,25 @@ class Chart(easytree.dict):
         """
         return easychart.Grid([easychart.Plot(self, width=width)], theme=theme)
 
-    def save(self, filename, indent=4):
+    def save(self, filename, *, indent=4):
         """
         Serializes and dumps the chart configuration to file
+
+        Parameters
+        ----------
+        filename : str, Path
+            target location
+
+        indent : int
+            the JSON indentation (number of spaces)
         """
         with open(filename, "w") as file:
             simplejson.dump(
-                self, file, default=easychart.encoders.default, indent=indent
+                self,
+                file,
+                default=easychart.encoders.default,
+                indent=indent,
+                ignore_nan=True,
             )
         return
 
