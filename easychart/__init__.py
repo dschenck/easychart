@@ -10,7 +10,7 @@ import easychart.themes
 import easychart.colormaps
 import easychart.extensions as ext
 
-__version__ = "0.1.24"
+__version__ = "0.1.25"
 
 
 def new(
