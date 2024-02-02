@@ -5,12 +5,17 @@ import simplejson
 import re
 import requests
 import warnings
+import textwrap
 
 import easychart
 import easychart.encoders
 import easychart.internals as internals
 
 from .series import Series
+
+
+# rate-limiting throttle
+_throttler = internals.Throttler()
 
 
 class Chart(easytree.dict):
@@ -1172,6 +1177,15 @@ class Chart(easytree.dict):
 
     def save(self, filename, *, indent=4):
         """
+        Serializes and dumps the chart configuration as JSON to file
+
+        Parameters
+        ----------
+        filename : str, Path
+            target location
+
+        indent : int
+            the JSON indentation (number of spaces)
         Serializes and dumps the chart configuration to file
 
         Parameters
@@ -1192,34 +1206,72 @@ class Chart(easytree.dict):
             )
         return
 
-    def export(self, to, theme=None, scale=2, **kwargs):
+    def export(self, filename, *, theme=None, scale=2, throttle=None, **kwargs):
         """
-        Export chart to a static format using an export server
+        Export chart to a static format (png, jpeg, svg or pdf)
+        using an export server
+
+        Parameters
+        ----------
+        filename : pathlib.Path, str
+            the name of the exported file
+
+        theme : dict, None
+            the theme in which to render the chart
+
+            defaults to the currently active default theme
+
+        scale : int
+            the resolution scale
+
+            defaults to 2 (i.e a 600 x 400 chart will be rendered as 1200 x 800)
+
+        throttle : int
+            the number of seconds to wait between each export request, such
+            as to respect the rate limit of the export server
+
+            defaults to easychart.config.exporting['rate-limit'] or 10 seconds
         """
-        if to[-3:] not in ["png", "jpg", "svg", "pdf"]:
+        if filename[-3:] not in ["png", "jpg", "jpeg", "svg", "pdf"]:
             raise ValueError(
-                f"Expected 'to' argument to end in one of 'png', 'jpg', 'svg', or 'pdf', received '{to}'"
+                f"Expected 'to' argument to end in one of 'png', 'jpg', 'jpeg', 'svg', or 'pdf', received '{filename}'"
             )
 
-        res = requests.post(
-            easychart.config.get(
-                ["exporting", "server", "url"], "http://export.highcharts.com/"
-            ),
-            json={
-                "options": self.serialize(),
-                "type": f"image/{to[-3:]}",
-                "scale": scale,
-                "globalOptions": easychart.themes.get(theme),
-            },
-        )
+        with _throttler.throttle(
+            throttle or self.config.get(["exporting", "rate-limit"], default=10)
+        ):
+            res = requests.post(
+                easychart.config.get(
+                    ["exporting", "server", "url"], "http://export.highcharts.com/"
+                ),
+                json={
+                    "options": self.serialize(),
+                    "type": f"image/{filename[-3:]}",
+                    "scale": scale,
+                    "globalOptions": easychart.themes.get(theme),
+                },
+            )
 
-        if res.status_code != 200:
-            raise Exception(f"Export server responded with code {res.status_code}")
+            if res.status_code == 429:
+                raise Exception(
+                    textwrap.dedent(
+                        f"""
+                        The export server responded with HTTP 429, which means you are making too many export requests in too short a period of time. 
 
-        if to in ["png", "jpg", "svg", "pdf"]:
+                        Please increase the throttle value, or manually set a time.sleep between each export request.
+                        """
+                    )
+                )
+
+            if res.status_code != 200:
+                raise Exception(
+                    f"The export server responded with HTTP code {res.status_code}"
+                )
+
+        if filename in ["png", "jpg", "jpeg", "svg", "pdf"]:
             return res.content
 
-        with open(to, "wb") as file:
+        with open(filename, "wb") as file:
             file.write(res.content)
 
     def serialize(self) -> dict:
