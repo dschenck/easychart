@@ -1209,7 +1209,7 @@ class Chart(easytree.dict):
     def export(self, filename, *, theme=None, scale=2, throttle=None, **kwargs):
         """
         Export chart to a static format (png, jpeg, svg or pdf)
-        using an export server
+        using a remote export server
 
         Parameters
         ----------
