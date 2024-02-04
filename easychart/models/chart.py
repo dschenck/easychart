@@ -1214,7 +1214,8 @@ class Chart(easytree.dict):
         Parameters
         ----------
         filename : pathlib.Path, str
-            the name of the exported file
+            the name of the exported file, including the file extension (e.g.
+            png, jpg, pdf or svg)
 
         theme : dict, None
             the theme in which to render the chart
@@ -1256,7 +1257,7 @@ class Chart(easytree.dict):
                 raise Exception(
                     textwrap.dedent(
                         f"""
-                        The export server responded with HTTP 429, which means you are making too many export requests in too short a period of time. 
+                        The export server responded with HTTP code 429, which means you are making too many export requests in too short a period of time. 
 
                         Please increase the throttle value, or manually set a time.sleep between each export request.
                         """
