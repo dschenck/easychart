@@ -31,7 +31,10 @@ class Config(easytree.dict):
             "container": {"width": "100%", "max-width": "100%"},
             "responsive": False,
         },
-        "exporting": {"server": {"url": "http://export.highcharts.com/"}},
+        "exporting": {
+            "server": {"url": "http://export.highcharts.com/"},
+            "rate-limit": 10,
+        },
     }
 
     filename = os.environ.get(

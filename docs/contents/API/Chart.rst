@@ -27,6 +27,7 @@ easychart.Chart
         plot, 
         serialize, 
         save, 
+        export,
         show, 
         vband,
         vline

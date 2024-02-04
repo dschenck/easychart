@@ -1,5 +1,6 @@
 import collections
 import numbers
+import time
 
 
 def flatten(*args) -> list:
@@ -152,3 +153,23 @@ class Size:
             else:
                 return Size.Pixels(value)
         raise ValueError(f"Unrecognized size '{value}'")
+
+
+class Throttler:
+    def __init__(self):
+        self.time = time.time()
+
+    def tick(self):
+        self.time = time.time()
+        return self
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args, **kwargs):
+        pass
+
+    def throttle(self, delay: int):
+        while time.time() < (self.time + max(0, delay)):
+            pass
+        return self.tick()
