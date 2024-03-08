@@ -1,7 +1,7 @@
 Integration with Streamlit
 ==========================
 
-Charts made with easychart can be rendered on Streamlit. This `demo <https://github.com/dschenck/streamlit-demo/tree/main`_ application shows you how. 
+Charts made with easychart can be rendered on Streamlit. This `demo <https://github.com/dschenck/streamlit-demo/tree/main>`_ application shows you how. 
 ::
 
     import streamlit as st

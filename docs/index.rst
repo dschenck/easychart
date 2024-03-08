@@ -40,8 +40,8 @@ Open up a new Jupyter notebook and start creating your charts:
    contents/themes
    contents/rendering
    contents/colormaps
-   contents/API/index
    contents/streamlit
+   contents/API/index
    contents/about
 
 Source
