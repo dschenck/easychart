@@ -41,6 +41,7 @@ Open up a new Jupyter notebook and start creating your charts:
    contents/rendering
    contents/colormaps
    contents/API/index
+   contents/streamlit
    contents/about
 
 Source
