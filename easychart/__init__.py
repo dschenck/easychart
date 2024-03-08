@@ -9,6 +9,7 @@ import easychart.datasets
 import easychart.themes
 import easychart.colormaps
 import easychart.extensions as ext
+import easychart.rendering
 
 __version__ = "0.1.25"
 
