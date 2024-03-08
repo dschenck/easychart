@@ -306,3 +306,15 @@ def test_chart_idempotency():
     chart.plot([11, 11, 13], name=2012)
 
     assert easychart.Chart(chart.serialize()) == chart
+
+
+def test_chart_exporting():
+    chart = easychart.new()
+    chart.exporting = True
+
+    assert chart.exporting == {"enabled": True}
+
+    chart = easychart.new()
+    chart.exporting = {"enabled": True}
+
+    assert chart.exporting == {"enabled": True}
