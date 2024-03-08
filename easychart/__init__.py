@@ -11,7 +11,7 @@ import easychart.colormaps
 import easychart.extensions as ext
 import easychart.rendering
 
-__version__ = "0.1.26"
+__version__ = "0.1.27"
 
 
 def new(
