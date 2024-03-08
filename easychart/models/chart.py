@@ -244,7 +244,7 @@ class Chart(easytree.dict):
         if isinstance(value, bool):
             self.exporting.enabled = value
         else:
-            self.exporting = value
+            super().__setattr__("exporting", value)
 
     @property
     def height(self):
