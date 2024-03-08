@@ -23,8 +23,10 @@ class Chart(easytree.dict):
     A Highchart chart configuration
     """
 
-    def __init__(self):
-        self.series = Series([])
+    def __init__(self, chart=None):
+        if chart is None:
+            chart = {}
+        super().__init__(**{**chart, "series": Series(chart.get("series", []))})
 
     def __setattr__(self, name, value):
         if hasattr(self.__class__, name) and getattr(self.__class__, name).fset:
