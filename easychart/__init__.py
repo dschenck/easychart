@@ -1,5 +1,6 @@
 import pandas as pd
 import inspect
+import re
 
 from easychart.config import config
 from easychart.models import Chart, Plot, Grid
@@ -11,7 +12,7 @@ import easychart.colormaps
 import easychart.extensions as ext
 import easychart.rendering
 
-__version__ = "0.1.28"
+__version__ = "0.1.29"
 
 
 def new(
@@ -54,7 +55,8 @@ def new(
     labels=None,
     twinx=None,
     twiny=None,
-    colormap=None
+    colormap=None,
+    constr=None,
 ):
     """
     Creates a new chart with some preset defaults
@@ -213,12 +215,16 @@ def new(
     if yformat is not None:
         if yformat in ["percent", "percentage", "pct", "%"]:
             chart.yAxis.labels.format = "{(multiply value 100)}%"
+        elif re.match(r":\.\d%", yformat):
+            chart.yAxis.labels.format = f"{{(multiply value 100){yformat[:-1]}f}}%"
         else:
             chart.yAxis.labels.format = yformat
 
     if xformat is not None:
         if xformat in ["percent", "percentage", "pct", "%"]:
             chart.xAxis.labels.format = "{(multiply value 100)}%"
+        elif re.match(r":\.\d%", xformat):
+            chart.xAxis.labels.format = f"{{(multiply value 100){xformat[:-1]}f)}}%"
         else:
             chart.xAxis.labels.format = xformat
 
@@ -300,6 +306,9 @@ def new(
     if colormap is not None:
         chart.cAxis = colormap
 
+    if constr is not None:
+        chart.constr = constr
+
     return chart
 
 
@@ -318,7 +327,7 @@ def heatmap(
     yreversed=True,
     xopposite=True,
     interpolation=False,
-    **kwargs
+    **kwargs,
 ):
     """
     Convenience function to plot heat maps

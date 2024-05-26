@@ -1155,7 +1155,7 @@ class Chart(easytree.dict):
             )
         pass
 
-    def show(self, *, width=None, theme=None):
+    def show(self, *, width=None, theme=None, constr=None):
         """
         Render chart to an easychart.Grid
 
@@ -1165,6 +1165,8 @@ class Chart(easytree.dict):
             plot width
         theme : str, dict
             theme
+        constr : str
+            one of 'chart', 'stock', 'map' or 'gantt'
 
         Returns
         -------
@@ -1175,7 +1177,9 @@ class Chart(easytree.dict):
         The width given in parameter sets the plot width, not the chart width. See notes on chart and plot sizing
         for more details
         """
-        return easychart.Grid([easychart.Plot(self, width=width)], theme=theme)
+        return easychart.Grid(
+            [easychart.Plot(self, width=width, constr=constr)], theme=theme
+        )
 
     def save(self, filename, *, indent=4):
         """

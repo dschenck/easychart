@@ -70,7 +70,14 @@
                     document.getElementById("root").appendChild(container)
 
                     try{
-                        if(plot.chart.chart && plot.chart.chart.type == "map"){
+                        if(plot.constr == "stock" || plot.constr == "stockChart"){
+                            var chart = Highcharts.stockChart(`container[${i}]`, plot.chart)
+                        }
+                        else if(plot.constr == "map" || plot.constr == "mapChart"){
+                            var chart = Highcharts.mapChart(`container[${i}]`, plot.chart);
+                        }
+                        // backward-compatibility
+                        else if(plot.chart.chart && plot.chart.chart.type == "map"){
                             var chart = Highcharts.mapChart(`container[${i}]`, plot.chart);
                         }
                         else {

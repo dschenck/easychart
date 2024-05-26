@@ -21,6 +21,7 @@ class Series(easytree.list):
     @internals.alias("color", "c")
     @internals.alias("data", "y")
     @internals.alias("index", "x")
+    @internals.alias("showInNavigator", "navigator")
     def append(self, data=None, **kwargs):
         if "marker" in kwargs:
             if isinstance(kwargs["marker"], bool):

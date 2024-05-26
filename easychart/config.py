@@ -10,14 +10,14 @@ class Config(easytree.dict):
     Package config
 
     This configuration contains configuration parameters of the easychart package, including
-    the list of stylesheets and scripts that are loaded in the jupyter renderer to
+    the list of stylesheets and scripts that are loaded in the jupyter constr to
     render the Highcharts objects.
     """
 
     defaults = {
         "stylesheets": [],
         "scripts": [
-            "https://code.highcharts.com/highcharts.js",
+            "https://code.highcharts.com/stock/highstock.js",
             "https://code.highcharts.com/highcharts-more.js",
             "https://code.highcharts.com/modules/heatmap.js",
             "https://code.highcharts.com/modules/exporting.js",

@@ -7,7 +7,7 @@ class Plot:
     Individual chart container
     """
 
-    def __init__(self, chart, *, width=None):
+    def __init__(self, chart, *, width=None, constr=None):
         """
         Parameters
         ------------
@@ -16,11 +16,19 @@ class Plot:
         width : str
             width of the plot, expressed as a number of pixels or a percentage
             of the container width
+        constr : str
+            one of 'chart', 'stock', 'map' or 'gantt'
+            defaults to 'chart'
         """
         if isinstance(chart, Plot):
-            chart, width = chart.chart, width or chart.width
+            chart, width, constr = (
+                chart.chart,
+                width or chart.width,
+                chart.constr or constr,
+            )
 
         self.chart = chart
+
         self.width = internals.Size(
             width
             or self.chart.get(
@@ -28,6 +36,8 @@ class Plot:
                 "100%" if easychart.config.rendering.responsive else "600px",
             )
         )
+
+        self.constr = chart.get("constr", constr) or "chart"
 
     def serialize(self) -> dict:
         """
@@ -38,4 +48,5 @@ class Plot:
         return {
             "chart": self.chart.serialize(),
             "width": self.width,
+            "constr": self.constr,
         }
