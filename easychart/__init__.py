@@ -56,6 +56,7 @@ def new(
     twinx=None,
     twiny=None,
     colormap=None,
+    constr=None,
 ):
     """
     Creates a new chart with some preset defaults
@@ -304,6 +305,9 @@ def new(
 
     if colormap is not None:
         chart.cAxis = colormap
+
+    if constr is not None:
+        chart.constr = constr
 
     return chart
 

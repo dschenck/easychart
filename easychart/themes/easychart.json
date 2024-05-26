@@ -91,7 +91,9 @@
                 "color": "#000000",
                 "font": "Arial"
             }
-        }
+        },
+        "opposite":false,
+        "showLastLabel":true
     },
     "credits": {
         "style": {
@@ -103,6 +105,9 @@
         },
         "text": "",
         "href": null
+    },
+    "rangeSelector":{
+        "verticalAlign":"bottom"
     },
     "plotOptions": {
         "chart": {
