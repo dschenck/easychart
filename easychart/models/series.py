@@ -22,10 +22,48 @@ class Series(easytree.list):
     @internals.alias("data", "y")
     @internals.alias("index", "x")
     @internals.alias("showInNavigator", "navigator")
+    @internals.alias("markersize", "ms", "size", "radius")
+    @internals.alias("markercolor", "mc")
+    @internals.alias("markerlinewidth", "mlw")
+    @internals.alias("markerlinecolor", "mlc")
     def append(self, data=None, **kwargs):
+        if "markersize" in kwargs:
+            kwargs["marker"] = {
+                **kwargs.get("marker", {}),
+                "radius": kwargs.pop("markersize"),
+            }
+
+        if "markercolor" in kwargs:
+            kwargs["marker"] = {
+                **kwargs.get("marker", {}),
+                "fillColor": kwargs.pop("markercolor"),
+            }
+
+        if "markerlinewidth" in kwargs:
+            kwargs["marker"] = {
+                **kwargs.get("marker", {}),
+                "lineWidth": kwargs.pop("markerlinewidth"),
+            }
+
+        if "markerlinecolor" in kwargs:
+            kwargs["marker"] = {
+                **kwargs.get("marker", {}),
+                "lineColor": kwargs.pop("markerlinecolor"),
+            }
+
         if "marker" in kwargs:
             if isinstance(kwargs["marker"], bool):
                 kwargs["marker"] = {"enabled": kwargs["marker"]}
+            elif isinstance(kwargs["marker"], (int, float)):
+                kwargs["marker"] = {"radius": kwargs["marker"]}
+            elif kwargs["marker"] in [
+                "circle",
+                "square",
+                "diamond",
+                "triangle",
+                "triangle-down",
+            ]:
+                kwargs["marker"] = {"symbol": kwargs["marker"]}
             elif kwargs["marker"] is None:
                 kwargs["marker"] = {"enabled": False}
 
