@@ -224,7 +224,7 @@ def new(
         if xformat in ["percent", "percentage", "pct", "%"]:
             chart.xAxis.labels.format = "{(multiply value 100)}%"
         elif re.match(r":\.\d%", xformat):
-            chart.xAxis.labels.format = f"{{(multiply value 100){xformat[:-1]}f)}}%"
+            chart.xAxis.labels.format = f"{{(multiply value 100){xformat[:-1]}f}}%"
         else:
             chart.xAxis.labels.format = xformat
 
