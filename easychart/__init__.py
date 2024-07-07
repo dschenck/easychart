@@ -12,7 +12,7 @@ import easychart.colormaps
 import easychart.extensions as ext
 import easychart.rendering
 
-__version__ = "0.1.29"
+__version__ = "0.1.30"
 
 
 def new(
@@ -224,7 +224,7 @@ def new(
         if xformat in ["percent", "percentage", "pct", "%"]:
             chart.xAxis.labels.format = "{(multiply value 100)}%"
         elif re.match(r":\.\d%", xformat):
-            chart.xAxis.labels.format = f"{{(multiply value 100){xformat[:-1]}f)}}%"
+            chart.xAxis.labels.format = f"{{(multiply value 100){xformat[:-1]}f}}%"
         else:
             chart.xAxis.labels.format = xformat
 
