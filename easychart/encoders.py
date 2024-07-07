@@ -54,7 +54,7 @@ def default(value):
     if isinstance(value, (np.int64, np.int32, np.int16, np.int8, np.int_)):
         return int(value)
 
-    if isinstance(value, (np.double, np.float64, np.float_)):
+    if isinstance(value, (np.double, np.float64)):
         return float(value)
 
     if isinstance(value, (pd.DataFrame, pd.Series, pd.Index)):
