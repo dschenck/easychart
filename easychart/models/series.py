@@ -23,7 +23,7 @@ class Series(easytree.list):
     @internals.alias("index", "x")
     @internals.alias("showInNavigator", "navigator")
     @internals.alias("markersize", "ms", "size", "radius")
-    @internals.alias("markercolor", "mc")
+    @internals.alias("markercolor", "mc", "markerfacecolor", "markerfillcolor", "mfc")
     @internals.alias("markerlinewidth", "mlw")
     @internals.alias("markerlinecolor", "mlc")
     def append(self, data=None, **kwargs):
