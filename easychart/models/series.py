@@ -91,9 +91,9 @@ class Series(easytree.list):
                 if isinstance(kwargs["index"], collections.abc.Iterable):
                     data = data.values.tolist()
                 elif isinstance(kwargs["index"], bool):
-                    if kwargs["index"] == False:
+                    if kwargs["index"] is False:
                         data = data.values.tolist()
-                    if kwargs["index"] == True:
+                    if kwargs["index"] is True:
                         data = data.reset_index().values.tolist()
             else:
                 data = data.reset_index().values.tolist()

@@ -1,4 +1,3 @@
-import IPython
 import os
 import simplejson
 import html
