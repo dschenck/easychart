@@ -1238,6 +1238,9 @@ class Chart(easytree.dict):
             as to respect the rate limit of the export server
 
             defaults to easychart.config.exporting['rate-limit'] or 10 seconds
+
+        **kwargs : dict (optional)
+            Additional arguments to pass to the HTTP request
         """
         if filename[-3:] not in ["png", "jpg", "jpeg", "svg", "pdf"]:
             raise ValueError(
@@ -1257,6 +1260,7 @@ class Chart(easytree.dict):
                     "scale": scale,
                     "globalOptions": easychart.themes.get(theme),
                 },
+                **kwargs
             )
 
             if res.status_code == 429:
