@@ -1135,7 +1135,7 @@ class Chart(easytree.dict):
                         "point": point
                         or (
                             None
-                            if (x == y == None)
+                            if (x is y is None)
                             else {"x": x, "y": y, "xAxis": xAxis, "yAxis": yAxis}
                         ),
                         "x": xOffset,
@@ -1262,7 +1262,7 @@ class Chart(easytree.dict):
             if res.status_code == 429:
                 raise Exception(
                     textwrap.dedent(
-                        f"""
+                        """
                         The export server responded with HTTP code 429, which means you are making too many export requests in too short a period of time. 
 
                         Please increase the throttle value, or manually set a time.sleep between each export request.

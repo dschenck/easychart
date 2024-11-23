@@ -1,6 +1,6 @@
 try:
     ip = get_ipython()  # noqa: F821
-except:
+except Exception:
     ip = None
 
 if ip and (
