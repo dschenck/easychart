@@ -131,3 +131,7 @@ dmypy.json
 .DS_Store
 
 notes.txt
+
+# Ruff
+.ruff_cache
+.ruff_cache/*
