@@ -1260,7 +1260,7 @@ class Chart(easytree.dict):
                     "scale": scale,
                     "globalOptions": easychart.themes.get(theme),
                 },
-                **kwargs
+                **kwargs,
             )
 
             if res.status_code == 429:
