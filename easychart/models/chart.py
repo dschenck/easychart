@@ -549,7 +549,9 @@ class Chart(easytree.dict):
                 if match.groups()[0] is not None:
                     self.tooltip.valuePrefix = match.groups()[0]
                 if ":" in match.groups()[1]:
-                    submatch = re.match("\.?(\d)[f%]?", match.groups()[1].split(":")[1])
+                    submatch = re.match(
+                        r"\.?(\d)[f%]?", match.groups()[1].split(":")[1]
+                    )
                     if submatch:
                         self.tooltip.valueDecimals = int(submatch.groups()[0])
                 if match.groups()[2] is not None:
