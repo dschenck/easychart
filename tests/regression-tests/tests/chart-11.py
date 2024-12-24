@@ -7,7 +7,7 @@ def regress(regression):
 
     # data is a pd.DataFrame of stock prices
     data = easychart.datasets.load("stocks")
-    data = data[:"20200430"].resample("M").last().pct_change()[1:]
+    data = data[:"20200430"].resample("ME").last().pct_change()[1:]
 
     stats = 100 * pd.concat(
         [
