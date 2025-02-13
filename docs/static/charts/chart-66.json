@@ -1,0 +1,33 @@
+{
+    "series": [
+        {
+            "data": [
+                [
+                    -2,
+                    8
+                ],
+                [
+                    4,
+                    6
+                ]
+            ],
+            "dataLabels": {
+                "enabled": true,
+                "format": "{#if (le point.y 0)}{point.y:,.0f}USD{else}+{point.y}USD{/if}"
+            }
+        }
+    ],
+    "chart": {
+        "type": "dumbbell",
+        "zoomType": "x"
+    },
+    "legend": {
+        "enabled": false
+    },
+    "xAxis": {
+        "categories": [
+            "A",
+            "B"
+        ]
+    }
+}
