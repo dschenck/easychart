@@ -12,7 +12,7 @@ import easychart.colormaps
 import easychart.extensions as ext
 import easychart.rendering
 
-__version__ = "0.1.31"
+__version__ = "0.1.32"
 
 
 def new(
@@ -57,6 +57,7 @@ def new(
     twiny=None,
     colormap=None,
     constr=None,
+    inverted=None,
 ):
     """
     Creates a new chart with some preset defaults
@@ -305,6 +306,9 @@ def new(
 
     if colormap is not None:
         chart.cAxis = colormap
+
+    if inverted is not None:
+        chart.chart.inverted = inverted
 
     if constr is not None:
         chart.constr = constr

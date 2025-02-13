@@ -18,3 +18,13 @@ Inspired from this `Highcharts <https://www.highcharts.com/demo/dumbbell>`_ demo
 
 
 .. literalinclude:: /_misc/examples/chart-28.py
+
+Custom labels
+-------------
+
+.. raw:: html 
+
+    <div class="chart-container" style="min-height:400px" data-filename="../../_static/charts/chart-66.json?v=1"></div>
+
+
+.. literalinclude:: /_misc/examples/chart-66.py
