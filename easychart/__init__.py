@@ -2,6 +2,9 @@ import pandas as pd
 import inspect
 import re
 
+import narwhals.stable.v2 as nw
+from narwhals.stable.v2 import dependencies as nw_dep
+
 from easychart.config import config
 from easychart.models import Chart, Plot, Grid
 
@@ -371,6 +374,18 @@ def heatmap(
     -------
     easychart.Chart
     """
+    # Convert non-pandas DataFrames (Polars, etc.) to pandas
+    # Suggested approach for heatmap() is pragmatic - since it relies heavily
+    # on pandas operations (.stack(), .rename_axis(), index/column handling),
+    # here convert Polars DataFrames to pandas first
+    # Could review on more complete narwhals uplift
+    if not isinstance(data, pd.DataFrame) and nw_dep.is_into_dataframe(data):
+        native = nw.from_native(data, eager_only=True).to_native()
+        if hasattr(native, "to_pandas"):
+            data = native.to_pandas()
+        else:
+            data = pd.DataFrame(native.to_numpy())
+
     if isinstance(data, pd.DataFrame):
         if not (
             isinstance(data.index, pd.DatetimeIndex)
