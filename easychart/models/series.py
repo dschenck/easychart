@@ -111,13 +111,9 @@ class Series(easytree.list):
             data = s.to_list()
 
         elif nw_dep.is_into_dataframe(data):
-            # Non-pandas DataFrame (Polars, etc.): convert to list of rows
+            # Non-pandas DataFrame (Polars, PyArrow, etc.): convert to list of rows
             df = nw.from_native(data, eager_only=True)
-            native = nw.to_native(df)
-            if hasattr(native, "rows"):
-                data = list(native.rows())
-            else:
-                data = native.to_numpy().tolist()
+            data = df.rows()
 
         if "index" in kwargs and isinstance(kwargs["index"], collections.abc.Iterable):
             data = [

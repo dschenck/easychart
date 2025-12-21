@@ -71,10 +71,7 @@ def default(value):
 
     if nw_dep.is_into_dataframe(value):
         df = nw.from_native(value, eager_only=True)
-        native = nw.to_native(df)
-        if hasattr(native, "rows"):
-            return list(native.rows())
-        return native.to_numpy().tolist()
+        return df.rows()
 
     if isinstance(
         value,
