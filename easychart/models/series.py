@@ -2,6 +2,9 @@ import easytree
 import pandas as pd
 import collections
 
+import narwhals.stable.v2 as nw
+from narwhals.stable.v2 import dependencies as nw_dep
+
 import easychart.internals as internals
 
 
@@ -82,11 +85,15 @@ class Series(easytree.list):
             if isinstance(kwargs["color"], int):
                 kwargs["colorIndex"] = kwargs.pop("color")
 
-        if isinstance(data, pd.Series):
-            if "name" not in kwargs:
-                kwargs["name"] = data.name
+        # Extract series name (works for pandas and polars)
+        if nw_dep.is_into_series(data):
+            s = nw.from_native(data, series_only=True, eager_only=True)
+            if "name" not in kwargs and s.name is not None:
+                kwargs["name"] = s.name
 
+        # Data conversion
         if isinstance(data, (pd.Series, pd.DataFrame)):
+            # pandas: maintain current behavior (uses index by default)
             if "index" in kwargs:
                 if isinstance(kwargs["index"], collections.abc.Iterable):
                     data = data.values.tolist()
@@ -97,6 +104,20 @@ class Series(easytree.list):
                         data = data.reset_index().values.tolist()
             else:
                 data = data.reset_index().values.tolist()
+
+        elif nw_dep.is_into_series(data):
+            # Non-pandas Series (Polars, etc.): no index concept, just values
+            s = nw.from_native(data, series_only=True, eager_only=True)
+            data = s.to_list()
+
+        elif nw_dep.is_into_dataframe(data):
+            # Non-pandas DataFrame (Polars, etc.): convert to list of rows
+            df = nw.from_native(data, eager_only=True)
+            native = nw.to_native(df)
+            if hasattr(native, "rows"):
+                data = list(native.rows())
+            else:
+                data = native.to_numpy().tolist()
 
         if "index" in kwargs and isinstance(kwargs["index"], collections.abc.Iterable):
             data = [

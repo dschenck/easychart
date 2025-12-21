@@ -135,3 +135,7 @@ notes.txt
 # Ruff
 .ruff_cache
 .ruff_cache/*
+
+# Claude Code
+CLAUDE.md
+plan.md
