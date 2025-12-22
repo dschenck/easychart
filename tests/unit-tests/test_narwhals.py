@@ -1,6 +1,8 @@
-import polars as pl
+import pytest
 import pandas as pd
-import pyarrow as pa
+
+pl = pytest.importorskip("polars")
+pa = pytest.importorskip("pyarrow")
 
 import easychart
 from easychart.encoders import default
