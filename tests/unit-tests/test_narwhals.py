@@ -1,5 +1,6 @@
 import polars as pl
 import pandas as pd
+import pyarrow as pa
 
 import easychart
 from easychart.encoders import default
@@ -32,6 +33,22 @@ class TestPolarsSupport:
         chart = easychart.heatmap(df)
         assert chart.chart.type == "heatmap"
         # Verify data was converted and plotted
+        assert len(chart.series[0]["data"]) == 9  # 3x3 grid
+
+
+class TestPyArrowSupport:
+    """Tests for PyArrow Table support via narwhals"""
+
+    def test_pyarrow_dataframe(self):
+        df = pa.table({"a": [1, 2], "b": [3, 4]})
+        chart = easychart.new()
+        chart.plot(df)
+        assert chart.series[0]["data"] == [(1, 3), (2, 4)]
+
+    def test_pyarrow_heatmap(self):
+        df = pa.table({"a": [1, 2, 3], "b": [4, 5, 6], "c": [7, 8, 9]})
+        chart = easychart.heatmap(df)
+        assert chart.chart.type == "heatmap"
         assert len(chart.series[0]["data"]) == 9  # 3x3 grid
 
 
