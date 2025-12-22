@@ -88,8 +88,9 @@ class Series(easytree.list):
         # Extract series name (works for pandas and polars)
         if nw_dep.is_into_series(data):
             s = nw.from_native(data, series_only=True, eager_only=True)
-            if "name" not in kwargs and s.name is not None:
-                kwargs["name"] = s.name
+            if "name" not in kwargs:
+                # Use None for empty names so Highcharts defaults to "Series 1" etc.
+                kwargs["name"] = s.name or None
 
         # Data conversion
         if isinstance(data, (pd.Series, pd.DataFrame)):
