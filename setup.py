@@ -19,6 +19,7 @@ setuptools.setup(
         "Operating System :: OS Independent",
     ],
     install_requires=[
+        "pytz",
         "pandas",
         "numpy",
         "easytree>=0.2.3",

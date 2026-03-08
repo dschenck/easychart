@@ -7,9 +7,6 @@ import sys
 
 sys.path.append("../../../easychart")  # add the easychart path
 
-import re
-import json
-import easychart
 
 directory = os.path.join(os.path.dirname(os.path.realpath(__file__)), "examples")
 
