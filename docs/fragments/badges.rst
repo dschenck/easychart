@@ -1,8 +1,8 @@
 .. image:: https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue
    :target: https://pypi.org/project/easychart
 
-.. image:: https://github.com/dschenck/easychart/workflows/testing/badge.svg
-   :target: https://github.com/dschenck/easychart/actions
+.. image:: https://github.com/dschenck/easychart/actions/workflows/testing.yml/badge.svg?branch=main
+    :target: https://github.com/dschenck/easychart/actions/workflows/testing.yml/badge.svg?branch=main
 
 .. image:: https://badge.fury.io/py/easychart.svg
    :target: https://badge.fury.io/py/easychart
