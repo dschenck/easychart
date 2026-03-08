@@ -1,4 +1,3 @@
-import pytest
 
 import easychart
 import easychart.models
