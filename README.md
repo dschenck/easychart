@@ -3,8 +3,8 @@
 [highcharts](https://www.highcharts.com/) meets python in your [Jupyter](https://jupyter.org/) notebook
 
 [![PyPI version](https://badge.fury.io/py/easychart.svg)](https://badge.fury.io/py/easychart)
-[![pythons](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://pypi.org/project/easytree)
-[![build](https://github.com/dschenck/easychart/workflows/testing/badge.svg)](https://github.com/dschenck/easychart/actions)
+[![pythons](https://img.shields.io/badge/python-3.8%20%7C%203.9%20%7C%203.10%20%7C%203.11%20%7C%203.12-blue)](https://pypi.org/project/easychart)
+[![tests and coverage](https://github.com/dschenck/easychart/actions/workflows/testing.yml/badge.svg?branch=main)](https://github.com/dschenck/easychart/actions/workflows/testing.yml)
 [![Documentation Status](https://readthedocs.org/projects/easychart/badge/?version=latest)](https://easychart.readthedocs.io/en/latest/?badge=latest)
 [![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
 [![Downloads](https://static.pepy.tech/badge/easychart/week)](https://pepy.tech/project/easychart)
