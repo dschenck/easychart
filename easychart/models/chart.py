@@ -13,7 +13,6 @@ import easychart.internals as internals
 
 from .series import Series
 
-
 # rate-limiting throttle
 _throttler = internals.Throttler()
 
@@ -1266,15 +1265,11 @@ class Chart(easytree.dict):
             )
 
             if res.status_code == 429:
-                raise Exception(
-                    textwrap.dedent(
-                        """
+                raise Exception(textwrap.dedent("""
                         The export server responded with HTTP code 429, which means you are making too many export requests in too short a period of time. 
 
                         Please increase the throttle value, or manually set a time.sleep between each export request.
-                        """
-                    )
-                )
+                        """))
 
             if res.status_code != 200:
                 raise Exception(
