@@ -17,14 +17,14 @@ class Config(easytree.dict):
     defaults = {
         "stylesheets": [],
         "scripts": [
-            "https://code.highcharts.com/stock/highstock.js",
-            "https://code.highcharts.com/highcharts-more.js",
-            "https://code.highcharts.com/modules/heatmap.js",
-            "https://code.highcharts.com/modules/exporting.js",
-            "https://code.highcharts.com/modules/offline-exporting.js",
-            "https://code.highcharts.com/modules/export-data.js",
-            "https://code.highcharts.com/modules/annotations.js",
-            "https://code.highcharts.com/modules/accessibility.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/highstock.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/highcharts-more.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/modules/heatmap.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/modules/exporting.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/modules/offline-exporting.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/modules/export-data.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/modules/annotations.js",
+            "https://cdn.jsdelivr.net/npm/highcharts/modules/accessibility.js",
         ],
         "theme": None,
         "rendering": {
