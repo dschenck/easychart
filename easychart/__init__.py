@@ -12,7 +12,22 @@ import easychart.colormaps
 import easychart.extensions as ext
 import easychart.rendering
 
-__version__ = "0.1.32"
+__version__ = "0.1.33"
+
+__all__ = [
+    "new",
+    "heatmap",
+    "plot",
+    "render",
+    "Chart",
+    "Plot",
+    "Grid",
+    "config",
+    "datasets",
+    "themes",
+    "colormaps",
+    "ext",
+]
 
 
 def new(

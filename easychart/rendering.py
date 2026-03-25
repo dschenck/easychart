@@ -7,6 +7,8 @@ import easychart.encoders
 import easychart.themes
 import easychart.internals
 
+from . import utils
+
 from jinja2 import Environment, FileSystemLoader
 
 # create the environment
@@ -33,8 +35,8 @@ def render(charts) -> str:
         **{
             "plots": simplejson.dumps([plot.serialize() for plot in grid.plots]),
             "theme": simplejson.dumps(easychart.themes.get(grid.theme)),
-            "scripts": easychart.config.scripts,
-            "stylesheets": easychart.config.stylesheets,
+            "scripts": utils.deduplicate(easychart.config.scripts),
+            "stylesheets": utils.deduplicate(easychart.config.stylesheets),
         }
     )
 
