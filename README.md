@@ -34,6 +34,32 @@ chart
 
 <img src="https://raw.githubusercontent.com/dschenck/easychart/latest/docs/static/demo%20(1).svg"/>
 
+## Plotting with DataFrames
+
+easychart works with pandas, Polars, PyArrow, and other dataframe libraries. Pandas is a dependency while other dataframe libraries are supported via [narwhals](https://github.com/narwhals-dev/narwhals).
+
+```python
+import pandas as pd
+import easychart
+
+# pandas Series uses index as x-axis
+data = pd.Series([10, 20, 30], index=["a", "b", "c"], name="values")
+chart = easychart.new()
+chart.plot(data)
+chart
+```
+
+```python
+import polars as pl
+import easychart
+
+# Polars DataFrame
+data = pl.DataFrame({"x": [1, 2, 3], "y": [10, 20, 30]})
+chart = easychart.new()
+chart.plot(data)
+chart
+```
+
 ## Documentation
 
 Complete documentation is hosted on [read the docs](https://easychart.readthedocs.io/en/latest/). Have a look at one of the [25+ example charts](https://easychart.readthedocs.io/en/latest/contents/examples/index.html).

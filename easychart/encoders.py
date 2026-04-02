@@ -4,6 +4,9 @@ import numpy as np
 import pandas as pd
 import datetime
 
+import narwhals.stable.v2 as nw
+from narwhals.stable.v2 import dependencies as nw_dep
+
 
 def default(value):
     """
@@ -59,6 +62,16 @@ def default(value):
 
     if isinstance(value, (pd.DataFrame, pd.Series, pd.Index)):
         return value.values.tolist()
+
+    # Handle non-pandas DataFrames/Series (Polars, etc.)
+    # Since we already convert in series.py, this is a safety net
+    if nw_dep.is_into_series(value):
+        s = nw.from_native(value, series_only=True, eager_only=True)
+        return s.to_list()
+
+    if nw_dep.is_into_dataframe(value):
+        df = nw.from_native(value, eager_only=True)
+        return df.rows()
 
     if isinstance(
         value,
